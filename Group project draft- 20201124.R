@@ -1,7 +1,6 @@
 # Data <- read.table("Data_for_project.csv", dec = ",", sep = ";")
 # mean(Data_for_project$aphidsinoculated_init)
 
-
 ###20201124 miki script##################################
 #import data file
 library(readr)
@@ -31,6 +30,9 @@ group_by(Treatment_ID, Plant) %>%
 summarise(across(everything(), list(mean)))
 View(Data3)
 
+#remove variable "Plant"???
+Data3[-2]
+              
 
 #Package that we use
 #Aphid population growth was modelled using a linear mixed model
