@@ -2,7 +2,7 @@
 # mean(Data_for_project$aphidsinoculated_init)
 
 
-###################20201124 miki script#####
+###20201124 miki script##################################
 #import data file
 library(readr)
 Data1 <- read_csv("C:/Users/mk4rb/Desktop/Rpractice/Data for project.csv")
@@ -13,36 +13,26 @@ summary(Data1)
 #check variables name
 names(Data1)
 
-#remove variables that we dont need
-Variables <- names(Data1)[c(-1, -2)]
+#remove variables that we dont need: plot_ID, Treatment, Field_Mgmt and crop type
+Variables <- names(Data1)[c(-1, -2, -11, -13)]
 Variables
 Data2 <- Data1[Variables]
 Data3 <- data.frame(Data2)
 
+Treatment_ID <- Field_Mgmt<- croptype <- character()
+Plant<- aphidsinoculated_init <- aphid_live <- aphid_parasitized <- numeric()
+syrphidl_p <- Biomass_fin <- cropmaturity_init <- X <- Y <- numeric()
+BUFF_DIST <-  Pt.seminatural <- numeric()
 
 ###Summarizing multiple columns with dplyr 
 library(dplyr)
-Data3 %>% 
+Data3 <- Data3 %>% 
 group_by(Treatment_ID, Plant) %>% 
-summarise(aphidsinoculated_init = mean(aphidsinoculated_init)) 
-
-
-# summarise(aphid_live = mean(aphid_live)) %>%
-# summarise(aphid_parasitized = mean(aphid_parasitized))  %>% 
-# summarise(syrphidl_p = mean(syrphidl_p))
-
-
-  
-# may not needed
-# Treatment_ID <- Field_Mgmt<- croptype <- character()
-# Plant<- aphidsinoculated_init <- aphid_live <- aphid_parasitized <- numeric()
-# syrphidl_p <- Biomass_fin <- cropmaturity_init <- X <- Y <- numeric()
-# BUFF_DIST <-  Pt.seminatural <- numeric()
-
+summarise(across(everything(), list(mean)))
+View(Data3)
 
 
 #Package that we use
-
 #Aphid population growth was modelled using a linear mixed model
 install.packages("nlme")
 #Parasitism rates (the ratio of parasitized to all aphids) 
