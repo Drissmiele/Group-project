@@ -61,9 +61,11 @@ SA_D1 <- data.frame(DATE1$Pt.seminatura, APG_D1)
 View(SA_D1)
 
 #barplot for % Seminatural habitat and APhid population growth
-plot(SA_D1, type = "l", 
-     col = 1:6, xlim = c(0:70))
-lines(SA_D1, col = 1:6)
+library(ggplot2)
+ggplot(SA_D1, 
+       aes(x = SA_D1$DATE1.Pt.seminatura, y = SA_D1$APG_D1)) +
+                  geom_smooth() 
+     
 
 #lmer for plot (not yet, trying)
 lmer(SA_D1$DATE1.Pt.seminatura~ SA_D1$APG_D1, data = SA_D1)
