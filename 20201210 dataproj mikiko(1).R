@@ -10,7 +10,6 @@ names(Data1)
 
 #remove variables that we dont need: plot_ID, Treatment, Field_Mgmt and crop type
 Variables <- names(Data1)[c(-1,-2, -11, -13, -14)]
-Variables
 Data2 <- Data1[Variables]
 Data2 <- data.frame(Data2)
 
