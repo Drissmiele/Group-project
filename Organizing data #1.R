@@ -34,3 +34,6 @@ dframe_date3 <- data.frame(slice(Data2, 863:1271))
 # checking for missing data
 which(!dframe_date2$plant_ID %in% dframe_date3$plant_ID)
 which(!dframe_date1$plant_ID %in% dframe_date2$plant_ID)
+
+#
+complete(dframe_date1)
