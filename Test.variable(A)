@@ -1,0 +1,48 @@
+library(readxl)
+library(igraph)
+
+# dir()
+links <- read_excel("Relationships between variables.xlsx")
+
+# uncomment this line for first lines graph. Comment for complete graph
+links <- links[1:20 ]
+
+network <- graph_from_data_frame(d = links, directed = TRUE) 
+
+# plot it
+plot(network, 
+     edge.curved = 0.2,
+     vertex.shape = "rectangle", 
+     vertex.color = "white",
+     vertex.frame.color = "white"
+)
+
+library(readr)
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
+View(Data1)
+# Treatment - aphids density
+
+lm1 <- lm(Data1$aphid_live ~ Data1$Treatment)
+summary(lm1)
+plot(Data1$aphid_live ~ Data1$Treatment)
+# the effect of treatment on aphids density is significant for all treatments.
+
+
+
+#calculate the aphids population growth 
+logNaphids_all <- log(Data1$aphid_live + 1) - log(Data1$aphidsinoculated_init + 1) 
+APG_all <- logNaphids_all/10
+
+#make new data frame which include aphids population growth rate
+Data1_APG_all <- data.frame(Data1, APG_all)
+View(Data1_APG_all)
+
+# Treatment - aphid pop growth
+
+lm2 <- lm(Data1_APG_all$APG_all ~ Data1_APG_all$Treatment)
+summary(lm2)
+
+# Treatment - aphid pop + organic management
+
+glm1 <- glm(Data1$aphid_live~Data1$Treatment + Data1$Field_Mgmt + I(Treatment*Field_Mgmt)
+summary(glm1)
