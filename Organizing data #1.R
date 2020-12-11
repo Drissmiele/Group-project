@@ -1,9 +1,9 @@
 library(readr)
-Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
 View(Data1)
 
 
-#remove variables that we dont need: plot_ID, Treatment, Field_Mgmt and crop type
+#remove variables that we don't need: plot_ID, Treatment, Field_Mgmt and crop type
 Variables <- names(Data1)[c(-1, -11, -12, -13, -14, -15, -17)]
 Data2 <- Data1[Variables]
 
@@ -17,12 +17,12 @@ i <- select(filter(Data2, Data2$Treatment_ID == '37_H'), aphid_live, Biomass_fin
 # Alternative way of doing it 
 Data2[Data2$Treatment_ID == "37_H", c("Treatment_ID", "aphid_live", "Biomass_fin")]
 # select treatment H (herbivores), live aphids and final biomass
-Data2[Data2$Treatment =="H", c("Treatment", "aphid_live", "Biomass_fin")]
+Data2[Data2$Treatment == "H", c("Treatment", "aphid_live", "Biomass_fin")]
 
 
-Data2$plant_ID <- paste(Data2$Treatment, Data2$Plant, sep ="_") # created a new variable called plant_ID that is highly specific (plant number)
+Data2$plant_ID <- paste(Data2$Treatment, Data2$Plant, sep = "_") # created a new variable called plant_ID that is highly specific (plant number)
 unique(Data2$plant_ID) 
-Data2 <- Data2[Data2$BUFF_DIST =="100",] # selecting  all the rows with buff = 100 in Data2
+Data2 <- Data2[Data2$BUFF_DIST == "100",] # selecting  all the rows with buff = 100 in Data2
 
 
 # separating Data2 into three data frames for each date
