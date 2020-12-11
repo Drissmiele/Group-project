@@ -10,7 +10,7 @@ View(BUFF)
 
 
 #calculate the aphids parasitism rate (n = 1271)
-parasitism_rate　<- BUFF$aphid_parasitized/(BUFF$aphid_live)
+parasitism_rate　<- BUFF$aphid_parasitized/(BUFF$aphid_live+BUFF$aphid_parasitized)
 BUFF$parasitism_rate <- parasitism_rate
 
 # creating the syrphid fraction variable 
