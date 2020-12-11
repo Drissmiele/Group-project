@@ -10,7 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # 1.Select the data.
-
 Data provided by the following scientific article: **“Pest control of aphids on landscape complexity and natural enemy interactions”.** Data can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
 
 # 2. Define the objectives.
