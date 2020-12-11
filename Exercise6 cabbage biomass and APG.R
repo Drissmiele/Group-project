@@ -4,7 +4,7 @@
 ###############################
 #import data file
 library(readr)
-Data1 <- read.table ("Project data.csv", header = TRUE, dec = ",", sep = ";")
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
 
 # created a new variable called plant_ID that is highly specific (plant number)
 Data1$plant_ID <- paste(Data1$Treatment, Data1$Plant, sep = "_")
