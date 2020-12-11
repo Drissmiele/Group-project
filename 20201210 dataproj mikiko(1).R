@@ -1,6 +1,6 @@
 #import data file
 library(readr)
-Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
 View(Data1)
 str(Data1)
 summary(Data1)
@@ -13,9 +13,9 @@ Variables <- names(Data1)[c(-1,-2, -11, -13, -14)]
 Data2 <- Data1[Variables]
 Data2 <- data.frame(Data2)
 
-Data2$plant_ID <- paste(Data2$Treatment, Data2$Plant, sep ="_") # created a new variable called plant_ID that is highly specific (plant number)
+Data2$plant_ID <- paste(Data2$Treatment, Data2$Plant, sep = "_") # created a new variable called plant_ID that is highly specific (plant number)
 unique(Data2$plant_ID)
-Data2 <- Data2[Data2$BUFF_DIST =="100",] #selecting in Data 2 all the rows with buff = 100
+Data2 <- Data2[Data2$BUFF_DIST == "100",] #selecting in Data 2 all the rows with buff = 100
 View(Data2)
 
 
@@ -25,7 +25,7 @@ summary(DATE1)
 View(DATE1)
 
 #calculate the aphids population growth at date1
-logNaphids_D1 <- log(DATE1$aphid_live+1) - log(DATE1$aphidsinoculated_init+1) 
+logNaphids_D1 <- log(DATE1$aphid_live + 1) - log(DATE1$aphidsinoculated_init + 1) 
 APG_D1 <- logNaphids_D1/10
 
 
@@ -35,7 +35,7 @@ summary(DATE2)
 View(DATE2)
 
 #calculate the aphids population growth at date2
-logNaphids_D2 <- log(mean(DATE2$aphid_live)+1) - log(mean(DATE2$aphidsinoculated_init)+1) 
+logNaphids_D2 <- log(mean(DATE2$aphid_live) + 1) - log(mean(DATE2$aphidsinoculated_init) + 1) 
 APG_D2 <- logNaphids_D2/10
 
 
@@ -45,7 +45,7 @@ summary(DATE3)
 View(DATE3)
 
 #calculate the aphids population growth at date3
-logNaphids_D3 <- log(mean(DATE3$aphid_live)+1) - log(mean(DATE3$aphidsinoculated_init)+1) 
+logNaphids_D3 <- log(mean(DATE3$aphid_live) + 1) - log(mean(DATE3$aphidsinoculated_init) + 1) 
 APG_D3 <- logNaphids_D3/10
 
 #Package that we use

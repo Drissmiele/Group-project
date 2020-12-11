@@ -6,6 +6,7 @@ View(Data1)
 install.packages("igraph")
 library(igraph)
 
+<<<<<<< HEAD
 # graph depicting the relationship between variables
 links <- data.frame(
   source=c("NE", "APG","NE", "NE", "PR","SF", "PR", "SF", "LC", "LC"),
@@ -18,6 +19,8 @@ plot(network, vertex.color= "yellow", edge.arrow.size=1, vertex.label.font = 2, 
 legend(x =1, y =1, c("NE = Natural enemies", "PR = Parasitism rate", "SF = Syrfid fraction", "APG = Aphid population growth", "LC = Lanscape complexity", "FCB = Final Cabbage biomass"), cex = 1, title = "Relationships between variables")
 =======
 
+=======
+>>>>>>> 13492120f2e8b6918406fd322069f6680f70c214
 #remove variables that we don't need: plot_ID, Treatment, Field_Mgmt and crop type
 Variables <- names(Data1)[c(-1, -11, -12, -13, -14, -15, -17)]
 Data2 <- Data1[Variables]

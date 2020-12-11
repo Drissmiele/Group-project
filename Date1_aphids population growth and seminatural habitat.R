@@ -9,12 +9,18 @@ summary(DATE1)
 View(DATE1)
 
 #calculate the aphids population growth at date1
-logNaphids_D1 <- log(DATE1$aphid_live+1) - log(DATE1$aphidsinoculated_init+1) 
+logNaphids_D1 <- log(DATE1$aphid_live + 1) - log(DATE1$aphidsinoculated_init + 1) 
 APG_D1 <- logNaphids_D1/10
 
+<<<<<<< HEAD
 #dataframe for seminatural habitat and aphids population growth at date1 
 DATE1APG <- data.frame(DATE1,APG_D1)
 
+=======
+#data frame for seminatural habitat and aphids population growth at date1 
+SA_D1 <- data.frame(DATE1$Pt.seminatural, APG_D1)
+View(SA_D1)
+>>>>>>> 13492120f2e8b6918406fd322069f6680f70c214
 
 
 #barplot for % Seminatural habitat and APhid population growth
