@@ -9,7 +9,7 @@ links <- links[1:20 ]
 
 network <- graph_from_data_frame(d = links, directed = TRUE) 
 
-# plot it
+# Now we plot it
 plot(network, 
      edge.curved = 0.2,
      vertex.shape = "rectangle", 
