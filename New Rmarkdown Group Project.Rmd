@@ -1,0 +1,57 @@
+---
+title: "Group project"
+author: "Ajobiewe, E., Benedetto, A., Karasawa,M., & Martinez,F."
+date: "12/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1.Select the data.
+
+Data provided by the following scientific article: **“Pest control of aphids on landscape complexity and natural enemy interactions”.** Data can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
+
+# 2. Define the objectives.
+
+Only a few studies measured the degree to which different enemy guilds affect pest populations across a gradient in landscape complexity. In this study, the field locations covered a gradient in landscape complexity from 6.3% to 43.3% semi-natural habitat in a 700 m radius around the fields. Our major objectives are to assess:
+
+1.   The effect of natural enemies on aphid population growth across a gradient of landscape complexity.
+
+2.   The individual and interacting effects of different natural enemy guilds on aphid population growth
+
+3.   The possible interaction effect between natural enemy guilds and landscape complexity.
+
+# 3. Define the main hypotheses.
+
+1.	We will study whether the presence of natural enemies decrease aphid population growth, comparing plots with NE present to plots where NE is absent. In this case, the null hypothesis is that there is no significant difference in pop growth between plots when NE is present and NE is absent. 
+2.	Even though intraguild predation has been reported in other studies, we will study whether the combination of natural enemies have a complementary effect and not an antagonistic effect on aphid population growth. This means that we will study whether the reduction of aphid growth is greater when several guilds of natural enemies are present, comparing plots when a few NE are present and plots where multiple NE are present. 
+3.	We will study whether the effect of natural enemies is stronger in complex landscapes, comparing plots with complex landscapes to plots with simplified ones. 
+4.	We will study whether there is an interaction effect between the type of NE and landscape complexity. According to the null hypothesis, the interaction may not be significant. If it is rejected, it would probably mean that we will see some guilds perform better in some landscape than others.
+5.	We will see whether the rate of parasitism and syrphid fraction increase with landscape complexity or not. Complex landscapes usually have more semi-natural, interconnected habitats that can be used by natural predators of aphids for overwinter and nesting. Also, food resources tend to be more abundant in complex landscapes.
+6.	We will study whether aphid growth population decreases cabbage biomass (null hypothesis: no significant differences)
+
+# 4. Analyses needed or intended.
+We know that:
+
+##### **1.	Dependent variables:** aphid population growth, final cabbage biomass, parasitism rate, syrphid fraction. The only real final dependent variable is final cabbage biomass. 
+
+##### **2.	Independent variables:** landscape complexity, exclusion treatments (a combination of one or more natural enemies)
+
+##### **Interactions between variables**
+-	Natural enemies aphid & population growth.
+-	Aphid population growth & final cabbage biomass.
+-	Natural enemies & parasitism rate.
+-	Natural enemies & syrphid fraction.
+-	Parasitism rate & aphid population growth. 
+-	Syrphid fraction & aphid population growth. 
+-	Relation between natural enemies & landscape complexity. 
+
+##### **Steps**
+
+1.   Once checking for all the possible relationships between variables, the first step would be to look for the best statistical method to use to see if they are significant. Linear models + anova.
+
+2.   Check for possible interactions between variables. 
+
+
