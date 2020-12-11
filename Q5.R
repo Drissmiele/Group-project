@@ -40,6 +40,8 @@ p <- ggplot(Data1, aes(x=Pt.seminatural,y=(aphid_parasitized), color= Treatment)
   geom_point() + 
   geom_smooth(method = "lm")
 print(p)
+
+
 lm1 <- lm(Data1$aphid_parasitized ~ Data1$Pt.seminatural)
 summary(lm1)
 lm2 <- lm(Data1$aphid_parasitized ~ Data1$Pt.seminatural + as.numeric(as.factor(Data1$Treatment)) + I(Data1$Pt.seminatural* as.numeric(as.factor(Data1$Treatment))))
