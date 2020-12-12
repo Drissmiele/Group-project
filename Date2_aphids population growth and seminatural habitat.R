@@ -21,5 +21,6 @@ D2 <- D2 + labs(x= "% seminatural habitat", y="Aphids population growth", title 
 #if scatter plot is needed
 #q <- q + geom_point()
 D2 <- D2 + geom_smooth(method = "lm")
+D2 <- D2 +xlim(5,45) +ylim(-0.1 , 0.2)
 print(D2)
 
