@@ -77,7 +77,7 @@ summary(lm20)
 plot(Data1$aphid_live ~ Data1$Date, ylab = "Aphids", xlab = "Date", col="red")
 #p value  <2e-16 ***
 
-Data1
+
 ANOVAlm1 <- aov(Data1$aphid_live ~ Data1$Treatment, data = Data1)
 summary(ANOVAlm1)
 library("agricolae")
