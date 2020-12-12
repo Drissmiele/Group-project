@@ -1,12 +1,25 @@
+#Date3_population growth and seminatural habitat
+#import data file
+library(readr)
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
+
 ###dataframe for sampling date3
-DATE3 <- Data2[Data2$Date == "3", ]
-summary(DATE3)
-View(DATE3)
+DATE3 <- Data1[Data1$Date == "3", ]
 
 #calculate the aphids population growth at date3
-logNaphids_D3 <- log(mean(DATE3$aphid_live) + 1) - log(mean(DATE3$aphidsinoculated_init) + 1) 
-APG_D3 <- logNaphids_D3/10
+logNaphids_D3 <- log(DATE3$aphid_live + 1) - log(DATE3$aphidsinoculated_init + 1) 
+APG_D3 <- logNaphids_D3/30
 
 #dataframe for seminatural habitat and aphids population growth at date1 
-SA_D3 <- data.frame(DATE3$Pt.seminatura, APG_D3)
-View(SA_D3)
+DATE3APG <- data.frame(DATE3, APG_D3)
+
+####line graph (Figure 1B at date3)
+#barplot for % Seminatural habitat and APhid population growth
+library(ggplot2)
+D3 <- ggplot(DATE3APG, aes(x = Pt.seminatural, y = APG_D3, color = Treatment))
+D3 <- D3 + labs(x= "% seminatural habitat", y="Aphids population growth", title = "Effects of Treatment on LC and APG at Date 3")
+#if scatter plot is needed
+#D3 <- D3 + geom_point()
+D3 <- D3 + geom_smooth(method = "lm")
+D3 <- D3 +xlim(5,45) +ylim(-0.2 , 0.2)
+print(D3)

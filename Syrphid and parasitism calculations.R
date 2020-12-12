@@ -15,6 +15,10 @@ BUFF$parasitism_rate <- parasitism_rate
 
 # calculating parasitism rate for the whole data set D1
 
-
 parasitism_rate　<- Data1$aphid_parasitized/(Data1$aphid_live)
 Data1$parasitism_rate <- parasitism_rate
+
+# calculating the syrphid fraction = # syrphids/(total aphids + syrphids)
+syrphid_fraction <- (Data1$syrphidl_p /((Data1$aphid_live)+(Data1$syrphidl_p)))
+Data1$syrphid_fraction <- syrphid_fraction
+                     
