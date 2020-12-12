@@ -3,12 +3,6 @@
 library(readr)
 Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
 
-#####################################
-#select BUFF_DUST = 100
-#selecting in Data 3 all the rows with buff = 100
-BUFF <- Data1[Data1$BUFF_DIST =="100",] 
-########################################
-
 ###dataframe for sampling date3
 DATE3 <- Data1[Data1$Date == "3", ]
 
