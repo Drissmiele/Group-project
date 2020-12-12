@@ -28,13 +28,6 @@ D1 <- D1 + labs(x= "% seminatural habitat", y="Aphids population growth", title 
 #if scatter plot is needed
 #D1 <- D1 + geom_point()
 D1 <- D1 + geom_smooth(method = "lm")
-D1 <- D1 +xlim(5,45) +ylim(-0.1 , 0.2)
+D1 <- D1 +xlim(5,45) +ylim(-0.2 , 0.2)
 print(D1)
 
-
-# H	herbivores only (all enemies excluded)
-# HGD	herbivores + ground-dwellers (birds and flying insects excluded)
-# HP	herbivores + flying insects ("P" for parasitoids) (birds and ground-dwellers excluded)
-# HBP	herbivores + birds + flying insects (ground-dwellers excluded)
-# HPGD	herbivores + flying insects + ground-dwellers (birds excluded)
-# O	herbivores + all enemies (open)
