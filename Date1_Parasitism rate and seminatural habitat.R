@@ -13,5 +13,6 @@ Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
 DATE1 <- Data1[Data1$Date == "1", ]
 
 #calculate the aphids parasitism rate (n = 1271)
-parasitism_rate　<- Data1$aphid_parasitized/(Data1$aphid_live+BUFF$aphid_parasitized)
-BUFF$parasitism_rate <- parasitism_rate
+parasitism_rate　<- Data1$aphid_parasitized/(Data1$aphid_live+Data1$aphid_parasitized)
+Data1$parasitism_rate <- parasitism_rate
+
