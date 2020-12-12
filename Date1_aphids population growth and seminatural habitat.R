@@ -15,20 +15,12 @@ APG_D1 <- logNaphids_D1/10
 #dataframe for seminatural habitat and aphids population growth at date1 
 DATE1APG <- data.frame(DATE1,APG_D1)
 
+####line graph (Figure 1B at date1)
 #barplot for % Seminatural habitat and APhid population growth
 library(ggplot2)
-q <- ggplot(DATE1APG, aes(x = Pt.seminatural...., y = APG_D1))
-q <- q  + geom_quantile(size=1)
-q <- q + labs(x= "% seminatural habitat", y="Aphids population growth")
-q
-
-#####################################
-#lmer for plot (not yet, trying)
-lmer(SA_D1$DATE1.Pt.seminatura~ SA_D1$APG_D1, data = SA_D1)
-
-#Package that we use
-#Aphid population growth was modelled using a linear mixed model
-#install.packages("nlme")
-library(nlme)
-#install.packages("lme4")
-library(lme4)
+q <- ggplot(DATE1APG, aes(x = Pt.seminatural, y = APG_D1, color = Treatment))
+q <- q + labs(x= "% seminatural habitat", y="Aphids population growth", title = "Effects of Treatment on LC and APG at Date 1")
+#if scatter plot is needed
+#q <- q + geom_point()
+q <- q + geom_smooth(method = "lm")
+print(q)
