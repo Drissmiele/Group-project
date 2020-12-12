@@ -85,3 +85,4 @@ HSDtest <- HSD.test(ANOVAlm1, "Treatment" )
 HSDtest
 boxplot(Data1$aphid_live ~ Data1$Treatment, data = Data1)
 
+aa
