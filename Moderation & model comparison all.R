@@ -35,7 +35,7 @@ AIC(lm7, lm7a)
 # lm7 is better because lower AIC values indicate a better-fit model. 
 # there is no moderation, the direct relationship is able to explain what is going on better
 
-#8 Management and syruphids
+#8 Management and syruphids ll
 lm8 <- lm(Data1$syrphidl_p ~ Data1$Field_Mgmt)
 summary(lm8)
 # p value =  <2e-16
