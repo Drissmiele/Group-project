@@ -1,6 +1,6 @@
 Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
 
-#6 aphids and biomass
+#6 aphids and biomass l
 lm6 <- lm(Data1$Biomass_fin ~ Data1$aphid_live)
 summary(lm6) 
 # P value = 0.0523 = effect of aphid density on biomass is not significant, by a little. 
