@@ -6,7 +6,6 @@ Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
 #####################################
 #If BUff_DUST is needed
 #select BUFF_DUST = 100
-#selecting in Data 2 all the rows with buff = 100
 #BUFF <- Data1[Data1$BUFF_DIST =="100",] 
 ########################################
 
@@ -25,8 +24,7 @@ DATE1APG <- data.frame(DATE1,APG_D1)
 library(ggplot2)
 D1 <- ggplot(DATE1APG, aes(x = Pt.seminatural, y = APG_D1, color = Treatment))
 D1 <- D1 + labs(x= "% seminatural habitat", y="Aphids population growth", title = "Effects of Treatment on LC and APG at Date 1")
-#if scatter plot is needed
-#D1 <- D1 + geom_point()
+# for scatter plot: use geom_point()
 D1 <- D1 + geom_smooth(method = "lm")
 D1 <- D1 +xlim(5,45) +ylim(-0.2 , 0.2)
 print(D1)
