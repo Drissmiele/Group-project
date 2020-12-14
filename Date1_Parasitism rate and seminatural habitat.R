@@ -5,7 +5,7 @@ Date_1 <- Data1[Data1$Date == "1", ]
 parasitism_rate　<- Date_1$aphid_parasitized/((Date_1$aphid_live)+(Date_1$aphid_parasitized))
 Date_1$parasitism_rate <- parasitism_rate
 
-# trying to remove all NA
+# trying to remove all NA values
 Date_1a <- na.omit(Date_1)
 plot(Date_1a$parasitism_rate ~ Date_1a$Pt.seminatural)
 
