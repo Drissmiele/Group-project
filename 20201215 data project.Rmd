@@ -1,0 +1,330 @@
+---
+title: "20201215 data project"
+author: "mikiko"
+date: "2020/12/15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+---
+
+####  **Effects of landscape complexity and natural enemy exclusion on average daily aphid population growth across three sampling dates (1-3). **
+APG: APhids population growth  
+LC: Landscape complexity
+
+
+```{r}
+#import data file
+library(readr)
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
+
+###dataframe for sampling date1 
+DATE1 <- Data1[Data1$Date == "1", ]
+DATE1_700 <- subset(DATE1, DATE1$BUFF_DIST == "700")
+
+```
+
+
+####  **Bar graph**  
+**Aphids population growth and Treatment**    
+Effects of natural enemy exclusion on average daily aphid population growth across three sampling dates (1-3). 
+Mean growth per exclusion treatment and sampling date.  
+
+
+**Date1**   
+
+```{r} 
+#calculate the aphids population growth at date1
+logNaphids_D1_bar <- log(DATE1$aphid_live+1) - log(DATE1$aphidsinoculated_init+1) 
+APG_D1_bar <- logNaphids_D1_bar/10
+#dataframe for seminatural habitat and aphids population growth at date1 
+DATE1APG_bar <- data.frame(DATE1,APG_D1_bar)
+```
+
+```{r}
+#plot
+library(ggplot2)
+Bar_APGD1 <- ggplot(DATE1APG_bar, aes(x = Treatment, y = APG_D1_bar, fill = Treatment))
+Bar_APGD1 <- Bar_APGD1 + geom_bar(stat = "identity")
+Bar_APGD1 <- Bar_APGD1 + labs(x= "Enemy exclution treatment", y="APhids population growth", title = "Effects of Treatment on APG at Date 1")
+Bar_APGD1 <- Bar_APGD1 + geom_hline(yintercept=0, colour="grey") 
+#Bar_APGD1 <- Bar_APGD1 + ylim(-0.1 , 0.15)
+plot(Bar_APGD1)
+```
+
+
+**Date2**    
+```{r}
+####dataframe for sampling date2
+DATE2 <- Data1[Data1$Date == "2", ]
+DATE2_700 <- subset(DATE2, DATE2$BUFF_DIST == "700")
+
+#Bar graph
+#calculate the aphids population growth at date1
+logNaphids_D2_bar <- log(DATE2$aphid_live+1) - log(DATE2$aphidsinoculated_init+1) 
+APG_D2_bar <- logNaphids_D2_bar/20
+
+#dataframe for seminatural habitat and aphids population growth at date1 
+DATE2APG_bar <- data.frame(DATE2,APG_D2_bar)
+
+#plot
+Bar_APGD2 <- ggplot(DATE2APG_bar, aes(x = Treatment, y = APG_D2_bar, fill = Treatment))
+Bar_APGD2 <- Bar_APGD2 + geom_bar(stat = "identity")
+Bar_APGD2 <- Bar_APGD2 + labs(x= "Enemy exclution treatment", y="APhids population growth", title = "Effects of Treatment on APG at Date 2")
+Bar_APGD2 <- Bar_APGD2 + geom_hline(yintercept=0, colour="grey") 
+plot(Bar_APGD2)
+
+```
+
+
+
+**Date3**    
+```{r}
+####dataframe for sampling date3
+DATE3 <- Data1[Data1$Date == "3", ]
+DATE3_700 <- subset(DATE3, DATE3$BUFF_DIST == "700")
+
+#calculate the aphids population growth at date1
+logNaphids_D3_bar <- log(DATE3$aphid_live+1) - log(DATE3$aphidsinoculated_init+1) 
+APG_D3_bar <- logNaphids_D3_bar/30
+
+#dataframe for seminatural habitat and aphids population growth at date1 
+DATE3APG_bar <- data.frame(DATE3,APG_D3_bar)
+
+#plot
+Bar_APGD3 <- ggplot(DATE3APG_bar, aes(x = Treatment, y = APG_D3_bar, fill = Treatment))
+Bar_APGD3 <- Bar_APGD3 + geom_bar(stat = "identity")
+Bar_APGD3 <- Bar_APGD3 + labs(x= "Enemy exclution treatment", y="APhids population growth", title = "Effects of Treatment on APG at Date 3")
+Bar_APGD3 <- Bar_APGD3 + geom_hline(yintercept=0, colour="grey") 
+plot(Bar_APGD3)
+
+
+```
+
+
+
+
+
+
+####  **Line graph**  
+Effects of landscape complexity and natural enemy exclusion on average daily aphid population growth across three sampling dates (1-3).  
+Variation of predicted values across the gradient in landscape complexity, measured by percent seminatural habitat in a 700 m radius around fields.  
+
+**Date 1**  
+
+```{r}
+#calculate the aphids population growth at date1  
+logNaphids_D1_line <- log(DATE1_700$aphid_live+1) - log(DATE1_700$aphidsinoculated_init+1) 
+APG_D1_line <- logNaphids_D1_line/10 
+```
+
+```{r}
+#dataframe for seminatural habitat and aphids population growth at date1   
+DATE1APG_line <- data.frame(DATE1_700,APG_D1_line)  
+```
+
+```{r}
+#barplot for % Seminatural habitat and APhid population growth
+Line_APGD1 <- ggplot(DATE1APG_line, aes(x = Pt.seminatural, y = APG_D1_line, color = Treatment))
+Line_APGD1 <- Line_APGD1 + labs(x= "% seminatural habitat", y="Aphids population growth", title = "Effects of Treatment on LC and APG at Date 1")
+Line_APGD1 <- Line_APGD1 + geom_smooth(method = "lm")
+Line_APGD1 <- Line_APGD1 +xlim(5,45) +ylim(-0.2 , 0.2)
+print(Line_APGD1)
+```
+
+
+**Date2**    
+```{r}
+#calculate the aphids population growth at date1
+logNaphids_D2_line <- log(DATE2_700$aphid_live+1) - log(DATE2_700$aphidsinoculated_init+1) 
+APG_D2_line <- logNaphids_D2_line/20
+
+#dataframe for seminatural habitat and aphids population growth at date1 
+DATE2APG_line <- data.frame(DATE2_700,APG_D2_line)
+
+#barplot for % Seminatural habitat and APhid population growth
+Line_APGD2 <- ggplot(DATE2APG_line, aes(x = Pt.seminatural, y = APG_D2_line, color = Treatment))
+Line_APGD2 <- Line_APGD2 + labs(x= "% seminatural habitat", y="Aphids population growth", title = "Effects of Treatment on LC and APG at Date 2")
+# for scatter plot: use geom_point()
+Line_APGD2 <- Line_APGD2 + geom_smooth(method = "lm")
+Line_APGD2 <- Line_APGD2 +xlim(5,45) +ylim(-0.2 , 0.2)
+print(Line_APGD2)
+```
+
+
+**Date3**    
+```{r}
+#calculate the aphids population growth at date1
+logNaphids_D3_line <- log(DATE3_700$aphid_live+1) - log(DATE3_700$aphidsinoculated_init+1) 
+APG_D3_line <- logNaphids_D3_line/30
+
+#dataframe for seminatural habitat and aphids population growth at date1 
+DATE3APG_line <- data.frame(DATE3_700,APG_D3_line)
+
+#barplot for % Seminatural habitat and APhid population growth
+Line_APGD3 <- ggplot(DATE3APG_line, aes(x = Pt.seminatural, y = APG_D3_line, color = Treatment))
+Line_APGD3 <- Line_APGD3 + labs(x= "% seminatural habitat", y="Aphids population growth", title = "Effects of Treatment on LC and APG at Date 3")
+# for scatter plot: use geom_point()
+Line_APGD3 <- Line_APGD3 + geom_smooth(method = "lm")
+Line_APGD3 <- Line_APGD3 +xlim(5,45) +ylim(-0.2 , 0.2)
+print(Line_APGD3)
+
+```
+
+
+
+####  **Effects of landscape complexity and natural enemy exclusion on aphid parasitism rate at three sampling dates (dates 1–3; 10 day intervals).**
+
+####  **Bar graph**   
+Mean values per exclusion treatment and sampling date.
+
+
+**Date1**  
+```{r}
+#dataframe for sampling date1 
+DATE1 <- Data1[Data1$Date == "1", ]
+DATE1_200 <-  subset(DATE1, DATE1$BUFF_DIST == "200")
+
+# parasitism rate 
+PR_D1_bar　<- DATE1$aphid_parasitized/(DATE1$aphid_live + DATE1$aphid_parasitized)
+
+#add parasitism rate to the dataframe 
+DATE1PR_bar <- data.frame(DATE1,PR_D1_bar)
+
+#plot
+Bar_PRD1 <- ggplot(DATE1PR_bar, aes(x = Treatment, y = PR_D1_bar, fill = Treatment))
+Bar_PRD1 <- Bar_PRD1 + geom_bar(stat = "identity")
+Bar_PRD1 <- Bar_PRD1 + labs(x= "Enemy exclution treatment", y="Parasitism rate", title = "Effects of Treatment on PR at Date 1")
+plot(Bar_PRD1)
+
+```
+
+
+**Date2**  
+```{r}
+# parasitism rate 
+PR_D2_bar　<- DATE2$aphid_parasitized/(DATE2$aphid_live + DATE2$aphid_parasitized)
+
+#dataframe including PR
+DATE2PR_bar <- data.frame(DATE2,PR_D2_bar)
+
+#plot
+Bar_PRD2 <- ggplot(DATE2PR_bar, aes(x = Treatment, y = PR_D2_bar, fill = Treatment))
+Bar_PRD2 <- Bar_PRD2 + geom_bar(stat = "identity")
+Bar_PRD2 <- Bar_PRD2 + labs(x= "Enemy exclution treatment", y="Parasitism rate", title = "Effects of Treatment on PR at Date 2")
+plot(Bar_PRD2)
+
+```
+
+
+**Date3**  
+```{r}
+# parasitism rate - Treatment
+PR_D3_bar　<- DATE3$aphid_parasitized/(DATE3$aphid_live + DATE3$aphid_parasitized)
+
+#dataframe including parasitism rate at date3 
+DATE3PR_bar <- data.frame(DATE3,PR_D3_bar)
+
+#plot 
+Bar_PRD3 <- ggplot(DATE3PR_bar, aes(x = Treatment, y = PR_D3_bar, fill = Treatment))
+Bar_PRD3 <- Bar_PRD3 + geom_bar(stat = "identity")
+Bar_PRD3 <- Bar_PRD3 + labs(x= "Enemy exclution treatment", y="Parasitism rate", title = "Effects of Treatment on PR at Date 3")
+plot(Bar_PRD3)
+
+```
+
+
+####  **Effects of landscape complexity and natural enemy exclusion on syrphid fraction at three sampling dates (dates 1–3; 10 day intervals).**  
+
+
+**Date1**  
+```{r}
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
+Date_1 <- Data1[Data1$Date == "1", ]
+syrphid_fraction <- (Date_1$syrphidl_p /((Date_1$aphid_live)+(Date_1$syrphidl_p)))
+Date_1$syrphid_fraction <- syrphid_fraction
+
+Date1buff <- subset(Date_1, BUFF_DIST ==900)
+
+# lm using Date_1
+lm1 <- lm(Date1buff$syrphid_fraction ~ Date1buff$Pt.seminatural)
+plot(Date1buff$syrphid_fraction ~ Date1buff$Pt.seminatural)
+
+# ggplot using Date1buff
+ggplot(Date1buff, aes(x= Pt.seminatural, y= syrphid_fraction, 
+                   color = Treatment)) +
+  geom_jitter()+
+  geom_smooth(method="exp")
+
+#barplot using Date_1
+G1 <- ggplot(Date_1, aes(x= Treatment, y= syrphid_fraction, fill = Treatment))+
+  geom_bar(stat="identity")+
+  labs(x="Treatment", y="Syrphid fraction", title="Effect of NE treatment on syrphid fraction at Date 1")
+
+```
+
+
+**Date2**   
+```{r}
+# lm using Date_2
+Date_2 <- Data1[Data1$Date == "2", ]
+syrphid_fraction <- (Date_2$syrphidl_p /((Date_2$aphid_live)+(Date_2$syrphidl_p)))
+Date_2$syrphid_fraction <- syrphid_fraction
+
+Date2buff <- subset(Date_2, BUFF_DIST ==900)
+
+lm1 <- lm(Date_2$syrphid_fraction ~ Date_2$Pt.seminatural)
+plot(Date_2$syrphid_fraction ~ Date_2$Pt.seminatural)
+
+# ggplot using Date2buff
+ggplot(Date2buff, aes(x= Pt.seminatural, y= syrphid_fraction, 
+                      color = Treatment)) +
+  geom_jitter()+
+  geom_smooth(method="exp")
+
+#barplot using Date_2
+G1 <- ggplot(Date_2, aes(x= Treatment, y= syrphid_fraction, fill = Treatment))+
+  geom_bar(stat="identity")+
+  labs(x="Treatment", y="Syrphid fraction", title="Effect of NE treatment on syrphid fraction at Date 2")
+print(G1)
+
+```
+
+
+
+
+**Date3**   
+```{r}
+Date_3 <- Data1[Data1$Date == "3", ]
+syrphid_fraction <- (Date_3$syrphidl_p /((Date_3$aphid_live)+(Date_3$syrphidl_p)))
+Date_3$syrphid_fraction <- syrphid_fraction
+
+Date3buff <- subset(Date_3, BUFF_DIST ==900)
+
+
+# lm using Date_3
+lm1 <- lm(Date_3$syrphid_fraction ~ Date_3$Pt.seminatural)
+plot(Date_3$syrphid_fraction ~ Date_3$Pt.seminatural)
+
+# ggplot using Date3buff
+ggplot(Date3buff, aes(x= Pt.seminatural, y= syrphid_fraction, 
+                      color = Treatment)) +
+  geom_jitter()+
+  geom_smooth(method="exp")
+
+#barplot using Date_3
+G1 <- ggplot(Date_3, aes(x= Treatment, y= syrphid_fraction, fill = Treatment))+
+  geom_bar(stat="identity")+
+  labs(x="Treatment", y="Syrphid fraction", title="Effect of NE treatment on syrphid fraction at Date 3")
+print(G1)
+
+# one inconsistency: second highest number should not be HPGD, but HGD according to the article. 
+
+```
+
+
+
+

@@ -7,22 +7,6 @@ Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
 DATE2 <- Data1[Data1$Date == "2", ]
 DATE2_700 <- subset(DATE2, DATE2$BUFF_DIST == "700")
 
-
-#Date2_population growth and seminatural habitat
-#import data file
-library(readr)
-Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
-
-#####################################
-#If BUff_DUST is needed
-#select BUFF_DUST = 100
-#BUFF <- Data1[Data1$BUFF_DIST =="100",] 
-########################################
-
-###dataframe for sampling date1 
-DATE2 <- Data1[Data1$Date == "2", ]
-DATE2_700 <- subset(DATE2, DATE2$BUFF_DIST == "700")
-
 ###############line graph################
 #calculate the aphids population growth at date1
 logNaphids_D2_line <- log(DATE2_700$aphid_live+1) - log(DATE2_700$aphidsinoculated_init+1) 
@@ -43,7 +27,7 @@ print(Line_APGD2)
 ###############Bar graph######################
 #calculate the aphids population growth at date1
 logNaphids_D2_bar <- log(DATE2$aphid_live+1) - log(DATE2$aphidsinoculated_init+1) 
-APG_D2_bar <- logNaphids_D2/20
+APG_D2_bar <- logNaphids_D2_bar/20
 
 #dataframe for seminatural habitat and aphids population growth at date1 
 DATE2APG_bar <- data.frame(DATE2,APG_D2_bar)

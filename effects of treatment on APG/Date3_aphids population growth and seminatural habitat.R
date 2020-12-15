@@ -27,7 +27,7 @@ print(Line_APGD3)
 ###############Bar graph######################
 #calculate the aphids population growth at date1
 logNaphids_D3_bar <- log(DATE3$aphid_live+1) - log(DATE3$aphidsinoculated_init+1) 
-APG_D3_bar <- logNaphids_D3/30
+APG_D3_bar <- logNaphids_D3_bar/30
 
 #dataframe for seminatural habitat and aphids population growth at date1 
 DATE3APG_bar <- data.frame(DATE3,APG_D3_bar)
