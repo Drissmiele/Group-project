@@ -49,7 +49,7 @@ As of right now, we have assessed the relationships between the following variab
 24. Crop maturity --> Parasitism rate
 25. % Seminatural habitat --> Parasitism rate
 26. Field Management --> Parasitism rate
-It is pertinent to point out that we have not elucidated the relationship yet between Parasitism rate and APG/Aphids density.
+It is pertinent to point out that we have not elucidated the relationship yet between Parasitism rate and APG/Aphids density!!
 
 # Objectives.
 
