@@ -9,7 +9,7 @@ library(ggplot2)
 p <- ggplot(Data1, aes(x = croptype , y = syrphidl_p, color = Treatment)) +
   geom_point() + 
   geom_smooth(method = "lm")
-print (p)                             
+print(p)                             
 #remarks: Syrphids were more on other crop types and slightly on Brassicaceae (impact on crop biomass) this could depend on the Field Management 
 
 #Moderation effect of Syrphids - crop type with the Interaction of Field Mgt
