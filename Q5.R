@@ -4,13 +4,13 @@
 # H1: significant difference in parasitism rate between landscapes if high and low
 
 library(readr)
-Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
 
 # created a new variable called plant_ID that is highly specific (plant number)
-Data1$plant_ID <- paste(Data1$Treatment, Data1$Plant, sep = "_")
+Data1$plant_ID <- paste(Data1$Treatment, Data1$Plant, sep ="_")
 
 #selecting in Data 2 all the rows with buff = 100
-BUFF <- Data1[Data1$BUFF_DIST == "100",] 
+BUFF <- Data1[Data1$BUFF_DIST =="100",] 
 View(BUFF)
 
 
@@ -24,19 +24,19 @@ Data1$parasitism_rate <- parasitism_rate
 
 # Pearson test for correlation between landscape complexity and parasitism rate
 cor.test(Data1$parasitism_rate, Data1$Pt.seminatural, method = "pearson")
-plot(x = Data1$Pt.seminatural, y = Data1$parasitism_rate)
+plot(x= Data1$Pt.seminatural, y = Data1$parasitism_rate)
 
 # result: the correlation coefficient is 0.087. p < 0.05: the correlation is statistically significant. 
 # LC and PR are significantly correlated.
 library(ggplot2)
-p <- ggplot(Data1, aes(x = Pt.seminatural,y = parasitism_rate, color = Treatment)) +
+p <- ggplot(Data1, aes(x=Pt.seminatural,y=parasitism_rate, color= Treatment)) +
   geom_point() + 
   geom_smooth(method = "lm")
 print(p)
 # horizontal
 
 library(ggplot2)
-p <- ggplot(Data1, aes(x = Pt.seminatural,y = (aphid_parasitized), color = Treatment)) +
+p <- ggplot(Data1, aes(x=Pt.seminatural,y=(aphid_parasitized), color= Treatment)) +
   geom_point() + 
   geom_smooth(method = "lm")
 print(p)
