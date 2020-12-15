@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 #Introduction.
+
 Data provided by the following scientific article: **“Pest control of aphids on landscape complexity and natural enemy interactions”.** 
 Data can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
 
@@ -19,11 +20,8 @@ the strength of natural pest control across landscapes, the contribution of natu
 Variables studied:
 Dependent:** Aphid Population Growth, Parasitism rate, Syrphid fractions, and the real final dependent variable which is final cabbage biomass. 
 Independent:** Landscape complexity, exclusion treatments (a combination of one or more natural enemies)
-Steps
-We checked for all the possible relationships between variables, and the best statistical method to see if they are significant: 
-Linear models + some anova and AIC Method to compare models.
 
-# **Interactions between variables**
+**Interactions between variables**
 -	Natural enemies aphid & population growth.
 -	Aphid population growth & final cabbage biomass.
 -	Natural enemies & parasitism rate.
@@ -52,3 +50,9 @@ Our major objectives are to assess:
 6.	We will study whether aphid growth population decreases cabbage biomass (null hypothesis: no significant differences)
 
 # Methods.
+Step by Step:
+
+- We checked for all the possible relationships between variables as highlighted in the introduction, 
+- We looked for the best statistical method to see if they are significant. We used Linear models plus some Anova to do this
+- Next we used the AIC Method to compare the models and check the interaction effect.
+
