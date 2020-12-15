@@ -6,6 +6,7 @@
 library(readxl)
 library(igraph)
 
+
 links <- read_excel("Relationships between variables.xlsx")
 
 network <- graph_from_data_frame(d = links, directed = TRUE) 
