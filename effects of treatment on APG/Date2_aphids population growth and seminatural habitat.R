@@ -7,7 +7,6 @@ Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
 DATE2 <- Data1[Data1$Date == "2", ]
 DATE2_700 <- subset(DATE2, DATE2$BUFF_DIST == "700")
 
-
 #Date2_population growth and seminatural habitat
 #import data file
 library(readr)
