@@ -1,7 +1,7 @@
-Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
 
 # response on parasitism rate
-parasitism_rate　<- Data1$aphid_parasitized/((Data1$aphid_live)+(Data1$aphid_parasitized))
+parasitism_rate　<- Data1$aphid_parasitized/((Data1$aphid_live) + (Data1$aphid_parasitized))
 Data1$parasitism_rate <- parasitism_rate
 
 
@@ -25,7 +25,7 @@ AIC(lm2)
 
 # response on syrphid fraction
 
-syrphid_fraction <- (Data1$syrphidl_p /((Data1$aphid_live)+(Data1$syrphidl_p)))
+syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
 Data1$syrphid_fraction <- syrphid_fraction
 
 lm8 <- lm(Data1$syrphid_fraction ~ as.numeric(as.factor(Data1$Field_Mgmt)) + Data1$Pt.seminatural + as.numeric(as.factor(Data1$Date)) + as.numeric(as.factor(Data1$Treatment))+I(Data1$Pt.seminatural*as.numeric(as.factor(Data1$Treatment))))
