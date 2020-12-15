@@ -49,7 +49,8 @@ As of right now, we have assessed the relationships between the following variab
 24. Crop maturity --> Parasitism rate
 25. % Seminatural habitat --> Parasitism rate
 26. Field Management --> Parasitism rate
-It is pertinent to point out that we have not elucidated the relationship yet between Parasitism rate and APG/Aphids density!!
+
+It is pertinent to point out that we have not elucidated the relationships relating Parasitism rate and other variables except for "Parasitism rate ~ Treatment".
 
 # Objectives.
 
@@ -74,9 +75,10 @@ Our major objectives were to assess:
 6.	We will study whether aphid growth population decreases cabbage biomass (null hypothesis: no significant differences)..
 
 # Methods.
+
 Step by Step:
 
-- We checked for all the possible relationships between variables as highlighted in the introduction, 
-- We looked for the best statistical method to see if they are significant. We used Linear models plus some Anova to do this
+- We assessed the relationships between multiple variables (excluding Parasitism rate, except fro "Parasitism rate ~ Treatment) using a linear model (lm).
+- We compared direct relati
 - Next we used the AIC Method to compare the models and check the interaction effect
 
