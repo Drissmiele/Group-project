@@ -3,19 +3,26 @@ Date_1 <- Data1[Data1$Date == "1", ]
 syrphid_fraction <- (Date_1$syrphidl_p /((Date_1$aphid_live)+(Date_1$syrphidl_p)))
 Date_1$syrphid_fraction <- syrphid_fraction
 
-Date2 <- subset(Date_1, BUFF_DIST ==200 | BUFF_DIST ==900)
-
-
-boxplot(syrphid_fraction ~ Treatment, data = Date2, ylim =c(0,0.5))
+Date1buff <- subset(Date_1, BUFF_DIST ==900)
 
 
 # lm using Date_1
-lm1 <- lm(Date_1$syrphid_fraction ~ Date_1$Pt.seminatural)
-plot(Date2$syrphid_fraction ~ Date2$Pt.seminatural)
+lm1 <- lm(Date1buff$syrphid_fraction ~ Date1buff$Pt.seminatural)
+plot(Date1buff$syrphid_fraction ~ Date1buff$Pt.seminatural)
 
-# ggplot (d1)
+# ggplot using Date1buff
 library(ggplot2)
-ggplot(Date2, aes(x= Pt.seminatural, y= syrphid_fraction, 
+ggplot(Date1buff, aes(x= Pt.seminatural, y= syrphid_fraction, 
                    color = Treatment)) +
-  geom_smooth() 
+  geom_jitter()+
+  geom_smooth(method="exp")
+
+#barplot using Date_1
+G1 <- ggplot(Date_1, aes(x= Treatment, y= syrphid_fraction, fill = Treatment))+
+  geom_bar(stat="identity")+
+  labs(x="Treatment", y="Syrphid fraction", title="Effect of NE treatment on syrphid fraction at Date 1")
+print(G1)
+
+
+
 
