@@ -271,7 +271,7 @@ plot(Data1$aphid_live ~ as.numeric(as.factor(Data1$Plot_ID)))
 plot(Data1$aphid_live ~ as.factor(Data1$Plot_ID), xlab = "Plot", ylab = "Aphids")
 
 
-#20 Aphids density ~ Date
+#20. Aphids density ~ Date
 lm20 <- lm(Data1$aphid_live ~ Data1$Date)
 summary(lm20)
 #p value <2e-16
