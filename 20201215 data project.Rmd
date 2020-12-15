@@ -8,7 +8,7 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
+a
 ---
 
 ####  **Effects of landscape complexity and natural enemy exclusion on average daily aphid population growth across three sampling dates (1-3). **
