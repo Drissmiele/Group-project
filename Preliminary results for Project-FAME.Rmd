@@ -71,7 +71,7 @@ Our major objectives were to assess:
 
 4.	We will study whether there is an interaction effect between the type of NE and landscape complexity. According to the null hypothesis, the interaction may not be significant. If it is rejected, it would probably mean that we will see some guilds perform better in some landscape than others.
 5.	We will study if the parasitism rate and syrphid fraction increases with landscape complexity or not. (H0; No differences in parasitism rate and syrphid fraction in complex landscapes )
-6.	We will study whether aphid growth population decreases cabbage biomass (null hypothesis: no significant differences)
+6.	We will study whether aphid growth population decreases cabbage biomass (null hypothesis: no significant differences)..
 
 # Methods.
 Step by Step:
