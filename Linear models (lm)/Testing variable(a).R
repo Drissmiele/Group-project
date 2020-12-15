@@ -26,7 +26,8 @@ Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
 lm1 <- lm(Data1$aphid_live ~ Data1$Treatment)
 summary(lm1)
 plot(Data1$aphid_live ~ as.numeric(as.factor(Data1$Treatment)), col = "red")
-# the effect of treatment on aphids density is significant for all treatments.
+
+
 p <- ggplot(Data1, aes(x=Treatment,y=(aphid_live), color= Treatment)) +
   geom_point() + 
   geom_smooth(method = "lm")
