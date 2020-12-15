@@ -3,12 +3,6 @@
 library(readr)
 Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
 
-#####################################
-#If BUff_DUST is needed
-#select BUFF_DUST = 100
-#BUFF <- Data1[Data1$BUFF_DIST =="100",] 
-########################################
-
 ###dataframe for sampling date1 
 DATE1 <- Data1[Data1$Date == "1", ]
 DATE1_700 <- subset(DATE1, DATE1$BUFF_DIST == "700")
