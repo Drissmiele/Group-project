@@ -9,7 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 #Introduction.
-Data provided by the following scientific article: **“Pest control of aphids on landscape complexity and natural enemy interactions”.** Data can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
+Data provided by the following scientific article: **“Pest control of aphids on landscape complexity and natural enemy interactions”.** 
+Data can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
+
 Aphids are a major concern in agricultural crops, and control by natural enemies is an essential component of the ecological intensification of agriculture. 
 This study used multiple natural enemy enclosures replicated in 18 fields of Brassica oleracea and other crop types across a gradient in landscape complexity to investigate;
 the strength of natural pest control across landscapes, the contribution of natural enemy guilds to pest control and Interaction effect between natural enemy guilds and landscape. 
@@ -32,7 +34,7 @@ Linear models + some anova and AIC Method to compare models.
 
 # Objectives.
 
-Only a few studies measured the degree to which different enemy guilds affect pest populations across a gradient in landscape complexity. In this study, the field locations covered a gradient in landscape complexity from 6.3% to 43.3% semi-natural habitat in a 700 m radius around the fields. Our major objectives are to assess:
+Our major objectives are to assess:
 
 1.   The effect of natural enemies on aphid population growth across a gradient of landscape complexity.
 
@@ -43,11 +45,10 @@ Only a few studies measured the degree to which different enemy guilds affect pe
 # Hypotheses.
 
 1.	We will study whether the presence of natural enemies decrease aphid population growth, comparing plots with NE present to plots where NE is absent. In this case, the null hypothesis is that there is no significant difference in pop growth between plots when NE is present and NE is absent. 
-2. we will study whether the combination of natural enemies have a complementary effect and not an antagonistic effect on aphid population growth. 
+2. We will study whether the combination of natural enemies have a complementary effect and not an antagonistic effect on aphid population growth. 
 3.	We will study whether the effect of natural enemies is stronger in complex landscapes, comparing plots with complex landscapes to plots with simplified ones. 
 4.	We will study whether there is an interaction effect between the type of NE and landscape complexity. According to the null hypothesis, the interaction may not be significant. If it is rejected, it would probably mean that we will see some guilds perform better in some landscape than others.
 5.	We will study if the parasitism rate and syrphid fraction increases with landscape complexity or not. (H0; No differences in parasitism rate and syrphid fraction in complex landscapes )
-
 6.	We will study whether aphid growth population decreases cabbage biomass (null hypothesis: no significant differences)
 
 # Methods.
