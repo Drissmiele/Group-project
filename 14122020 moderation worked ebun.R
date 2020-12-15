@@ -12,7 +12,7 @@ p <- ggplot(Data1, aes(x = croptype , y = syrphidl_p, color = Treatment)) +
 print (p)                             
 #remarks: Syrphids were more on other crop types and slightly on Brassicaceae (impact on crop biomass) this could depend on the Field Management 
 
-#moderation effect of Syrphids - crop type with the Interaction of Field Mgt
+#Moderation effect of Syrphids - crop type with the Interaction of Field Mgt
 lm13a <- lm(Data1$syrphidl_p ~ Data1$croptype + as.numeric(as.factor(Data1$Field_Mgmt)) + I(as.numeric(as.factor(Data1$aphid_live))* as.numeric(as.factor(Data1$Field_Mgmt))))
 summary(lm13a)
 #model comparison
