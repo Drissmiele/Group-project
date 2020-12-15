@@ -54,5 +54,5 @@ Step by Step:
 
 - We checked for all the possible relationships between variables as highlighted in the introduction, 
 - We looked for the best statistical method to see if they are significant. We used Linear models plus some Anova to do this
-- Next we used the AIC Method to compare the models and check the interaction effect.
+- Next we used the AIC Method to compare the models and check the interaction effect
 
