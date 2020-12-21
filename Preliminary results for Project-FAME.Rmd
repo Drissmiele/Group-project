@@ -1,0 +1,82 @@
+---
+title: "Pest control of aphids depends on landscape complexity and natural enemy interactions"
+author: "Ajobiewe, E., Benedetto, A., Karasawa,M., & Martinez,F."
+date: "15/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Note that the data was provided by the following scientific article: **“Pest control of aphids on landscape complexity and natural enemy interactions”.** 
+It can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
+
+# Introduction
+
+Aphids are a major concern in agricultural crops. Control by natural enemies is an essential component of the ecological intensification of agriculture. 
+This study used multiple natural enemy enclosures replicated in 18 fields of Brassica oleracea and other crop types across a gradient in landscape complexity to investigate:the strength of natural pest control across landscapes, the contribution of natural enemy guilds to pest control and the interaction effect between natural enemy guilds and landscape. 
+
+In this study, the variables are as follows:
+1. Dependent variables: Aphid Population Growth (APG), Aphid density, Parasitized Aphids, Parasitism rate, Syrphid larvae, Syrphid fraction, and the real final dependent variable which is final cabbage biomass. 
+
+2. Independent variables: Landscape complexity, Natural Exclusion Treatments (a combination of one or more natural enemies), Field management, crop type, crop initial maturity, % of seminatural habitat, radius of the buffer, Date. 
+
+As of right now, we have assessed the relationships between the following variables:
+
+1. Treatment --> Aphid density/APG
+2. Aphid parasitized --> Aphids density/APG
+3. Aphids density/APG --> Aphids parasitized
+4. Syrphid fraction --> Aphids density
+5. Aphids density --> Final Cabbage biomass
+6. Field Management --> Aphids density
+7. Field Management --> Syrphid fraction
+8. Field Management --> Aphids parasitized
+9. Crop initial maturity --> Aphids density
+10. Crop initial maturity --> Syrphid fraction
+11. Crop type --> Aphids density
+12. Crop type --> Syrphid fraction
+13. % Semi natural habitat --> Aphids density
+14. % Semi natural habitat --> Syrphid fraction
+15. % Semi natural habitat --> Aphids parasitized 
+16. % Semi natural habitat --> Final Cabbage Biomass
+17. Field Management --> Final Cabbage Biomass
+18. Plot ID --> Aphids density
+19. Date --> Aphids density
+20. Treatment --> Parasitism rate
+21. Parasitism rate --> Aphids density
+22. Parasitism rate --> APG
+23. Syrphid fraction --> APG
+24. Crop maturity --> Parasitism rate
+25. % Seminatural habitat --> Parasitism rate
+26. Field Management --> Parasitism rate
+It is pertinent to point out that we have not elucidated the relationship yet between Parasitism rate and APG/Aphids density!!
+
+# Objectives.
+
+Our major objectives were to assess:
+
+1.The effect of natural enemies on aphid population growth across a gradient of landscape complexity.
+
+2.The individual and interacting effects of different natural enemy guilds on aphid population growth
+
+3.The possible interaction effect between natural enemy guilds and landscape complexity.
+
+# Hypotheses.
+
+1.We will study whether the presence of natural enemies decrease aphid population growth, comparing plots with NE present to plots where NE is absent. In this case, the null hypothesis is that there is no significant difference in population growth between plots when NE is present and NE is absent. 
+
+2. We will study whether the combination of natural enemies have a complementary effect and not an antagonistic effect on aphid population growth. 
+
+3.	We will study whether the effect of natural enemies is stronger in complex landscapes, comparing plots with complex landscapes to plots with simplified ones. 
+
+4.	We will study whether there is an interaction effect between the type of NE and landscape complexity. According to the null hypothesis, the interaction may not be significant. If it is rejected, it would probably mean that we will see some guilds perform better in some landscape than others.
+5.	We will study if the parasitism rate and syrphid fraction increases with landscape complexity or not. (H0; No differences in parasitism rate and syrphid fraction in complex landscapes )
+6.	We will study whether aphid growth population decreases cabbage biomass (null hypothesis: no significant differences)..
+
+# Methods.
+Step by Step:
+
+- We checked for all the possible relationships between variables as highlighted in the introduction, 
+- We looked for the best statistical method to see if they are significant. We used Linear models plus some Anova to do this
+- Next we used the AIC Method to compare the models and check the interaction effect
+
