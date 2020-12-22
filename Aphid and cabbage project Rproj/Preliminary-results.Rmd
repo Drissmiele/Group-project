@@ -7,8 +7,8 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-# install.packages("readxl")
-# install.packages("igraph")
+## install.packages("readxl")
+## install.packages("igraph")
 ```
 Note that the data was provided by the following scientific article: **“Pest control of aphids on landscape complexity and natural enemy interactions”.** 
 It can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
