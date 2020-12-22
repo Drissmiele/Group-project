@@ -7,7 +7,7 @@ summary(lm1)
 
 # ggplot
 library(ggplot2)
-p <- ggplot(Data1, aes(x=Treatment,y=(aphid_live), color= Treatment)) +
+p <- ggplot(Data1, aes(x = Treatment,y = (aphid_live), color = Treatment)) +
   geom_point() + 
   geom_smooth(method = "lm")
 print(p)
@@ -19,7 +19,7 @@ Date_1 <- Data1[Data1$Date == "1",]
 lm1_1 <- lm(Date_1$aphid_live ~ Date_1$Treatment)
 
 # ggplot
-p <- ggplot(Data_1, aes(x=Treatment,y=(aphid_live), color= Treatment)) +
+p <- ggplot(Data_1, aes(x = Treatment,y = (aphid_live), color = Treatment)) +
   geom_point() + 
   geom_smooth(method = "lm")
 print(p)
@@ -30,7 +30,7 @@ lm1_2 <- lm(Date_2$aphid_live ~ Date_2$Treatment)
 plot(Date_2$aphid_live ~ as.numeric(as.factor(Date_2$Treatment)))
 
 # ggplot
-p <- ggplot(Date_2, aes(x=Treatment,y=(aphid_live), color= Treatment)) +
+p <- ggplot(Date_2, aes(x = Treatment,y = (aphid_live), color = Treatment)) +
   geom_point() + 
   geom_smooth(method = "lm")
 print(p)
@@ -41,7 +41,7 @@ lm1_3 <- lm(Date_3$aphid_live ~ Date_3$Treatment)
 plot(Date_3$aphid_live ~ as.numeric(as.factor(Date_3$Treatment)))
 
 #ggplot
-p <- ggplot(Date_3, aes(x=Treatment,y=(aphid_live), color= Treatment)) +
+p <- ggplot(Date_3, aes(x = Treatment,y = (aphid_live), color = Treatment)) +
   geom_point() + 
   geom_smooth(method = "lm")
 print(p)
@@ -58,7 +58,7 @@ lm1_4 <- lm(Date_1$APG_date1 ~ Date_1$Treatment)
 summary(lm1_4)
 
 # ggplot
-p <- ggplot(Date_1, aes(x=Treatment,y=(APG_date1), color= Treatment)) +
+p <- ggplot(Date_1, aes(x = Treatment,y = (APG_date1), color = Treatment)) +
   geom_point() + 
   geom_smooth(method = "lm")
 print(p)
@@ -73,7 +73,7 @@ lm1_5 <- lm(Date_2$APG_date2 ~ Date_2$Treatment)
 summary(lm1_5)
 
 # ggplot
-p <- ggplot(Date_2, aes(x=Treatment,y=(APG_date2), color= Treatment)) +
+p <- ggplot(Date_2, aes(x = Treatment,y = (APG_date2), color = Treatment)) +
   geom_point() + 
   geom_smooth(method = "lm")
 print(p)
@@ -89,7 +89,7 @@ summary(lm1_6)
 
 
 # ggplot
-p <- ggplot(Date_3, aes(x=Treatment,y=(APG_date3), color= Treatment)) +
+p <- ggplot(Date_3, aes(x = Treatment,y = (APG_date3), color = Treatment)) +
   geom_point() + 
   geom_smooth(method = "lm")
 print(p)
@@ -99,9 +99,9 @@ lm2 <- lm(Data1$aphid_live ~ Data1$aphid_parasitized)
 summary(lm2)
 
 # ggplot
-p <- ggplot(Data1, aes(x=aphid_parasitized,y=(aphid_live), color= aphid_parasitized)) +
+p <- ggplot(Data1, aes(x = aphid_parasitized,y = (aphid_live), color = aphid_parasitized)) +
   geom_point() + 
-  geom_smooth(method="lm")
+  geom_smooth(method = "lm")
 print(p)
 
 
@@ -110,13 +110,13 @@ lm3 <- lm(Data1$aphid_parasitized ~ Data1$aphid_live)
 summary(lm3)
 
 # ggplot
-p <- ggplot(Data1,aes(x=aphid_live,y=(aphid_parasitized), color= aphid_live)) +
+p <- ggplot(Data1,aes(x = aphid_live,y = (aphid_parasitized), color = aphid_live)) +
   geom_point() + 
-  geom_smooth(method="lm")
+  geom_smooth(method = "lm")
 print(p)
 
 #4. Aphid density ~ Syrphid fraction
-syrphid_fraction <- (Data1$syrphidl_p /((Data1$aphid_live)+(Data1$syrphidl_p)))
+syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
 Data1$syrphid_fraction <- syrphid_fraction
 
 Data2 <- na.omit(Data1)
@@ -126,19 +126,19 @@ lm4 <- lm(Data1$aphid_live~Data1$syrphid_fraction)
 summary(lm4)
 
 ## ggplot
-p <- ggplot(Data1,aes(x=syrphid_fraction,y=(aphid_live), color= aphid_live)) +
+p <- ggplot(Data1,aes(x = syrphid_fraction,y = (aphid_live), color = aphid_live)) +
   geom_point() + 
-  geom_smooth(method="lm")
+  geom_smooth(method = "lm")
 print(p)
 
 #5. Aphid density ~ Syrphid fraction 
-lm4_2 <- lm(Data1$aphid_live ~Data1$syrphid_fraction)
+lm4_2 <- lm(Data1$aphid_live ~ Data1$syrphid_fraction)
 summary(lm4_2)
 
 # ggplot
-p <- ggplot(Data1,aes(x=syrphid_fraction,y=(aphid_live), color= aphid_live)) +
+p <- ggplot(Data1,aes(x = syrphid_fraction,y = (aphid_live), color = aphid_live)) +
   geom_point() + 
-  geom_smooth(method="lm")
+  geom_smooth(method = "lm")
 print(p)
 
 #6. Biomass ~ Aphid density
@@ -202,7 +202,7 @@ summary(lm12)
 # p value = 3.65e-10
 
 # plot
-plot(Data1$aphid_live ~ Data1$croptype, ylab = "Aphids density", xlab ="Crop type" )
+plot(Data1$aphid_live ~ Data1$croptype, ylab = "Aphids density", xlab = "Crop type" )
 
 
 #13. Syrphid fraction ~ Crop type
@@ -277,6 +277,6 @@ summary(lm20)
 #p value <2e-16
 
 # plot
-plot(Data1$aphid_live ~ Data1$Date, ylab = "Aphids", xlab = "Date", col="red")
+plot(Data1$aphid_live ~ Data1$Date, ylab = "Aphids", xlab = "Date", col = "red")
 
 
