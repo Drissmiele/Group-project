@@ -6,17 +6,11 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-<<<<<<< HEAD
-knitr::opts_chunk$set(echo = TRUE)
-## install.packages("readxl")
-## install.packages("igraph")
-=======
 knitr::opts_chunk$set(echo = TRUE) 
 # install.packages("readxl")
 # install.packages("igraph")
 library(readxl)
 library(igraph)
->>>>>>> 8dc2aa0bb84dd6c160b334d045ae21d69d080452
 ```
 Note that the data was provided by the following scientific article: **“Pest control of aphids on landscape complexity and natural enemy interactions”.** 
 It can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
