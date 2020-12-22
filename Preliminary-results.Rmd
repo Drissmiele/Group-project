@@ -7,6 +7,10 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+#install.packages("readxl")
+#install.packages("igraph")
+
 ```
 Note that the data was provided by the following scientific article: **“Pest control of aphids on landscape complexity and natural enemy interactions”.** 
 It can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
@@ -56,6 +60,8 @@ It is pertinent to point out that we have not elucidated the relationships relat
 We have represented all possible relationships in the following **network**:
 
 ```{r}
+install.packages("readxl")
+install.packages("igraph")
 library(readxl)
 library(igraph)
 links <- read_excel("Relationships between variables.xlsx")
