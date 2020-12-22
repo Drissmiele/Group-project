@@ -1,21 +1,18 @@
+
+
+# plotting the relationships
+
+#legend(x = 1, y = 1, c("NE = Natural enemies", "PR = Parasitism rate", "SF = Syrfid fraction", "APG = Aphid population growth", "LC = Lanscape complexity", "FCB = Final Cabbage biomass"), cex = 1, title = "Relationships between variables")
 library(readxl)
 library(igraph)
 
-# dir()
+
 links <- read_excel("Relationships between variables.xlsx")
 
-# uncomment this line for first lines graph. Comment for complete graph
-links <- links[1:20 ]
-
 network <- graph_from_data_frame(d = links, directed = TRUE) 
+plot(network, vertex.color = "yellow", edge.arrow.size = 1, vertex.label.font = 2, vertex.label.color = "black")
 
-# Now we plot it
-plot(network, 
-     edge.curved = 0.2,
-     vertex.shape = "rectangle", 
-     vertex.color = "white",
-     vertex.frame.color = "white"
-)
+
 
 library(readr)
 Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")

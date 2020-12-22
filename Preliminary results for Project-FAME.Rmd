@@ -38,13 +38,18 @@ As of right now, we have assessed the relationships between the following variab
 13. % Semi natural habitat --> Aphids density
 14. % Semi natural habitat --> Syrphid fraction
 15. % Semi natural habitat --> Aphids parasitized 
-16. Treatment --> Parasitism rate
-17. % Semi natural habitat --> Final Cabbage Biomass
-18. Field Management --> Final Cabbage Biomass
-19. Plot ID --> Aphids density
-20. Date --> Aphids density
-
-It is pertinent to point out that we have not elucidated the relationship yet between Parasitism rate and APG/Aphids density.
+16. % Semi natural habitat --> Final Cabbage Biomass
+17. Field Management --> Final Cabbage Biomass
+18. Plot ID --> Aphids density
+19. Date --> Aphids density
+20. Treatment --> Parasitism rate
+21. Parasitism rate --> Aphids density
+22. Parasitism rate --> APG
+23. Syrphid fraction --> APG
+24. Crop maturity --> Parasitism rate
+25. % Seminatural habitat --> Parasitism rate
+26. Field Management --> Parasitism rate
+It is pertinent to point out that we have not elucidated the relationship yet between Parasitism rate and APG/Aphids density!!
 
 # Objectives.
 
@@ -66,7 +71,7 @@ Our major objectives were to assess:
 
 4.	We will study whether there is an interaction effect between the type of NE and landscape complexity. According to the null hypothesis, the interaction may not be significant. If it is rejected, it would probably mean that we will see some guilds perform better in some landscape than others.
 5.	We will study if the parasitism rate and syrphid fraction increases with landscape complexity or not. (H0; No differences in parasitism rate and syrphid fraction in complex landscapes )
-6.	We will study whether aphid growth population decreases cabbage biomass (null hypothesis: no significant differences)
+6.	We will study whether aphid growth population decreases cabbage biomass (null hypothesis: no significant differences)..
 
 # Methods.
 Step by Step:
