@@ -16,7 +16,7 @@ DataOG$parasitism_rate <- parasitism_rate
 syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
 DataOG$syrphid_fraction <- syrphid_fraction
 
-# conversion of character vectors into numeric vectors
+# conversion of character vectors into numeric vectors !
 
 B <- lapply(DataOG[c(2,3,11,13)], as.factor)
 B <- lapply(B, as.numeric)
