@@ -47,22 +47,10 @@ lmAD18 <- lm(DataOG$aphid_live ~ DataOG$Pt.seminatural + DataOG$croptype + DataO
 lmAD19 <- lm(DataOG$aphid_live ~ DataOG$Pt.seminatural + DataOG$Treatment)
 lmAD20 <- lm(DataOG$aphid_live ~ DataOG$Pt.seminatural + DataOG$Date)
 
-AIC(lmAD1, lmAD2, lmAD3, lmAD4, lmAD5, lmAD6, lmAD7, lmAD9, lmAD10, lmAD11, lmAD12, lmAD13, lmAD14, lmAD15, lmAD16, lmAD17, lmAD18, lmAD19, lmAD20)
+AIC(lmAD1, lmAD2, lmAD3, lmAD4, lmAD5, lmAD6, lmAD7, lmAD8, lmAD9, lmAD10, lmAD11, lmAD12, lmAD13, lmAD14, lmAD15, lmAD16, lmAD17, lmAD18, lmAD19, lmAD20)
 
-#lowest
-#lmAD18 72913.84
+#lowest AIC
+#lmAD11 149319.6
 
 
 
-#check difference between DataOG and Data1
-#use data1 
-Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
-parasitism_rate <- (Data1$aphid_parasitized/Data1$aphid_live + Data1$aphid_parasitized)
-syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
-Data1_syrphid_fraction <- data.frame(Data1, syrphid_fraction )
-
-lmAD1 <- lm(DataOG$aphid_live ~ DataOG$syrphid_fraction)
-lmAD1_data1 <- lm(Data1_syrphid_fraction$aphid_live ~ Data1_syrphid_fraction$syrphid_fraction)
-AIC(lmAD1, lmAD1_data1)
-
-#same AIC value
