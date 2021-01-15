@@ -25,6 +25,7 @@ B <- lapply(B, as.numeric)
 DataOG[c(2,3,11,13)] <- B
 
 #linear model
+#dataOG
 lmAD1 <- lm(DataOG$aphid_live ~ DataOG$syrphid_fraction)
 lmAD2 <- lm(DataOG$aphid_live ~DataOG$Field_Mgmt)
 lmAD3 <- lm(DataOG$aphid_live ~ DataOG$cropmaturity_init)
@@ -53,3 +54,15 @@ AIC(lmAD1, lmAD2, lmAD3, lmAD4, lmAD5, lmAD6, lmAD7, lmAD9, lmAD10, lmAD11, lmAD
 
 
 
+#check difference between DataOG and Data1
+#use data1 
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
+parasitism_rate <- (Data1$aphid_parasitized/Data1$aphid_live + Data1$aphid_parasitized)
+syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
+Data1_syrphid_fraction <- data.frame(Data1, syrphid_fraction )
+
+lmAD1 <- lm(DataOG$aphid_live ~ DataOG$syrphid_fraction)
+lmAD1_data1 <- lm(Data1_syrphid_fraction$aphid_live ~ Data1_syrphid_fraction$syrphid_fraction)
+AIC(lmAD1, lmAD1_data1)
+
+#same AIC value
