@@ -21,3 +21,18 @@ DataOG$syrphid_fraction <- syrphid_fraction
 B <- lapply(DataOG[c(2,3,11,13)], as.factor)
 B <- lapply(B, as.numeric)
 DataOG[c(2,3,11,13)] <- B
+
+
+
+
+#convert NaN to 0
+is.nan.data.frame <- function(x)
+  do.call(cbind, lapply(x, is.nan))
+
+DataOG[is.nan(DataOG)] <- 0
+
+#convert inf to 1
+is.infinite.data.frame <- function(y)
+  do.call(cbind, lapply(y, is.infinite))
+
+DataOG[is.infinite(DataOG)] <- 1
