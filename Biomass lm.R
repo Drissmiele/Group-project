@@ -14,7 +14,7 @@ A <- Data1$Date == "3"
 Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/30)
 DataOG <- Data1
 
-parasitism_rate <- (Data1$aphid_parasitized/Data1$aphid_live + Data1$aphid_parasitized)
+parasitism_rate <- (Data1$aphid_parasitized/(Data1$aphid_live + Data1$aphid_parasitized))
 DataOG$parasitism_rate <- parasitism_rate
 
 syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
@@ -39,6 +39,7 @@ is.infinite.data.frame <- function(y)
   do.call(cbind, lapply(y, is.infinite))
 
 DataOG[is.infinite(DataOG)] <- 1
+
 #linear model Biomass
 #dataOG
 
@@ -54,14 +55,13 @@ lmBM9 <- lm(DataOG$Biomass_fin ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural)
 lmBM10 <- lm(DataOG$Biomass_fin ~ DataOG$aphid_live + DataOG$Field_Mgmt + DataOG$Pt.seminatural)
 lmBM11 <- lm(DataOG$Biomass_fin ~ DataOG$Pt.seminatural + DataOG$Field_Mgmt + DataOG$aphid_live)
 lmBM12 <- lm(DataOG$Biomass_fin ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$aphid_live)
-
+lmBM13 <- lm(DataOG$Biomass_fin ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Treatment + I((DataOG$Field_Mgmt)*(DataOG$aphid_live)) + I((DataOG$Pt.seminatural)*(DataOG$aphid_parasitized)) + I((DataOG$Field_Mgmt)*(DataOG$Treatment)))
+lmBM14 <- lm(DataOG$Biomass_fin ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Treatment + I((DataOG$Field_Mgmt)*(DataOG$aphid_live)) + I((DataOG$Pt.seminatural)*(DataOG$Treatment)))
+lmBM15 <- lm(DataOG$Biomass_fin ~ DataOG$Pt.seminatural + DataOG$Treatment + I((DataOG$Pt.seminatural)*(DataOG$aphid_live)) + I((DataOG$Field_Mgmt)*(DataOG$parasitism_rate)))
 
 #Model comparison
 
-AIC(lmBM1, lmBM2, lmBM3, lmBM4, lmBM5, lmBM6, lmBM7, lmBM8, lmBM9, lmBM10, lmBM11, lmBM12)
+AIC(lmBM1, lmBM2, lmBM3, lmBM4, lmBM5, lmBM6, lmBM7, lmBM8, lmBM9, lmBM10, lmBM11, lmBM12, lmBM13, lmBM14, lmBM15)
 
 #lowest
-#lmBM10  5 158974.2
-#lmBM11  5 158974.2
-#lmBM12  5 158974.2
-> 
+#lmBM13 158068.6

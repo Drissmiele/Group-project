@@ -14,7 +14,7 @@ A <- Data1$Date == "3"
 Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/30)
 DataOG <- Data1
 
-parasitism_rate <- (Data1$aphid_parasitized/Data1$aphid_live + Data1$aphid_parasitized)
+parasitism_rate <- (Data1$aphid_parasitized/(Data1$aphid_live + Data1$aphid_parasitized))
 DataOG$parasitism_rate <- parasitism_rate
 
 syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
@@ -60,5 +60,5 @@ lmPR14 <- lm(DataOG$parasitism_rate ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural 
 
 AIC(lmPR1, lmPR2, lmPR3, lmPR4, lmPR5, lmPR6, lmPR7, lmPR8, lmPR9, lmPR10, lmPR11, lmPR12, lmPR13, lmPR14)
 #lowest
-#lmPR12  8 72278.21
+#lmPR10  3623.658
 
