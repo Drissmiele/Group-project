@@ -1,7 +1,7 @@
 Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
 
 # response on parasitism rate
-parasitism_rate　<- Data1$aphid_parasitized/((Data1$aphid_live) + (Data1$aphid_parasitized))
+parasitism_rate<- Data1$aphid_parasitized/((Data1$aphid_live) + (Data1$aphid_parasitized))
 Data1$parasitism_rate <- parasitism_rate
 
 

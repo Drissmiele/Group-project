@@ -16,23 +16,18 @@ DataOG$parasitism_rate <- parasitism_rate
 syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
 DataOG$syrphid_fraction <- syrphid_fraction
 
-# conversion of character vectors into numeric vectors !
 
-B <- lapply(DataOG[c(2,3,11,13)], as.factor)
-B <- lapply(B, as.numeric)
-DataOG[c(2,3,11,13)] <- B
+# APG ~ parasitism_rate
+plot(APG ~ parasitism_rate, data = DataOG, xlab="Parasitism rate", abline(lm(APG ~ parasitism_rate)))
 
+# APG ~ syrphid_fraction
+plot(APG ~ syrphid_fraction, data = DataOG, xlab ="Syrphid fraction", abline(lm(APG ~ syrphid_fraction)))
 
+# Biomass_fin ~ syrphid_fraction
+plot(Biomass_fin ~ syrphid_fraction, data = DataOG, xlab ="Syrphid fraction", abline(lm(Biomass_fin ~ syrphid_fraction)))
 
-
-#convert NaN to 0
-is.nan.data.frame <- function(x)
-  do.call(cbind, lapply(x, is.nan))
-
-DataOG[is.nan(DataOG)] <- 0
-
-#convert inf to 1
-is.infinite.data.frame <- function(y)
-  do.call(cbind, lapply(y, is.infinite))
-
-DataOG[is.infinite(DataOG)] <- 1
+attach(DataOG)
+par(mfrow=c(3,1))
+plot(APG ~ parasitism_rate, data = DataOG, xlab="Parasitism rate", abline(lm(APG ~ parasitism_rate)))
+plot(APG ~ syrphid_fraction, data = DataOG, xlab ="Syrphid fraction",abline(lm(APG ~ syrphid_fraction)))
+plot(Biomass_fin ~ syrphid_fraction, data = DataOG, xlab ="Syrphid fraction", abline(lm(Biomass_fin ~ syrphid_fraction)))
