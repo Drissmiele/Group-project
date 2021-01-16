@@ -9,11 +9,17 @@ Date_1_SF <- data.frame(Date_1, SF_D1)
 
 #D1 anova test
 anovaD1_SF <- aov(Date_1_SF$SF_D1 ~ Date_1$Treatment, data = Date_1_SF)
+anovaD1_SF_FM <- aov(Date_1_SF$SF_D1 ~ Date_1$Treatment + Date_1$fieldma, data = Date_1_SF)
+
+
 summary(anovaD1_SF)
 TukeyHSD(anovaD1_SF)
 library("agricolae")
 HSD_D1_SF <- HSD.test(anovaD1_SF, "Date_1$Treatment", unbalanced = TRUE, group = T)
 HSD_D1_SF
+
+
+#graph
 
 
 # Date_1$Treatment`
@@ -42,3 +48,6 @@ HSD_D1_SF
 # HBP       0.07043040      c
 # HGD       0.06724479      c
 # H         0.03673913      c
+
+
+l

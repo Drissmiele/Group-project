@@ -47,7 +47,7 @@ lmAD4 <- lm(DataOG$aphid_live ~ DataOG$croptype)
 lmAD5 <- lm(DataOG$aphid_live ~ DataOG$Pt.seminatural)
 lmAD6 <- lm(DataOG$aphid_live ~ DataOG$Plot_ID)
 lmAD7 <- lm(DataOG$aphid_live ~ DataOG$Date)
-lmAD8 <- lm(DataOG$aphid_live ~ DataOG$Field_Mgmt)
+lmAD8 <- lm(DataOG$aphid_live ~ DataOG$Field_Mgmt + DataOG$parasitism_rate)
 lmAD9 <- lm(DataOG$aphid_live ~ DataOG$Treatment)
 lmAD10 <- lm(DataOG$aphid_live ~ DataOG$aphid_parasitized)
 lmAD11 <- lm(DataOG$aphid_live ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + DataOG$Treatment + I(DataOG$Pt.seminatural* DataOG$Date) + I(DataOG$Field_Mgmt*DataOG$Treatment))
@@ -66,5 +66,7 @@ AIC(lmAD1, lmAD2, lmAD3, lmAD4, lmAD5, lmAD6, lmAD7, lmAD8, lmAD9, lmAD10, lmAD1
 #lowest AIC
 #lmAD11 149319.6
 
+
+aa
 
 
