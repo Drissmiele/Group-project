@@ -1,7 +1,6 @@
 #model comparison for aphids density
 
-# creation of DataOG with all variables
-
+#creation of DataOG with all variables
 Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
 Data1$APG <- NA 
 A <- Data1$Date == "1"
@@ -24,7 +23,6 @@ B <- lapply(DataOG[c(2,3,11,13)], as.factor)
 B <- lapply(B, as.numeric)
 DataOG[c(2,3,11,13)] <- B
 
-
 #convert NaN to 0
 is.nan.data.frame <- function(x)
   do.call(cbind, lapply(x, is.nan))
@@ -34,9 +32,7 @@ DataOG[is.nan(DataOG)] <- 0
 #convert inf to 1
 is.infinite.data.frame <- function(y)
   do.call(cbind, lapply(y, is.infinite))
-
 DataOG[is.infinite(DataOG)] <- 1
-
 
 #linear model
 #dataOG
@@ -67,6 +63,29 @@ AIC(lmAD1, lmAD2, lmAD3, lmAD4, lmAD5, lmAD6, lmAD7, lmAD8, lmAD9, lmAD10, lmAD1
 #lmAD11 149319.6
 
 
-aa
 
+
+
+#############################not sure
+#ANOVA
+anovaAD3 <- aov(DataOG$aphid_live ~ DataOG$cropmaturity_init)
+anovaAD4 <- aov(DataOG$aphid_live ~ DataOG$croptype)
+anovaAD5 <- aov(DataOG$aphid_live ~ DataOG$Pt.seminatural)
+anovaAD6 <- aov(DataOG$aphid_live ~ DataOG$Plot_ID)
+anovaAD7 <- aov(DataOG$aphid_live ~ DataOG$Date)
+summary(anovaAD1)
+summary(anovaAD2)
+summary(anovaAD3)
+summary(anovaAD4)
+summary(anovaAD5)
+summary(anovaAD6)
+summary(anovaAD7)
+
+TukeyHSD(anovaAD1)
+TukeyHSD(anovaAD2)
+TukeyHSD(anovaAD3)
+TukeyHSD(anovaAD4)
+TukeyHSD(anovaAD5)
+TukeyHSD(anovaAD6)
+TukeyHSD(anovaAD7)
 

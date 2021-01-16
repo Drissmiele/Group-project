@@ -58,6 +58,10 @@ lmAPG19 <- lm(DataOG$APG ~ DataOG$Field_Mgmt + DataOG$parasitism_rate)
 lmAPG20 <- lm(DataOG$APG ~ DataOG$Field_Mgmt + DataOG$syrphid_fraction)
 
 AIC(lmAPG1, lmAPG2, lmAPG3, lmAPG4, lmAPG5, lmAPG6, lmAPG7, lmAPG8, lmAPG9, lmAPG10, lmAPG11, lmAPG12, lmAPG13, lmAPG14, lmAPG15, lmAPG16, lmAPG17, lmAPG18, lmAPG19, lmAPG20)
-
 #lowest AIC:
 #lmAPG5  11 -19871.81
+
+
+#anova for lmAPG
+ANOVA_lmAPG <-  anova(lmAPG1, lmAPG2, lmAPG3, lmAPG4, lmAPG5, lmAPG6, lmAPG7, lmAPG8, lmAPG9, lmAPG10, lmAPG11, lmAPG12, lmAPG13, lmAPG14, lmAPG15, lmAPG16, lmAPG17, lmAPG18, lmAPG19, lmAPG20)
+ANOVA_lmAPG
