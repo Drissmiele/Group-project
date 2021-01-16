@@ -12,7 +12,7 @@ A <- Data1$Date == "3"
 Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/30)
 DataOG <- Data1
 
-parasitism_rate <- (Data1$aphid_parasitized/Data1$aphid_live + Data1$aphid_parasitized)
+parasitism_rate <- (Data1$aphid_parasitized/(Data1$aphid_live + Data1$aphid_parasitized))
 DataOG$parasitism_rate <- parasitism_rate
 
 syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
@@ -24,6 +24,20 @@ B <- lapply(DataOG[c(2,3,11,13)], as.factor)
 B <- lapply(B, as.numeric)
 DataOG[c(2,3,11,13)] <- B
 
+
+#convert NaN to 0
+is.nan.data.frame <- function(x)
+  do.call(cbind, lapply(x, is.nan))
+
+DataOG[is.nan(DataOG)] <- 0
+
+#convert inf to 1
+is.infinite.data.frame <- function(y)
+  do.call(cbind, lapply(y, is.infinite))
+
+DataOG[is.infinite(DataOG)] <- 1
+
+
 #linear model
 #dataOG
 lmAD1 <- lm(DataOG$aphid_live ~ DataOG$syrphid_fraction)
@@ -33,7 +47,7 @@ lmAD4 <- lm(DataOG$aphid_live ~ DataOG$croptype)
 lmAD5 <- lm(DataOG$aphid_live ~ DataOG$Pt.seminatural)
 lmAD6 <- lm(DataOG$aphid_live ~ DataOG$Plot_ID)
 lmAD7 <- lm(DataOG$aphid_live ~ DataOG$Date)
-lmAD8 <- lm(DataOG$aphid_live ~ DataOG$Field_Mgmt)
+lmAD8 <- lm(DataOG$aphid_live ~ DataOG$Field_Mgmt + DataOG$parasitism_rate)
 lmAD9 <- lm(DataOG$aphid_live ~ DataOG$Treatment)
 lmAD10 <- lm(DataOG$aphid_live ~ DataOG$aphid_parasitized)
 lmAD11 <- lm(DataOG$aphid_live ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + DataOG$Treatment + I(DataOG$Pt.seminatural* DataOG$Date) + I(DataOG$Field_Mgmt*DataOG$Treatment))
@@ -52,5 +66,7 @@ AIC(lmAD1, lmAD2, lmAD3, lmAD4, lmAD5, lmAD6, lmAD7, lmAD8, lmAD9, lmAD10, lmAD1
 #lowest AIC
 #lmAD11 149319.6
 
+
+aa
 
 
