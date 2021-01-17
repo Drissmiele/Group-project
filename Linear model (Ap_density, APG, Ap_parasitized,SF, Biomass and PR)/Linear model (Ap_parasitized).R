@@ -62,7 +62,6 @@ lmAP20 <- lm(DataOG$aphid_parasitized ~ DataOG$APG + DataOG$Field_Mgmt)
 AIC(lmAP1, lmAP2, lmAP3, lmAP4, lmAP5, lmAP6, lmAP7, lmAP8, lmAP9, lmAP10, lmAP11, lmAP12, lmAP13, lmAP14, lmAP15, lmAP16, lmAP17, lmAP18, lmAP19, lmAP20)
 
 #lowest AIC:
-# lmAP6   7 78178.60
-# lmAP7   7 78178.60
+
 # lmAP8   7 78178.60
 # lmAP9   7 78178.60
