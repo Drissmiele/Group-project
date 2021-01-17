@@ -57,6 +57,7 @@ lmAP17 <- lm(DataOG$aphid_parasitized ~ DataOG$Field_Mgmt + DataOG$croptype)
 lmAP18 <- lm(DataOG$aphid_parasitized ~ DataOG$APG + DataOG$croptype)
 lmAP19 <- lm(DataOG$aphid_parasitized ~ DataOG$APG + DataOG$Pt.seminatural)
 lmAP20 <- lm(DataOG$aphid_parasitized ~ DataOG$APG + DataOG$Field_Mgmt)
+lmAP21 <- lm(DataOG$aphid_parasitized ~ DataOG$Treatment)
 
 
 AIC(lmAP1, lmAP2, lmAP3, lmAP4, lmAP5, lmAP6, lmAP7, lmAP8, lmAP9, lmAP10, lmAP11, lmAP12, lmAP13, lmAP14, lmAP15, lmAP16, lmAP17, lmAP18, lmAP19, lmAP20)
@@ -66,3 +67,17 @@ AIC(lmAP1, lmAP2, lmAP3, lmAP4, lmAP5, lmAP6, lmAP7, lmAP8, lmAP9, lmAP10, lmAP1
 # lmAP7   7 78178.60
 # lmAP8   7 78178.60
 # lmAP9   7 78178.60
+
+
+
+#2 variables comparison
+AIC(lmAP1, lmAP2, lmAP3, lmAP4, lmAP5, lmAP21)
+# df      AIC
+# lmAP1  3 78639.51
+# lmAP2  3 78668.07
+# lmAP3  3 78488.26
+# lmAP4  3 78649.44
+# lmAP5  3 78370.83 #lowest #APG
+
+
+

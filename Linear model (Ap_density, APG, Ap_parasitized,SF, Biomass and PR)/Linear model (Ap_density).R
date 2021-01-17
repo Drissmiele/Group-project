@@ -62,8 +62,21 @@ AIC(lmAD1, lmAD2, lmAD3, lmAD4, lmAD5, lmAD6, lmAD7, lmAD8, lmAD9, lmAD10, lmAD1
 #lowest AIC
 #lmAD11 149319.6
 
+#only 2 variables comparison
+AIC(lmAD1, lmAD2, lmAD3, lmAD4, lmAD5, lmAD6, lmAD7)
+# df      AIC
+# lmAD1  3 152261.6
+# lmAD2  3 151662.9
+# lmAD3  3 152252.3
+# lmAD4  3 152301.8
+# lmAD5  3 152156.6
+# lmAD6  3 152336.1
+# lmAD7  3 152050.8
 
-
+#lowest
+#lmAD2: field management
+#secondly lowest
+#lmAD7: date
 
 
 #############################not sure
