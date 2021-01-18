@@ -57,7 +57,7 @@ It is pertinent to point out that we have not elucidated the relationships relat
 
 We have represented all possible relationships in the following **network**:
 
-```{r}
+```{r, echo=FALSE}
 library(readxl)
 library(igraph)
 links <- read_excel("Relationships between variables.xlsx")
