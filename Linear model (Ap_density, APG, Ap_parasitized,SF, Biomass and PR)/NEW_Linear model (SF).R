@@ -36,6 +36,19 @@ is.infinite.data.frame <- function(y)
 
 DataOG[is.infinite(DataOG)] <- 1
 
+#linear model (original order)
+lmSF_M8 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M9 <- lm(DataOG$syrphid_fraction ~ DataOG$Pt.seminatural + DataOG$Date + DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M10 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date + DataOG$Treatment + I(DataOG$Field_Mgmt*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M11 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date+ DataOG$Treatment+ I(DataOG$Field_Mgmt*DataOG$Date)+ I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M12 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Date + DataOG$Treatment+ I(DataOG$Field_Mgmt*DataOG$Date))
+lmSF_M13 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt +DataOG$Date + DataOG$Treatment)
+lmSF_M14 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M15  <- lm(DataOG$syrphid_fraction ~  DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment +  I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M16 <- lm(DataOG$syrphid_fraction ~ DataOG$Date +DataOG$Treatment)
+lmSF_M17 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date + DataOG$Treatment + I(DataOG$Field_Mgmt*DataOG$Date))
+
+
 #linear model arranged from complex to simple models
 lmSF_M11 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date+ DataOG$Treatment+ I(DataOG$Field_Mgmt*DataOG$Date)+ I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
 lmSF_M10 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date + DataOG$Treatment + I(DataOG$Field_Mgmt*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
@@ -80,56 +93,25 @@ anova(lmSF_M10, lmSF_M11)
 anova(lmSF_M14, lmSF_M11)
 #M11 2.44e-11 ***
 
-
-#M11 i the best model
+#M11 is the best model accroding to anova. We still decide to calculate the AIC index.
 
 #AIC
 AIC(lmSF_M11, lmSF_M10, lmSF_M14, lmSF_M8, lmSF_M15, lmSF_M17, lmSF_M9, lmSF_M12,lmSF_M13,lmSF_M16)
 # df      AIC
-# lmSF_M11  9 1409.151
-# lmSF_M10  8 1409.089
-# lmSF_M14  8 1451.763
-# lmSF_M8   7 1458.672
-# lmSF_M15  7 1618.325
-# lmSF_M17  7 1428.652
-# lmSF_M9   6 1624.700
-# lmSF_M12  6 1432.100
-# lmSF_M13  5 1481.405
-# lmSF_M16  4 1670.877
+# lmSF_M11  9 1409.151 # rank 2
+# lmSF_M10  8 1409.089 # rank 1
+# lmSF_M14  8 1451.763 # rank 5
+# lmSF_M8   7 1458.672 # rank 6
+# lmSF_M15  7 1618.325 # rank 8
+# lmSF_M17  7 1428.652 # rank 3
+# lmSF_M9   6 1624.700 # rank 9
+# lmSF_M12  6 1432.100 # rank 4
+# lmSF_M13  5 1481.405 # rank 7
+# lmSF_M16  4 1670.877 # rank 10
 
 
+#M10 is the best model
 
 
-
-lmSF_M8 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M9 <- lm(DataOG$syrphid_fraction ~ DataOG$Pt.seminatural + DataOG$Date + DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M10 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date + DataOG$Treatment + I(DataOG$Field_Mgmt*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M11 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date+ DataOG$Treatment+ I(DataOG$Field_Mgmt*DataOG$Date)+ I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M12 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Date + DataOG$Treatment+ I(DataOG$Field_Mgmt*DataOG$Date))
-lmSF_M13 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt +DataOG$Date + DataOG$Treatment)
-lmSF_M14 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M15  <- lm(DataOG$syrphid_fraction ~  DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment +  I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M16 <- lm(DataOG$syrphid_fraction ~ DataOG$Date +DataOG$Treatment)
-lmSF_M17 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date + DataOG$Treatment + I(DataOG$Field_Mgmt*DataOG$Date))
-
-
-
-
-
-#AIC
-SF_AIC <- AIC(lmSF_M8, lmSF_M9, lmSF_M10, lmSF_M11, lmSF_M12,lmSF_M13, lmSF_M14, lmSF_M15,lmSF_M16,lmSF_M17)
-# df      AIC
-# lmSF_M11  9 1409.151
-# lmSF_M10  8 1409.089
-# lmSF_M14  8 1451.763
-# lmSF_M8   7 1458.672
-# lmSF_M15  7 1618.325
-# lmSF_M17  7 1428.652
-# lmSF_M9   6 1624.700
-# lmSF_M12  6 1432.100
-# lmSF_M13  5 1481.405
-# lmSF_M16  4 1670.877
-
-#lmSF_M10: best model
 
 
