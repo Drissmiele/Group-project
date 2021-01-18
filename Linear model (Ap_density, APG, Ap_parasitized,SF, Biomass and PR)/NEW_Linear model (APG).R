@@ -61,84 +61,29 @@ AIC(lmAPG_M1, lmAPG_M2, lmAPG_M3, lmAPG_M4, lmAPG_M5, lmAPG_M6, lmAPG_M7, lmAPG_
 #lmAPG_M1: best model
 
 anova(lmAPG_M9, lmAPG_M8)
-# Model 1: DataOG$APG ~ DataOG$Field_Mgmt
-# Model 2: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural
-# Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-# 1  12708 182.17                                  
-# 2  12707 177.68  1    4.4948 321.45 < 2.2e-16 ***
+#  < 2.2e-16 ***
 
 anova(lmAPG_M8, lmAPG_M7)
-# Model 1: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural
-# Model 2: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date
-# Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-# 1  12707 177.68                                  
-# 2  12706 174.06  1    3.6214 264.36 < 2.2e-16 ***
+#  < 2.2e-16 ***
 
 anova(lmAPG_M7, lmAPG_M6)
-# Model 1: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date
-# Model 2: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + 
-#   DataOG$Treatment
-# Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-# 1  12706 174.06                                  
-# 2  12705 166.64  1    7.4217 565.86 < 2.2e-16 ***
+# < 2.2e-16 ***
 
 anova(lmAPG_M6, lmAPG_M5)
-# Model 1: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + 
-#   DataOG$Treatment
-# Model 2: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + 
-#   DataOG$Treatment + I(DataOG$Field_Mgmt * DataOG$Date)
-# Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-# 1  12705 166.64                                  
-# 2  12704 159.37  1    7.2711 579.63 < 2.2e-16 ***
+#  < 2.2e-16 ***
 
 
 anova(lmAPG_M5, lmAPG_M4)
-# Model 1: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + 
-#   DataOG$Treatment + I(DataOG$Field_Mgmt * DataOG$Date)
-# Model 2: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + 
-#   DataOG$Treatment + I(DataOG$Field_Mgmt * DataOG$Date) + I(DataOG$Pt.seminatural * 
-#                                                               DataOG$Date)
-# Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-# 1  12704 159.37                                  
-# 2  12703 158.12  1    1.2463 100.13 < 2.2e-16 ***
+#  < 2.2e-16 ***
 
 anova(lmAPG_M4, lmAPG_M3)
-#Model 1: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + 
-# DataOG$Treatment + I(DataOG$Field_Mgmt * DataOG$Date) + I(DataOG$Pt.seminatural * 
-#                                                             DataOG$Date)
-# Model 2: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + 
-#   DataOG$Treatment + I(DataOG$Field_Mgmt * DataOG$Date) + I(DataOG$Pt.seminatural * 
-#                                                               DataOG$Date) + I(DataOG$Treatment * DataOG$Date)
-# Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-# 1  12703 158.12                                  
-# 2  12702 156.20  1    1.9206 156.19 < 2.2e-16 ***
+# < 2.2e-16 ***
 
 anova(lmAPG_M3, lmAPG_M2)
-# Model 1: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + 
-#   DataOG$Treatment + I(DataOG$Field_Mgmt * DataOG$Date) + I(DataOG$Pt.seminatural * 
-#                                                               DataOG$Date) + I(DataOG$Treatment * DataOG$Date)
-# Model 2: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + 
-#   DataOG$Treatment + I(DataOG$Field_Mgmt * DataOG$Date) + I(DataOG$Pt.seminatural * 
-#                                                               DataOG$Date) + I(DataOG$Treatment * DataOG$Date) + I(DataOG$Pt.seminatural * 
-#                                                                                                                      DataOG$Treatment)
-# Res.Df    RSS Df Sum of Sq      F    Pr(>F)    
-# 1  12702 156.20                                  
-# 2  12701 155.61  1   0.59114 48.251 3.934e-12 ***
+#  3.934e-12 ***
 
 
 anova(lmAPG_M2, lmAPG_M1)
-# Model 1: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + 
-#   DataOG$Treatment + I(DataOG$Field_Mgmt * DataOG$Date) + I(DataOG$Pt.seminatural * 
-#                                                               DataOG$Date) + I(DataOG$Treatment * DataOG$Date) + I(DataOG$Pt.seminatural * 
-#                                                                                                                      DataOG$Treatment)
-# Model 2: DataOG$APG ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + 
-#   DataOG$Treatment + I(DataOG$Field_Mgmt * DataOG$Date) + I(DataOG$Pt.seminatural * 
-#                                                           DataOG$Date) + I(DataOG$Treatment * DataOG$Date) + I(DataOG$Pt.seminatural * 
-#                                                                                                                      DataOG$Treatment) + I(DataOG$Pt.seminatural * DataOG$Treatment * 
-#                                                                                                                                              DataOG$Date)
-# Res.Df    RSS Df Sum of Sq    F  Pr(>F)  
-# 1  12701 155.61                            
-# 2  12700 155.56  1  0.042627 3.48 0.06214 .
+#  0.06214 .
 
 #lmAPG_M2, lmAPG_M1: better models
-#
