@@ -140,7 +140,5 @@ anova(lmAPG_M2, lmAPG_M1)
 # 1  12701 155.61                            
 # 2  12700 155.56  1  0.042627 3.48 0.06214 .
 
-
-
 #lmAPG_M2, lmAPG_M1: better models
-
+#

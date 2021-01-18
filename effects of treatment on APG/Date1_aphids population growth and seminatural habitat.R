@@ -21,22 +21,13 @@ Line_APGD1 <- ggplot(DATE1APG_line, aes(x = Pt.seminatural, y = APG_D1_line, col
 Line_APGD1 <- Line_APGD1 + labs(x = "% seminatural habitat", y = "Aphids population growth", title = "Effects of Treatment on LC and APG at Date 1")
 # for scatter plot: use geom_point()
 Line_APGD1 <- Line_APGD1 + geom_smooth(method = "lm")
-<<<<<<< HEAD
 Line_APGD1 <- Line_APGD1 +xlim(5,45) +ylim(-0.2 , 0.2)
-=======
-Line_APGD1 <- ine_LAPGD1 + xlim(5,45) + ylim(-0.2 , 0.2)
->>>>>>> 04f4391e4e2ee56c9e1fdaaf088a06d63fd5a9d9
 print(Line_APGD1)
 
 ###############Bar graph################
 #calculate the aphids population growth at date1
-<<<<<<< HEAD
 logNaphids_D1_bar <- log(DATE1$aphid_live+1) - log(DATE1$aphidsinoculated_init+1) 
 APG_D1_bar <- logNaphids_D1_bar/10
-=======
-logNaphids_D1_bar <- log(DATE1$aphid_live + 1) - log(DATE1$aphidsinoculated_init + 1) 
-APG_D1_bar <- logNaphids_D1/10
->>>>>>> 04f4391e4e2ee56c9e1fdaaf088a06d63fd5a9d9
 
 #dataframe for seminatural habitat and aphids population growth at date1 
 DATE1APG_bar <- data.frame(DATE1,APG_D1_bar)

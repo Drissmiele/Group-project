@@ -18,6 +18,12 @@ Data1$APG
 A <- Data1$BUFF_DIST == "700"
 Data700 <-Data1[A,]  
 
+
+#ANOVA
+annos = c('a','bc','a','b','d','c',
+          'a','c','b','c','c','c',
+          'a','cd','b','c','e','de')
+
 #plot
 library(ggplot2)
 ggplot(Data700, aes(x = Treatment, y = APG, fill = Treatment)) +
@@ -25,8 +31,8 @@ ggplot(Data700, aes(x = Treatment, y = APG, fill = Treatment)) +
   labs(x = "Enemy exclution treatment", y = "Aphids population growth",
        title = "Effects of Treatment on APG at Different dates") +
   geom_hline(yintercept = 0, colour = "grey") +
+  stat_summary(geom = 'text', label =annos, fun.y = max, vjust = -1)+
   facet_grid(.~Date) # same date but one factor changes (e.g. date)
-
 
 
 # parasitism rate 
@@ -39,14 +45,19 @@ Data1$parasitism_rate
 
 # plot for BUFF DIST = 200 
 
+#ANOVA result for parasitism rate ~ treatment
+annosPR = c('c','b','c','b','a','b',
+          'd','b','d','a','c','b',
+          'd','bc','d','ab','a','c')
+
 library(ggplot2)
 ggplot(Data1, aes(x = Treatment, y = parasitism_rate, fill = Treatment)) +
   geom_boxplot() +
   labs(x = "Enemy exclution treatment", y = "Parasitism rate",
        title = "Effects of Treatment on Parasitism rate at different dates") +
   geom_hline(yintercept = 0, colour = "grey") +
+  stat_summary(geom = 'text', label =annosPR, fun.y = mean, vjust = -1)+
   facet_grid(.~Date) 
-
 
 
 
@@ -66,11 +77,19 @@ Data900 <- na.omit(Data900)
 
 #plot for BUFF DIST = 900
 
+
+#ANOVA result for syrphid fraction ~ treatment
+annosSF = c('c','c','c','b','b','a',
+            'd','b','c','a','b','b',
+            'd','a','c','ab','bc','a')
+
+
 ggplot(Data900, aes(x = Treatment, y = syrphid_fraction , fill = Treatment)) +
   geom_boxplot() +
   labs(x = "Enemy exclution treatment", y = "Syrphid fraction",
        title = "Effects of Treatment on syrphid fraction at different dates") +
   geom_hline(yintercept = 0, colour = "grey") +
+  stat_summary(geom = 'text', label =annosSF, fun.y = mean , vjust = -1)+
   facet_grid(.~Date)
 
 
