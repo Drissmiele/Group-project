@@ -42,8 +42,8 @@ lmAP2 <- lm(DataOG$aphid_parasitized ~DataOG$croptype)
 lmAP3 <- lm(DataOG$aphid_parasitized ~ DataOG$Pt.seminatural)
 lmAP4 <- lm(DataOG$aphid_parasitized ~ DataOG$Field_Mgmt)
 lmAP5 <- lm(DataOG$aphid_parasitized ~ DataOG$APG)
-lmAP6 <- lm(DataOG$aphid_parasitized ~ DataOG$aphid_live + DataOG$croptype + DataOG$Pt.seminatural + DataOG$Field_Mgmt + DataOG$APG)
-lmAP7 <- lm(DataOG$aphid_parasitized ~ DataOG$APG + DataOG$croptype + DataOG$Pt.seminatural + DataOG$aphid_live + DataOG$Field_Mgmt)
+lmAP6 <- lm(DataOG$aphid_parasitized ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + DataOG$Treatment + I((DataOG$Field_Mgmt)*(DataOG$Date)) + I((DataOG$Pt.seminatural)*(DataOG$Date)) + I((DataOG$Treatment)*(DataOG$Date) + I((DataOG$Pt.seminatural)*(DataOG$Treatment))))
+lmAP7 <- lm(DataOG$aphid_parasitized ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date + DataOG$Treatment + I((DataOG$Field_Mgmt)*(DataOG$Date)) + I((DataOG$Pt.seminatural)*(DataOG$Date)))
 lmAP8 <- lm(DataOG$aphid_parasitized ~ DataOG$Field_Mgmt + DataOG$croptype + DataOG$Pt.seminatural + DataOG$aphid_live + DataOG$APG)
 lmAP9 <- lm(DataOG$aphid_parasitized ~ DataOG$Pt.seminatural + DataOG$croptype + DataOG$Field_Mgmt + DataOG$aphid_live + DataOG$APG)
 lmAP10 <- lm(DataOG$aphid_parasitized ~ DataOG$aphid_live + DataOG$croptype)
@@ -63,8 +63,7 @@ lmAP21 <- lm(DataOG$aphid_parasitized ~ DataOG$Treatment)
 AIC(lmAP1, lmAP2, lmAP3, lmAP4, lmAP5, lmAP6, lmAP7, lmAP8, lmAP9, lmAP10, lmAP11, lmAP12, lmAP13, lmAP14, lmAP15, lmAP16, lmAP17, lmAP18, lmAP19, lmAP20)
 
 #lowest AIC:
-# lmAP6   7 78178.60
-# lmAP7   7 78178.60
+
 # lmAP8   7 78178.60
 # lmAP9   7 78178.60
 
