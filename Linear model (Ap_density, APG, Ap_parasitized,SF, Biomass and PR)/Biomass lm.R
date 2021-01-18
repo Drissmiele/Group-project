@@ -65,3 +65,6 @@ AIC(lmBM1, lmBM2, lmBM3, lmBM4, lmBM5, lmBM6, lmBM7, lmBM8, lmBM9, lmBM10, lmBM1
 
 #lowest
 #lmBM13 158068.6
+
+
+aaa
