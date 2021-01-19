@@ -1,0 +1,231 @@
+---
+title: "Final project"
+author: "Adriele Benedetto"
+date: "18/01/2021"
+output: html_document
+---
+
+knitr::opts_chunk$set(echo = FALSE)
+#install.packages("readxl")
+#install.packages("igraph")
+Note that the data was provided by the following scientific article: *“Pest control of aphids on landscape complexity and natural enemy interactions”.* 
+It can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
+
+# Introduction
+
+Aphids are a *major concern* in agricultural crops. Control by natural enemies is an essential component of the ecological intensification of agriculture. 
+This study used multiple natural enemy enclosures replicated in 18 fields of Brassica oleracea and other crop types across a gradient in *landscape complexity* to investigate:the strength of natural pest control across landscapes, the contribution of natural enemy guilds to pest control and the interaction effect between natural enemy guilds and landscape. 
+
+In this study, the variables are as follows:
+
+   *Dependent variables*
+1. Aphid Population Growth (APG) 
+2. Aphid density 
+3. Parasitized Aphids 
+4. Parasitism rate (PR)
+5. Syrphid larvae
+6. Syrphid fraction and the real final dependent variable which is  7. Final cabbage biomass
+
+  *Independent variables*
+1. Landscape complexity (% semi-natural habitat at a radius around fields)
+2. Treatments (different combinations of Natural Enemies exclusions) 3. Field management (organic versus conventional),
+4. Sampling Date
+5. Crop Type
+6. Crop Maturity 
+7. Plot 
+
+We used 6 of the dependent variableS to assess the best relationship with the independent variables. We also tested the interactions between 2 or more dependent variables e.g APG and PR
+
+We have represented all possible relationships in the following *network*
+
+library(readxl)
+library(igraph)
+links <- read_excel("Relationships between variables.xlsx")
+network <- graph_from_data_frame(d = links, directed = T) 
+plot(network, vertex.color = "yellow", edge.arrow.size = 1, vertex.label.font = 2, vertex.label.color = "black")
+
+# Team Objectives
+To determine:
+The effect of natural enemies (NE) on APG across a gradient of Landscape Complexity (LC).
+
+The effect of NE on parasitism rate and syrphid fraction across a gradient of LC.
+
+The possible interaction between NE and LC. Interaction would imply that the effects of NE guilds are affected by the complexity of the landscape.  
+
+
+# Research Questions and Hypotheses.
+
+1. Does the presence of natural enemies (NE) decrease aphid population growth? 
+
+2. Is the effect of NE complementary or antagonist on the dependent variables (e.g. APG, parasitism rate, syrphid fraction)?
+
+3. Is there a difference in the effect of NE over aphids between complex and simple landscapes?
+
+4. Is there an interaction between the efficiency of NE and landscape complexity (LC)?
+
+5. Do parasitism and syrphid presence increase with greater landscape complexity?
+
+6. Does aphid population growth decrease cabbage biomass?
+
+
+# Methodology using R and Excel
+
+Step by Step:
+
+1. We calculated 3 new variables whose formulas were given: APG, parasitism rate and syrphid fraction. 
+
+2. We created an excel sheet listing all the relationships between the variables that are relevant to assess. 
+
+3. We plotted the major relationships to outline trends and study the relationships between key variables.
+
+4. We ran a significant amount of linear models (lm) to know what model fits best for 6 dependent variables (only 3 in the original study): Aphids density, APG, aphids parasitized, parasitism rate, syrphid fraction and biomass. 
+
+5. We carried out ANOVAS followed by “post hoc” tests to highlight significant differences between the models. 
+
+# Results
+
+#### *Effects of landscape complexity and natural enemy exclusion on average daily aphid population growth across three sampling dates (1-3) *
+
+# APG, Treatment, semi-natural habitat 
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
+Data1$APG <- NA 
+A <- Data1$Date == "1"
+Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/10)
+A <- Data1$Date == "2"
+Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/20)
+A <- Data1$Date == "3"
+Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/30)
+DataOG <- Data1
+
+A <- DataOG$BUFF_DIST == "700"
+Data700 <- DataOG[A,]                       
+
+# plot APG ~ % of seminatural habitat for each treatment
+library(ggplot2)
+ggplot(Data700, aes(x = Pt.seminatural, y = APG, color = Treatment, alpha = "0")) +
+  labs(x = "Landscape complexity (% of seminatural habitat)", y = "APG",
+       title = "Effects of landscape complexity on APG in each treatment at 3 different dates") +
+  geom_smooth(method = "lm") +
+  facet_grid(.~Date)
+
+##### *Findings:*
+ 
+APG slope flattens, gets less steep over time. 
+In all treatments and for all dates (except the last one when it is less clear), we see a trend highlighting an increase in APG as landscape complexity increases. 
+In treatments involving more than 2 natural enemies, APG growth was the lowest. Examples are O, HPGD, HBP.
+When all natural enemies are excluded (H treatment), APG growth is at its highest.
+This finding is consistent with our hypothesis. 
+
+###Effects of enemy exclusion treatments 😊 combination of NE guilds) on APG at Date 1, 2 and 3
+
+
+library(readr)
+Data0 <- Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
+
+cowplot :: # Other function to put several figures together
+  
+# APG
+  
+Data1$APG <- NA 
+A <- Data1$Date == "1"
+Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/10)
+A <- Data1$Date == "2"
+Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/20)
+A <- Data1$Date == "3"
+Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/30)
+Data1$APG
+
+# new data frame with BUFF = 700
+A <- Data1$BUFF_DIST == "700"
+Data700 <- Data1[A,]  
+
+
+#ANOVA
+annos = c('a','bc','a','b','d','c',
+          'a','c','b','c','c','c',
+          'a','cd','b','c','e','de')
+#plot
+library(ggplot2)
+ggplot(Data700, aes(x = Treatment, y = APG, fill = Treatment)) +
+  geom_boxplot() +
+  labs(x = "Enemy exclution treatment", y = "Aphids population growth",
+       title = "Effects of Treatment on APG at Different dates") +
+  geom_hline(yintercept = 0, colour = "grey") +
+  stat_summary(geom = 'text', label = annos, fun.y = max, vjust = -1) + facet_grid(.~Date) # same date but one factor changes (e.g. date)
+*Remarks:* 
+Here we looked at the sole effect of natural enemies (different combinations) on aphid population growth, without considering landscape complexity. 
+We ran anova tests and post-hoc analysis using the tukey test and the letter test which gave rise to the diagram you see. 
+The same conclusions from the previous graph can be drawn here:
+the treatments with either all natural enemies (O) or many of them (HPGD) had the strongest pest control effect. 
+APG goes down considerably as time goes by. 
+across all dates, ground dwellers had the smallest control effect out of all natural enemies. 
+
+####  *Effect of enemy exclusion treatments on parasitism rate at Date 1, 2 and 3* 
+ 
+# parasitism rate 
+
+Data1$parasitism_rate <- NA
+A <-  Data1$BUFF_DIST == "200"
+Data1[A, "parasitism_rate"] <- (Data1$aphid_parasitized[A]/(Data1$aphid_live[A] + Data1$aphid_parasitized[A]))
+Data1$parasitism_rate
+
+# plot for BUFF DIST = 200 
+
+#ANOVA result for parasitism rate ~ treatment
+annosPR = c('c','b','c','b','a','b',
+          'd','b','d','a','c','b',
+          'd','bc','d','ab','a','c')
+
+library(ggplot2)
+ggplot(Data1, aes(x = Treatment, y = parasitism_rate, fill = Treatment)) +
+  geom_boxplot() +
+  labs(x = "Enemy exclution treatment", y = "Parasitism rate",
+       title = "Effects of Treatment on Parasitism rate at different dates") +
+  geom_hline(yintercept = 0, colour = "grey") +
+  stat_summary(geom = 'text', label = annosPR, fun.y = mean, vjust = -1) + facet_grid(.~Date)
+##Remarks:
+
+This bar plot graph describes the relationship between the natural enemies treatment and parasitism rate. 
+From this graph, we can notice that: 
+the parasitism rate tend to increase over time in most treatments except for H and HGD. Both these treatments remain low for all dates considered.  In HPGC, parasitism rate is first very high and then drops at Date 2 (could be due to sampling mistakes here, given how parasitism rate rises back on Date 3). 
+Globally, the more natural enemies are involved, the higher the parasitism rate of aphids. Look at treatment O, HPGD, HBP. 
+
+### *Effect of enemy exclusion treatments on syrphid fraction at Date 1, 2 and 3*
+
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
+Data1$APG <- NA 
+A <- Data1$Date == "1"
+Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/10)
+A <- Data1$Date == "2"
+Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/20)
+A <- Data1$Date == "3"
+Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/30)
+DataOG <- Data1
+
+parasitism_rate <- (Data1$aphid_parasitized/Data1$aphid_live + Data1$aphid_parasitized)
+DataOG$parasitism_rate <- parasitism_rate
+
+syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
+DataOG$syrphid_fraction <- syrphid_fraction
+
+# new data frame with BUFF = 900
+
+A <- DataOG$BUFF_DIST == "900"
+Data900 <- DataOG[A,]   
+
+# plot
+
+library(ggplot2)
+ggplot(Data900, aes(x = Treatment, y = syrphid_fraction , fill = Treatment)) +
+  geom_boxplot() +
+  labs(x = "Enemy exclution treatment", y = "Syrphid fraction",
+       title = "Effects of Treatment on syrphid fraction at different dates") +
+  geom_hline(yintercept = 0, colour = "grey") +
+  facet_grid(.~Date)
+
+##Remarks 
+
+Similar findings of the graph from the previous result can be observed;
+-An increase in syrphid fraction over time in most treatments except for HGD and H. Syrphid fraction in HPGD grows also quite slow. 
+Treatments involving a large combination of NE show a higher syrphid fraction: O, HPGD, HBP. 
+Note that NaN have been purposely removed to obtain this graph. Given that syrphid fraction is a division, many values had NaN because of the division by 0.
