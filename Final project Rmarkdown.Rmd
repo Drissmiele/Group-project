@@ -402,6 +402,93 @@ facet_grid(.~Date)
 
 ```
 
+```{r}
+# New data frame with BUFF DIST = 900
+
+A <- Data1$BUFF_DIST == "900"
+Data900 <-Data1[A,]           # new data frame with BUFF_DIST = 900
+Data900$syrphid_fraction <- (Data900$syrphidl_p / ((Data900$aphid_live) + (Data900$syrphidl_p)))
+
+#Data900$syrphid_fraction[is.na(Data900$syrphid_fraction)] <- 0 #(used to assign 0 to NaN)
+
+# Removing all NaN
+Data900 <- na.omit(Data900)
+
+```
+
+
+```{r, include= FALSE}
+#ANOVA for syrphid fraction at date 1
+DATE1_900 <- Data900[Data900$Date == "1",]
+
+#D1 anova test
+anovaD1_SF <- aov(DATE1_900$syrphid_fraction ~ DATE1_900$Treatment, data = DATE1_900)
+
+summary(anovaD1_SF)
+
+TukeyHSD(anovaD1_SF)
+
+library("agricolae")
+HSD_D1_SF <- HSD.test(anovaD1_SF, "DATE1_900$Treatment", unbalanced = TRUE, group = T)
+HSD_D1_SF
+```
+
+```{r, include= FALSE}
+#ANOVA for syrphid fraction at date 2
+DATE2_900 <- Data900[Data900$Date == "2",]
+
+#D2 anova test
+anovaD2_SF <- aov(DATE2_900$syrphid_fraction ~ DATE2_900$Treatment, data = DATE2_900)
+summary(anovaD2_SF)
+
+TukeyHSD(anovaD2_SF)
+
+library("agricolae")
+HSD_D2_SF <- HSD.test(anovaD2_SF, "DATE2_900$Treatment", unbalanced = TRUE, group = T)
+HSD_D2_SF
+
+```
+
+
+```{r, include= FALSE}
+DATE3_900 <- Data900[Data900$Date == "3",]
+
+#D3 anova test
+anovaD3_SF <- aov(DATE3_900$syrphid_fraction ~ DATE3_900$Treatment, data = DATE3_900)
+
+summary(anovaD3_SF)
+
+TukeyHSD(anovaD3_SF)
+
+library("agricolae")
+HSD_D3_SF <- HSD.test(anovaD3_SF, "DATE3_900$Treatment", unbalanced = TRUE, group = T)
+HSD_D3_SF
+
+```
+
+
+```{r}
+#ANOVA result for syrphid fraction ~ treatment
+annosSF = c('b','b','b','ab','ab','a',
+            'b','ab','ab','a','ab','ab',
+            'a','a','a','a','a','a')
+
+```
+
+
+```{r}
+#plot for BUFF DIST = 900
+ggplot(Data900, aes(x = Treatment, y = syrphid_fraction , fill = Treatment)) +
+  geom_boxplot() +
+  labs(x = "Enemy exclution treatment", y = "Syrphid fraction",
+       title = "Effects of Treatment on syrphid fraction at different dates") +
+  geom_hline(yintercept = 0, colour = "grey") +
+  stat_summary(geom = 'text', label =annosSF, fun.y = mean , vjust = -1)+
+  facet_grid(.~Date)
+
+```
+
+
 ###comments date3 syrphid fraction anova
 
 
@@ -462,6 +549,8 @@ abline(lm(APG ~ syrphid_fraction, data = DataOG))
 plot(Biomass_fin ~ syrphid_fraction, data = DataOG, xlab ="Syrphid fraction", ylab = "Final Cabbage Biomass (g)", main = "Effect of syrphid fraction on final cabbage biomass")
 abline(lm(Biomass_fin ~ syrphid_fraction, data = DataOG))
 ```
+
+
 
 
 
