@@ -59,12 +59,58 @@ lmBM13 <- lm(DataOG$Biomass_fin ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + Da
 lmBM14 <- lm(DataOG$Biomass_fin ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Treatment + I((DataOG$Field_Mgmt)*(DataOG$aphid_live)) + I((DataOG$Pt.seminatural)*(DataOG$Treatment)))
 lmBM15 <- lm(DataOG$Biomass_fin ~ DataOG$Pt.seminatural + DataOG$Treatment + I((DataOG$Pt.seminatural)*(DataOG$aphid_live)) + I((DataOG$Field_Mgmt)*(DataOG$parasitism_rate)))
 
-#Model comparison
 
+# anova for model comparaison from simple to complex models
+
+anova(lmBM1, lmBM2)
+#no p value
+
+anova(lmBM2, lmBM3)
+#no p value
+
+anova(lmBM3, lmBM4)
+#no p value
+
+anova(lmBM4, lmBM5)
+#no p value
+
+anova(lmBM5, lmBM6)
+#no p  value
+
+anova(lmBM6, lmBM7)
+#no p value
+
+anova(lmBM7, lmBM8)
+#no p value
+
+anova(lmBM8, lmBM9)
+#no p value 
+
+anova(lmBM9, lmBM10)
+#M10 < 2.2e-16 ***
+
+anova(lmBM10, lmBM11)
+#no p value
+
+anova(lmBM11, lmBM12)
+#no p value
+
+anova(lmBM12, lmBM15)
+#no p value
+
+anova(lmBM15, lmBM14)
+#M14 < 2.2e-16 ***
+
+anova(lmBM14, lmBM13)
+#M13 < 2.2e-16 ***
+
+#M13 is the best model
+
+#　Given the absence of p values with the anova() function, we relied on the AIC index.
 AIC(lmBM1, lmBM2, lmBM3, lmBM4, lmBM5, lmBM6, lmBM7, lmBM8, lmBM9, lmBM10, lmBM11, lmBM12, lmBM13, lmBM14, lmBM15)
 
 #lowest
 #lmBM13 158068.6
 
 
-aaa
+    

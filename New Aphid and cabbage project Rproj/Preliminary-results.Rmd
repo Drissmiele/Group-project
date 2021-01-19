@@ -1,0 +1,470 @@
+---
+title: "Pest control of aphids depends on landscape complexity and natural enemy interactions"
+author: "Ajobiewe, E., Benedetto, A., Karasawa, M., & Martinez, F."
+date: "15/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE) 
+# install.packages("readxl")
+# install.packages("igraph")
+library(readxl)
+library(igraph)
+```
+Note that the data was provided by the following scientific article: **“Pest control of aphids on landscape complexity and natural enemy interactions”.** 
+It can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
+
+# Introduction
+
+Aphids are a **major concern** in agricultural crops. Control by natural enemies is an essential component of the ecological intensification of agriculture. 
+This study used multiple natural enemy enclosures replicated in 18 fields of Brassica oleracea and other crop types across a gradient in **landscape complexity** to investigate:the strength of natural pest control across landscapes, the contribution of natural enemy guilds to pest control and the interaction effect between natural enemy guilds and landscape. 
+
+In this study, the variables are as follows:
+
+1.   **Dependent variables**: Aphid Population Growth (APG), Aphid density, Parasitized Aphids, Parasitism rate, Syrphid larvae, Syrphid fraction, and the real final dependent variable which is final cabbage biomass. 
+
+2.   **Independent variables**: Landscape complexity, Natural Exclusion Treatments (a combination of one or more natural enemies), Field management, crop type, crop initial maturity, % of seminatural habitat, radius of the buffer, Date. 
+
+As of right now, we have assessed the relationships between the following variables:
+
+1.   Treatment --> Aphid density/APG
+2.   Aphid parasitized --> Aphids density/APG
+3.   Aphids density/APG --> Aphids parasitized
+4.   Syrphid fraction --> Aphids density
+5.   Aphids density --> Final Cabbage biomass
+6.   Field Management --> Aphids density
+7.   Field Management --> Syrphid fraction
+8.   Field Management --> Aphids parasitized
+9.  Crop initial maturity --> Aphids density
+10.   Crop initial maturity --> Syrphid fraction
+11.   Crop type --> Aphids density
+12.   Crop type --> Syrphid fraction
+13.   % Semi natural habitat --> Aphids density
+14.   % Semi natural habitat --> Syrphid fraction
+15.   % Semi natural habitat --> Aphids parasitized 
+16.   % Semi natural habitat --> Final Cabbage Biomass
+17.   Field Management --> Final Cabbage Biomass
+18.   Plot ID --> Aphids density
+19.   Date --> Aphids density
+20.   Treatment --> Parasitism rate
+21.   Parasitism rate --> Aphids density
+22.   Parasitism rate --> APG
+23.   Syrphid fraction --> APG
+24.   Crop maturity --> Parasitism rate
+25.   % Seminatural habitat --> Parasitism rate
+26.   Field Management --> Parasitism rate
+
+It is pertinent to point out that we have not elucidated the relationships relating Parasitism rate and other variables except for "Parasitism rate ~ Treatment".
+
+We have represented all possible relationships in the following **network**:
+
+```{r}
+
+links <- read_excel("Data/Relationships between variables.xlsx")
+network <- graph_from_data_frame(d = links, directed = T) 
+plot(network, vertex.color = "yellow", edge.arrow.size = 1, vertex.label.font = 2, vertex.label.color = "black")
+```
+
+# Objectives.
+
+Our major objectives were to assess:
+
+1.  The effect of natural enemies on aphid population growth across a gradient of landscape complexity.
+
+2.   The individual and interacting effects of different natural enemy guilds on aphid population growth
+
+3.   The possible interaction effect between natural enemy guilds and landscape complexity.
+
+# Hypotheses.
+
+1.   We will study whether the presence of natural enemies decrease aphid population growth, comparing plots with NE present to plots where NE is absent. In this case, the null hypothesis is that there is no significant difference in population growth between plots when NE is present and NE is absent. 
+
+2.   We will study whether the combination of natural enemies have a complementary effect and not an antagonistic effect on aphid population growth. 
+
+3.   We will study whether the effect of natural enemies is stronger in complex landscapes, comparing plots with complex landscapes to plots with simplified ones. 
+
+4.   We will study whether there is an interaction effect between the type of NE and landscape complexity. According to the null hypothesis, the interaction may not be significant. If it is rejected, it would probably mean that we will see some guilds perform better in some landscape than others.
+
+5.   We will study if the parasitism rate and syrphid fraction increases with landscape complexity or not. (H0; No differences in parasitism rate and syrphid fraction in complex landscapes )
+
+6.   We will study whether aphid growth population decreases cabbage biomass (null hypothesis: no significant differences)..
+
+# Methods.
+
+Step by Step:
+
+1.   We assessed the relationships between multiple variables (excluding Parasitism rate for which we only did "Parasitism rate ~ Treatment) using a linear model (lm).
+
+2.   We compared "direct relationships" between 2 variables and relationships between two variables with an interaction effect involving a third variable using the AIC function. We were hoping to detect significant interaction effects. To determine whether the two models were significantly different from each other, we used the Anova test. 
+
+3.   We plotted several graphs with new variables such as APG, Syrphid fraction and Paratism rate. 
+
+4.   We started to compare the different models that rely on a different set of variables using the AIC function. However, the values strayed away from the ones reported in the article. Different models other than lm will have to be tested. 
+
+
+# Results
+
+#### **Map of the Treatment plots**
+
+```{r}
+Data1 <- read.table("Data/Project data.csv", header = TRUE, dec = ",", sep = ";")
+plot(Data1$X, Data1$Y)
+```
+
+
+
+##### **Remark**: We did not include the sequence of linear models (lms) here. They can all be found in the "data folder" in a document called "Linear models 1-20". 
+
+
+
+####  **Effects of landscape complexity and natural enemy exclusion on average daily aphid population growth across three sampling dates (1-3). **
+APG: APhids population growth  
+LC: Landscape complexity
+
+
+```{r}
+#import data file
+# library(readr)
+# Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
+
+###dataframe for sampling date1 
+DATE1 <- Data1[Data1$Date == "1", ]
+DATE1_700 <- subset(DATE1, DATE1$BUFF_DIST == "700")
+
+```
+
+
+####  **Bar graph for APG**  
+**Aphids population growth and Treatment**    
+These bar graphs show the effects of natural enemy exclusion on average daily aphid population growth across three sampling dates (1-3). 
+We consider the mean growth per exclusion treatment and sampling date.  
+
+
+##### **Date1**   
+
+```{r} 
+#calculate the aphids population growth at date1
+logNaphids_D1_bar <- log(DATE1$aphid_live + 1) - log(DATE1$aphidsinoculated_init + 1) 
+APG_D1_bar <- logNaphids_D1_bar/10
+#dataframe for seminatural habitat and aphids population growth at date1 
+DATE1APG_bar <- data.frame(DATE1,APG_D1_bar)
+```
+
+```{r, fig.cap= "Effects of Treatment on APG at Date 1"}
+#plot
+library(ggplot2)
+Bar_APGD1 <- ggplot(DATE1APG_bar, aes(x = Treatment, y = APG_D1_bar, fill = Treatment))
+Bar_APGD1 <- Bar_APGD1 + geom_bar(stat = "identity")
+Bar_APGD1 <- Bar_APGD1 + labs(x = "Enemy exclution treatment", y = "APhids population growth", title = "Effects of Treatment on APG at Date 1")
+Bar_APGD1 <- Bar_APGD1 + geom_hline(yintercept = 0, colour = "grey") 
+#Bar_APGD1 <- Bar_APGD1 + ylim(-0.1 , 0.15)
+plot(Bar_APGD1)
+```
+
+
+##### **Date2**    
+```{r, fig.cap= "Effects of Treatment on APG at Date 2"}
+####dataframe for sampling date2
+DATE2 <- Data1[Data1$Date == "2", ]
+DATE2_700 <- subset(DATE2, DATE2$BUFF_DIST == "700")
+
+#Bar graph
+#calculate the aphids population growth at date1
+logNaphids_D2_bar <- log(DATE2$aphid_live + 1) - log(DATE2$aphidsinoculated_init + 1) 
+APG_D2_bar <- logNaphids_D2_bar/20
+
+#dataframe for seminatural habitat and aphids population growth at date1 
+DATE2APG_bar <- data.frame(DATE2,APG_D2_bar)
+
+#plot
+Bar_APGD2 <- ggplot(DATE2APG_bar, aes(x = Treatment, y = APG_D2_bar, fill = Treatment))
+Bar_APGD2 <- Bar_APGD2 + geom_bar(stat = "identity")
+Bar_APGD2 <- Bar_APGD2 + labs(x = "Enemy exclution treatment", y = "APhids population growth", title = "Effects of Treatment on APG at Date 2")
+Bar_APGD2 <- Bar_APGD2 + geom_hline(yintercept = 0, colour = "grey") 
+plot(Bar_APGD2)
+
+```
+
+
+
+##### **Date3**    
+```{r, fig.cap= "Effects of Treatment on APG at Date 3"}
+####dataframe for sampling date3
+DATE3 <- Data1[Data1$Date == "3", ]
+DATE3_700 <- subset(DATE3, DATE3$BUFF_DIST == "700")
+
+#calculate the aphids population growth at date1
+logNaphids_D3_bar <- log(DATE3$aphid_live + 1) - log(DATE3$aphidsinoculated_init + 1) 
+APG_D3_bar <- logNaphids_D3_bar/30
+
+#dataframe for seminatural habitat and aphids population growth at date1 
+DATE3APG_bar <- data.frame(DATE3,APG_D3_bar)
+
+#plot
+Bar_APGD3 <- ggplot(DATE3APG_bar, aes(x = Treatment, y = APG_D3_bar, fill = Treatment))
+Bar_APGD3 <- Bar_APGD3 + geom_bar(stat = "identity")
+Bar_APGD3 <- Bar_APGD3 + labs(x = "Enemy exclution treatment", y = "APhids population growth", title = "Effects of Treatment on APG at Date 3")
+Bar_APGD3 <- Bar_APGD3 + geom_hline(yintercept = 0, colour = "grey") 
+plot(Bar_APGD3)
+
+
+```
+
+
+
+####  **Line graph for APG **
+These lines graphs show the effects of landscape complexity and natural enemy exclusion (NEE) on average daily aphid population growth across three sampling dates (1-3).  
+They show the variation of predicted values across the gradient in landscape complexity, measured by percent seminatural habitat in a 700 m radius around fields.  
+
+##### **Date 1**  
+
+```{r}
+#calculate the aphids population growth at date1  
+logNaphids_D1_line <- log(DATE1_700$aphid_live + 1) - log(DATE1_700$aphidsinoculated_init + 1) 
+APG_D1_line <- logNaphids_D1_line/10 
+```
+
+```{r}
+#dataframe for seminatural habitat and aphids population growth at date1   
+DATE1APG_line <- data.frame(DATE1_700,APG_D1_line)  
+```
+
+```{r, fig.cap= "Effects of Treatment on LC and APG at Date 1"}
+#barplot for % Seminatural habitat and APhid population growth
+Line_APGD1 <- ggplot(DATE1APG_line, aes(x = Pt.seminatural, y = APG_D1_line, color = Treatment))
+Line_APGD1 <- Line_APGD1 + labs(x = "% seminatural habitat", y = "Aphids population growth", title = "Effects of Treatment on LC and APG at Date 1")
+Line_APGD1 <- Line_APGD1 + geom_smooth(method = "lm")
+Line_APGD1 <- Line_APGD1 + xlim(5,45) + ylim(-0.2 , 0.2)
+print(Line_APGD1)
+```
+
+
+##### **Date2**    
+```{r, fig.cap="Effects of Treatment on LC and APG at Date 2"}
+#calculate the aphids population growth at date1
+logNaphids_D2_line <- log(DATE2_700$aphid_live + 1) - log(DATE2_700$aphidsinoculated_init + 1) 
+APG_D2_line <- logNaphids_D2_line/20
+
+#dataframe for seminatural habitat and aphids population growth at date1 
+DATE2APG_line <- data.frame(DATE2_700,APG_D2_line)
+
+#barplot for % Seminatural habitat and APhid population growth
+Line_APGD2 <- ggplot(DATE2APG_line, aes(x = Pt.seminatural, y = APG_D2_line, color = Treatment))
+Line_APGD2 <- Line_APGD2 + labs(x = "% seminatural habitat", y = "Aphids population growth", title = "Effects of Treatment on LC and APG at Date 2")
+# for scatter plot: use geom_point()
+Line_APGD2 <- Line_APGD2 + geom_smooth(method = "lm")
+Line_APGD2 <- Line_APGD2 + xlim(5,45) + ylim(-0.2 , 0.2)
+print(Line_APGD2)
+```
+
+
+##### **Date3**    
+```{r, fig.cap="Effects of Treatment on LC and APG at Date 3"}
+#calculate the aphids population growth at date1
+logNaphids_D3_line <- log(DATE3_700$aphid_live + 1) - log(DATE3_700$aphidsinoculated_init + 1) 
+APG_D3_line <- logNaphids_D3_line/30
+
+#dataframe for seminatural habitat and aphids population growth at date1 
+DATE3APG_line <- data.frame(DATE3_700,APG_D3_line)
+
+#barplot for % Seminatural habitat and APhid population growth
+Line_APGD3 <- ggplot(DATE3APG_line, aes(x = Pt.seminatural, y = APG_D3_line, color = Treatment))
+Line_APGD3 <- Line_APGD3 + labs(x = "% seminatural habitat", y = "Aphids population growth", title = "Effects of Treatment on LC and APG at Date 3")
+# for scatter plot: use geom_point()
+Line_APGD3 <- Line_APGD3 + geom_smooth(method = "lm")
+Line_APGD3 <- Line_APGD3 + xlim(5,45) + ylim(-0.2 , 0.2)
+print(Line_APGD3)
+
+```
+
+
+
+####  **Effects of landscape complexity and natural enemy exclusion on aphid parasitism rate at three sampling dates (dates 1–3; 10 day intervals).**
+
+####  **Bar graph for Parasitism rate**   
+We consider the mean values per exclusion treatment and sampling date.
+
+
+##### **Date1**  
+```{r, fig.cap= "Effects of Treatment on PR at Date 1"}
+#dataframe for sampling date1 
+DATE1 <- Data1[Data1$Date == "1", ]
+DATE1_200 <-  subset(DATE1, DATE1$BUFF_DIST == "200")
+
+# parasitism rate 
+PR_D1_bar　<- DATE1$aphid_parasitized/(DATE1$aphid_live + DATE1$aphid_parasitized)
+
+#add parasitism rate to the dataframe 
+DATE1PR_bar <- data.frame(DATE1,PR_D1_bar)
+
+#plot
+Bar_PRD1 <- ggplot(DATE1PR_bar, aes(x = Treatment, y = PR_D1_bar, fill = Treatment))
+Bar_PRD1 <- Bar_PRD1 + geom_bar(stat = "identity")
+Bar_PRD1 <- Bar_PRD1 + labs(x = "Enemy exclution treatment", y = "Parasitism rate", title = "Effects of Treatment on PR at Date 1")
+plot(Bar_PRD1)
+
+```
+
+
+##### **Date2**  
+```{r, fig.cap="Effects of Treatment on PR at Date 2"}
+# parasitism rate 
+PR_D2_bar　<- DATE2$aphid_parasitized/(DATE2$aphid_live + DATE2$aphid_parasitized)
+
+#dataframe including PR
+DATE2PR_bar <- data.frame(DATE2,PR_D2_bar)
+
+#plot
+Bar_PRD2 <- ggplot(DATE2PR_bar, aes(x = Treatment, y = PR_D2_bar, fill = Treatment))
+Bar_PRD2 <- Bar_PRD2 + geom_bar(stat = "identity")
+Bar_PRD2 <- Bar_PRD2 + labs(x = "Enemy exclution treatment", y = "Parasitism rate", title = "Effects of Treatment on PR at Date 2")
+plot(Bar_PRD2)
+
+```
+
+
+##### **Date3**  
+```{r, fig.cap="Effects of Treatment on PR at Date 3"}
+# parasitism rate - Treatment
+PR_D3_bar　<- DATE3$aphid_parasitized/(DATE3$aphid_live + DATE3$aphid_parasitized)
+
+#dataframe including parasitism rate at date3 
+DATE3PR_bar <- data.frame(DATE3,PR_D3_bar)
+
+#plot 
+Bar_PRD3 <- ggplot(DATE3PR_bar, aes(x = Treatment, y = PR_D3_bar, fill = Treatment))
+Bar_PRD3 <- Bar_PRD3 + geom_bar(stat = "identity")
+Bar_PRD3 <- Bar_PRD3 + labs(x = "Enemy exclution treatment", y = "Parasitism rate", title = "Effects of Treatment on PR at Date 3")
+plot(Bar_PRD3)
+
+```
+
+
+####  **Effects of landscape complexity and natural enemy exclusion on syrphid fraction at three sampling dates (dates 1–3; 10 day intervals).**  
+
+
+##### **Date1**  
+```{r}
+#Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep =";")
+Date_1 <- Data1[Data1$Date == "1", ]
+syrphid_fraction <- (Date_1$syrphidl_p / ((Date_1$aphid_live) + (Date_1$syrphidl_p)))
+Date_1$syrphid_fraction <- syrphid_fraction
+
+Date1buff <- subset(Date_1, BUFF_DIST == 900)
+
+# lm using Date_1
+lm1 <- lm(Date1buff$syrphid_fraction ~ Date1buff$Pt.seminatural)
+
+# ggplot using Date1buff
+ggplot(Date1buff, aes(x = Pt.seminatural, y = syrphid_fraction, 
+                   color = Treatment)) +
+  geom_jitter() +
+  geom_smooth(method = "exp")
+```
+
+```{r, fig.cap= "Effect of NE treatment on syrphid fraction at Date 1"}
+#barplot using Date_1
+G1 <- ggplot(Date_1, aes(x = Treatment, y = syrphid_fraction, fill = Treatment)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Treatment", y = "Syrphid fraction", title = "Effect of NE treatment on syrphid fraction at Date 1")
+print(G1)
+```
+
+
+##### **Date2**   
+```{r}
+# lm using Date_2
+Date_2 <- Data1[Data1$Date == "2", ]
+syrphid_fraction <- (Date_2$syrphidl_p / ((Date_2$aphid_live) + (Date_2$syrphidl_p)))
+Date_2$syrphid_fraction <- syrphid_fraction
+
+Date2buff <- subset(Date_2, BUFF_DIST == 900)
+
+lm1 <- lm(Date_2$syrphid_fraction ~ Date_2$Pt.seminatural)
+
+# ggplot using Date2buff
+ggplot(Date2buff, aes(x = Pt.seminatural, y = syrphid_fraction, 
+                      color = Treatment)) +
+  geom_jitter() +
+  geom_smooth(method = "exp")
+```
+
+```{r, fig.cap= "Effect of NE treatment on syrphid fraction at Date 2"}
+#barplot using Date_2
+G1 <- ggplot(Date_2, aes(x = Treatment, y = syrphid_fraction, fill = Treatment)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Treatment", y = "Syrphid fraction", title = "Effect of NE treatment on syrphid fraction at Date 2")
+print(G1)
+
+```
+
+
+
+
+##### **Date3**   
+```{r}
+Date_3 <- Data1[Data1$Date == "3", ]
+syrphid_fraction <- (Date_3$syrphidl_p / ((Date_3$aphid_live) + (Date_3$syrphidl_p)))
+Date_3$syrphid_fraction <- syrphid_fraction
+
+Date3buff <- subset(Date_3, BUFF_DIST == 900)
+
+
+# lm using Date_3
+lm1 <- lm(Date_3$syrphid_fraction ~ Date_3$Pt.seminatural)
+
+# ggplot using Date3buff
+ggplot(Date3buff, aes(x = Pt.seminatural, y = syrphid_fraction, 
+                      color = Treatment)) +
+  geom_jitter() +
+  geom_smooth(method = "exp")
+```
+
+```{r, fig.cap= "Effect of NE treatment on syrphid fraction at Date 3"}
+#barplot using Date_3
+G1 <- ggplot(Date_3, aes(x = Treatment, y = syrphid_fraction, fill = Treatment)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Treatment", y = "Syrphid fraction", title = "Effect of NE treatment on syrphid fraction at Date 3")
+print(G1)
+
+# one inconsistency: second highest number should not be HPGD, but HGD according to the article. 
+
+```
+
+# Discussion
+
+## **Aphids population growth (APG)**
+
+##### As far as APG is concerned, we noticed that treatment H exhibited the highest APG. It was followed by the HGD (herbivores and ground-dwellers), HP (herbivores and flying insects), HBP (herbivores + birds + flying insects), O(herbivores + all enemies) and HPGD (herbivores + flying insects + ground-dwellers) 
+
+##### For Date 2, Aapg  was highest in H,  followed by HGD, HP, HPGD, HBP and O. For Date 3, apids population growth was highest in H, followed by HGD, HP, HBP, O and HPGD. Overall, the treatment H appears to be curbing the aphids population growththe most. Another interesting finding is that APG was notably less in sampling date 3.
+
+
+##### When looking at % Seminatural habitat, we noticed that the more complex the landscape is, the higher the APG. Moreover,in  sampling date 3, aphids population growth was stable, regardless of the percentage of seminatural habitat. Note that when we plotted the effect of landscape complexity and NEE on APG across 3 samplign dates (1-3), the graphs obtained wwere the same as the ones in the article. 
+
+
+## **Parasitism rate**
+
+##### For Date 1, HPGD was the treatment that exhibited the highest parasitism rate, followed by O, HBP, HP, HGD, and H. At date 2, HP was highest, followed by HBP, O and HPGD, HGD, and H. Finally, At date 3, HP was highest followed by HBP, HPGD, O HGD and H. When comparing all treatments, HP exhibited overall the highest parasitism rate accross all sampling dates.
+
+##### Note that in treatments where all NE were excluded, the parasitism rate did not vary much. Once again, our graphs representing the effects of landscape complexity and natural enemy exclusion on aphids parasitism rate across three sampling dates (1–3) correspond with the one from the article.
+
+
+## **Syrphid fraction**
+
+##### At date 1, O was the treatment that exhibited the highest syrphid fraction followed by HPGD, HGD, HBP, HGD and H. At date 2, HP was the highest followed by O, HBP, HPGD, HGD and H. At date 3, O was the highest, followed by HBP, HP, HPGD, HGD and H.
+
+##### Our graphs representing the effects of landscape complexity and natural enemy exclusion on syrphid fraction across sampling date 1-2 correspond to the ones from the article. However, the one based on date 3 does not. Some mistake has to be corrected. 
+
+
+
+# **Conclusion**
+
+##### With this preliminary work, we were able to identify trends and patterns, but our statistical analysis is not finished. The analysis performed in the research under study is advanced, and we are trying to follow their footsteps as far as we can. The next step consists of using different models besides lm. In fact, the research team placed a lot of emphasis in the search of appropriate models for each variable. We have only tried (lm() so far. We intend to use glm() and see if our results correspond more closely to the ones reported in the article. 
+
+
+
+
+
+
