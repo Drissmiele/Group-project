@@ -641,25 +641,7 @@ Figure 3. Effects of Treatment on parasitism rate at different rates
 </div>
 </div>
 <div id="effect-of-enemy-exclusion-treatments-on-syrphid-fraction-at-date-1-2-and-3" class="section level3">
-<<<<<<< HEAD
 <h3><strong>Effect of enemy exclusion treatments on syrphid fraction at Date 1, 2 and 3</strong></h3>
-=======
-<h3><em>Effect of enemy exclusion treatments on syrphid fraction at Date 1, 2 and 3</em></h3>
-<pre class="r"><code># New data frame with BUFF DIST = 900
-
-A &lt;- DataOG$BUFF_DIST == &quot;900&quot;
-Data900 &lt;-DataOG[A,]           # new data frame with BUFF_DIST = 900
-Data900$syrphid_fraction &lt;- (Data900$syrphidl_p / ((Data900$aphid_live) + (Data900$syrphidl_p)))
-
-#Data900$syrphid_fraction[is.na(Data900$syrphid_fraction)] &lt;- 0 #(used to assign 0 to NaN)
-
-# Removing all NaN
-Data900 &lt;- na.omit(Data900)</code></pre>
-<pre class="r"><code>#ANOVA result for syrphid fraction ~ treatment
-annosSF = c(&#39;b&#39;,&#39;b&#39;,&#39;b&#39;,&#39;ab&#39;,&#39;ab&#39;,&#39;a&#39;,
-            &#39;b&#39;,&#39;ab&#39;,&#39;ab&#39;,&#39;a&#39;,&#39;ab&#39;,&#39;ab&#39;,
-            &#39;a&#39;,&#39;a&#39;,&#39;a&#39;,&#39;a&#39;,&#39;a&#39;,&#39;a&#39;)</code></pre>
->>>>>>> 7c5345ac00c96004605cd8b033ff5b68feab6024
 <pre class="r"><code>#plot for BUFF DIST = 900
 ggplot(Data900, aes(x = Treatment, y = syrphid_fraction , fill = Treatment)) +
   geom_boxplot() +
