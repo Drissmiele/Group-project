@@ -147,3 +147,5 @@ anova(lmAP4, lmAP1)
 
 # M4 appears to be the best model.
 
+
+
