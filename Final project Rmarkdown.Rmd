@@ -1,92 +1,96 @@
 ---
-title: "Final project"
-author: "Adriele Benedetto"
+title: "Pest control of aphids depends on landscape complexity and natural enemy interactions"
+author: "Ajobiewe, E., Karasawa, M, Benedetto, A., & Martinez, F"
 date: "18/01/2021"
 output: html_document
 ---
-
-knitr::opts_chunk$set(echo = FALSE)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, gecho = FALSE)
 #install.packages("readxl")
 #install.packages("igraph")
 # install.packages("gridExtra")
+```
+#### Note that the data was provided by the following scientific article: *“Pest control of aphids on landscape complexity and natural enemy interactions”.* 
+#### It can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
 
-Note that the data was provided by the following scientific article: *“Pest control of aphids on landscape complexity and natural enemy interactions”.* 
-It can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
+# **Introduction**
 
-# Introduction
+#### Aphids are a **major concern** in agricultural crops. Control by natural enemies is an essential component of the ecological intensification of agriculture. This study attempts to fill a **knowledge gap**: the specific contribution of different Natural Enemy Guilds (NEG) in controlling aphids across a gradient in landscape complexity. This study used multiple natural enemy enclosures replicated in 18 fields of Brassica oleracea and other crop types across a gradient in **landscape complexity** to investigate: the strength of natural pest control across landscapes, the contribution of natural enemy guilds to pest control and the interaction effect between natural enemy guilds and landscape. 
 
-Aphids are a *major concern* in agricultural crops. Control by natural enemies is an essential component of the ecological intensification of agriculture. 
-This study used multiple natural enemy enclosures replicated in 18 fields of Brassica oleracea and other crop types across a gradient in *landscape complexity* to investigate:the strength of natural pest control across landscapes, the contribution of natural enemy guilds to pest control and the interaction effect between natural enemy guilds and landscape. 
+#### In this study, the variables are as follows:
 
-In this study, the variables are as follows:
+### **Dependent variables**
 
-*Dependent variables*
-1. Aphid Population Growth (APG) 
-2. Aphid density 
-3. Parasitized Aphids 
-4. Parasitism rate (PR)
-5. Syrphid larvae
-6. Syrphid fraction and the real final dependent variable which is  7. Final cabbage biomass
+#### 1. Aphid Population Growth (APG) 
+#### 2. Aphid density 
+#### 3. Parasitized Aphids 
+#### 4. Parasitism rate (PR)
+#### 5. Syrphid fraction 
+#### 6. Final cabbage biomass, the *ultimate dependent variable* that matters for farmers
 
-*Independent variables*
-1. Landscape complexity (% semi-natural habitat at a radius around fields)
-2. Treatments (different combinations of Natural Enemies exclusions) 3. Field management (organic versus conventional),
-4. Sampling Date
-5. Crop Type
-6. Crop Maturity 
-7. Plot 
+### **Independent variables**
 
-We used 6 of the dependent variableS to assess the best relationship with the independent variables. We also tested the interactions between 2 or more dependent variables e.g APG and PR
-
-We have represented all possible relationships in the following *network*
-
-library(readxl)
-library(igraph)
-links <- read_excel("Relationships between variables.xlsx")
-network <- graph_from_data_frame(d = links, directed = T) 
-plot(network, vertex.color = "yellow", edge.arrow.size = 1, vertex.label.font = 2, vertex.label.color = "black")
-
-# Team Objectives
-To determine:
-The effect of natural enemies (NE) on APG across a gradient of Landscape Complexity (LC).
-
-The effect of NE on parasitism rate and syrphid fraction across a gradient of LC.
-
-The possible interaction between NE and LC. Interaction would imply that the effects of NE guilds are affected by the complexity of the landscape.  
+#### 1. Landscape complexity (% semi-natural habitat at a radius around fields)
+#### 2. Treatments (different combinations of natural enemies) 
+#### 3. Field management (organic versus conventional),
+#### 4. Sampling Date
+#### 5. Crop Type
+#### 6. Crop Maturity 
+#### 7. Plot 
 
 
-# Research Questions and Hypotheses.
+# **Team Objectives**
 
-1. Does the presence of natural enemies (NE) decrease aphid population growth? 
+#### To determine:
 
-2. Is the effect of NE complementary or antagonist on the dependent variables (e.g. APG, parasitism rate, syrphid fraction)?
+#### 1. The effect of natural enemies (NE) on APG across a gradient of Landscape Complexity (LC).
 
-3. Is there a difference in the effect of NE over aphids between complex and simple landscapes?
+#### 2. The effect of NE on parasitism rate and syrphid fraction across a gradient of LC.
 
-4. Is there an interaction between the efficiency of NE and landscape complexity (LC)?
-
-5. Do parasitism and syrphid presence increase with greater landscape complexity?
-
-6. Does aphid population growth decrease cabbage biomass?
+#### 3. The possible interaction between NE and LC. Interaction would imply that the effects of NE guilds are affected by the complexity of the landscape.  
 
 
-# Methodology using R and Excel
+# **Research Questions and Hypotheses**
 
-Step by Step:
+#### 1. Does the presence of natural enemies (NE) decrease aphid population growth? 
 
-1. We calculated 3 new variables whose formulas were given: APG, parasitism rate and syrphid fraction. 
+#### 2. Is the effect of NE complementary or antagonist on the dependent variables (e.g. APG, parasitism rate, syrphid fraction)?
 
-2. We created an excel sheet listing all the relationships between the variables that are relevant to assess. 
+#### 3. Is there a difference in the effect of NE over aphids between complex and simple landscapes?
 
-3. We plotted the major relationships to outline trends and study the relationships between key variables.
+#### 4. Is there an interaction between the efficiency of NE and landscape complexity (LC)?
 
-4. We ran a significant amount of linear models (lm) to know what model fits best for 6 dependent variables (only 3 in the original study): Aphids density, APG, aphids parasitized, parasitism rate, syrphid fraction and biomass. 
+#### 5. Do parasitism and syrphid presence increase with greater landscape complexity?
 
-5. We carried out ANOVAS followed by “post hoc” tests to highlight significant differences between the models. 
+#### 6. Does aphid population growth decrease cabbage biomass?
 
-# Results
 
-####import data and make data frame called "DataOG" includes APhids population growth, parasitism rate and syrphid fraction.
+# **Methodology using R and Excel**
+
+#### Step by Step:
+
+#### 1. We calculated **3 new variables** whose formulas were given: APG, parasitism rate and syrphid fraction. 
+
+#### 2. We created an excel sheet listing **all the relationships** between the variables that are relevant to assess. 
+
+#### 3. We plotted the **major relationships** to outline trends and study the relationships between key variables.
+
+#### 4. We ran a significant amount of **linear models** (lm) to know what model fits best for 6 dependent variables (only 3 in the original study): Aphids density, APG, aphids parasitized, parasitism rate, syrphid fraction and biomass. 
+
+#### 5. We carried out **ANOVAS** followed by **“post hoc” tests** to highlight significant differences between the models. 
+
+# **Results**
+
+#### **Map of the Treatment plots**
+
+```{r}
+Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
+plot(Data1$X, Data1$Y)
+```
+
+
+#### Data import and creation of data frame *Data OG* that comprises the 3 new variables: APG, parasitism rate and syrphid fraction 
+
 ```{r}
 # creation of DataOG with all variables
 
@@ -119,10 +123,10 @@ DataOG[is.infinite(DataOG)] <- 1
 
 ```
 
-#### *Effects of landscape complexity and natural enemy exclusion on average daily aphid population growth across three sampling dates (1-3)*
+### **Effects of landscape complexity and natural enemy exclusion on average daily aphid population growth across three sampling dates (1-3)**
 
 
-```{r}
+```{r, echo=FALSE, fig.cap= "Figure 1. Effects of landscape complexity on APG in each treatment at 3 different dates"}
 #choose only the
 A <- DataOG$BUFF_DIST == "700"
 Data700 <- DataOG[A,]                       
@@ -138,17 +142,13 @@ facet_grid(.~Date)
 
 
 
-##### *Comments:*
+#### **Comments:**
 
-APG slope flattens, gets less steep over time. 
-In all treatments and for all dates (except the last one when it is less clear), we see a trend highlighting an increase in APG as landscape complexity increases. 
-In treatments involving more than 2 natural enemies, APG growth was the lowest. Examples are O, HPGD, HBP.
-When all natural enemies are excluded (H treatment), APG growth is at its highest.
-This finding is consistent with our hypothesis. 
+#### APG slope flattens, gets less steep over time. In all treatments and for all dates (except the last one where it is less clear), we see a trend highlighting an increase in APG as landscape complexity increases, especially in the absence of natural enemies. In treatments involving more than 2 natural enemies, APG growth was the lowest (e.g. O, HPGD, HBP). When all natural enemies are excluded (H treatment), APG growth is at its highest. This finding is consistent with the hypothesis that the more natural enemies, the more control.
 
 
 
-### Effects of enemy exclusion treatments (combination of NE guilds) on APG at Date 1, 2 and 3
+### **Effects of enemy exclusion treatments (combination of NE guilds) on APG at Date 1, 2 and 3**
 
 
 ```{r}
@@ -157,7 +157,7 @@ A <- DataOG$BUFF_DIST == "700"
 Data700 <- Data1[A,] 
 ```
 
-#####ANOVA and Tukey HSD (post hoc) test
+#### ANOVA and Tukey HSD (post hoc) test
 ```{r}
 #creation of data frame DATE1_700
 DATE1_700 <- Data700[Data700$Date == "1",]
@@ -207,7 +207,7 @@ HSD_D3_APG
 ```
 
 
-```{r}
+```{r, echo=FALSE}
 #Put result of retter test into a vector called annos
 annos = c('a','bc','ab','abc','c','c',
 'a','b','b','b','b','b',
@@ -216,7 +216,7 @@ annos = c('a','bc','ab','abc','c','c',
 ```
 
 
-```{r}
+```{r, echo=FALSE, fig.cap= "Figure 2. Effect of treatment on APG at different dates"}
 #plot
 library(ggplot2)
 ggplot(Data700, aes(x = Treatment, y = APG, fill = Treatment)) +
@@ -228,18 +228,15 @@ stat_summary(geom = 'text', label = annos, fun.y = max, vjust = -1) + facet_grid
 
 ```
 
-*Comments:* 
-Here we looked at the sole effect of natural enemies (different combinations) on aphid population growth, without considering landscape complexity. 
-We ran anova tests and post-hoc analysis using the tukey test and the letter test which gave rise to the diagram you see. 
-The same conclusions from the previous graph can be drawn here:
-the treatments with either all natural enemies (O) or many of them (HPGD) had the strongest pest control effect. 
-APG goes down considerably as time goes by. 
-across all dates, ground dwellers had the smallest control effect out of all natural enemies. 
+#### **Comments:**
 
-####  *Effect of enemy exclusion treatments on parasitism rate at Date 1, 2 and 3* 
+#### Here we looked at the sole effect of natural enemies (different combinations) on aphid population growth (APG), without considering landscape complexity (LC).We ran anova tests and post-hoc analysis using the tukey test and the letter test which gave rise to the diagram you see. The same conclusions from the previous graph can be drawn here:
++ #### the treatments with either all natural enemies (O) or many of them (HPGD) had the strongest pest control effect. 
++ #### APG goes down considerably as time goes by. 
++ #### Across all dates, ground dwellers (GD) had the smallest control effect out of all natural enemies. 
 
-# parasitism rate 
 
+### **Effect of enemy exclusion treatments on parasitism rate at Date 1, 2 and 3**
 ```{r}
 # new data frame with BUFF = 200
 A <- DataOG$BUFF_DIST == "200"
@@ -291,7 +288,7 @@ HSD_D3_PR <- HSD.test(anovaD3_PR, "DATE3_200$Treatment", unbalanced = TRUE, grou
 HSD_D3_PR
 ```
 
-```{r}
+```{r, echo=FALSE}
 #ANOVA result for parasitism rate ~ treatment
 annosPR = c('b','ab','b','ab','a','ab',
 'c','b','bc','a','bc','bc',
@@ -299,7 +296,7 @@ annosPR = c('b','ab','b','ab','a','ab',
 ```
 
 
-```{r}
+```{r, echo=FALSE, fig.cap= "Figure 3. Effects of Treatment on parasitism rate at different rates"}
 library(ggplot2)
 ggplot(Data1, aes(x = Treatment, y = parasitism_rate, fill = Treatment)) +
 geom_boxplot() +
@@ -310,17 +307,16 @@ stat_summary(geom = 'text', label = annosPR, fun.y = mean, vjust = -1) + facet_g
 ```
 
 
-##Remar:
+#### **Comment**:
 
-This bar plot graph describes the relationship between the natural enemies treatment and parasitism rate. 
-From this graph, we can notice that: 
-the parasitism rate tend to increase over time in most treatments except for H and HGD. Both these treatments remain low for all dates considered.  In HPGC, parasitism rate is first very high and then drops at Date 2 (could be due to sampling mistakes here, given how parasitism rate rises back on Date 3). 
-Globally, the more natural enemies are involved, the higher the parasitism rate of aphids. Look at treatment O, HPGD, HBP. 
-
-### *Effect of enemy exclusion treatments on syrphid fraction at Date 1, 2 and 3*
+#### This bar plot graph describes the relationship between the natural enemies treatment and parasitism rate. From this graph, we can notice that: 
++ #### parasitism rate tend to increase over time in most treatments except for H and HGD. Both these treatments remain low for all dates considered. 
++ #### In HPGC, parasitism rate is first very high and then drops at Date 2 (could be due to sampling mistakes here, given how parasitism rate rises back on Date 3). 
++ #### Globally, the more natural enemies are involved, the higher the parasitism rate of aphids. Look at treatment O, HPGD, HBP. 
 
 
-```{r}
+### **Effect of enemy exclusion treatments on syrphid fraction at Date 1, 2 and 3**
+```{r, include=FALSE}
 # New data frame with BUFF DIST = 900
 
 A <- DataOG$BUFF_DIST == "900"
@@ -385,7 +381,7 @@ HSD_D3_SF
 ```
 
 
-```{r}
+```{r, include=FALSE}
 #ANOVA result for syrphid fraction ~ treatment
 annosSF = c('b','b','b','ab','ab','a',
             'b','ab','ab','a','ab','ab',
@@ -394,7 +390,7 @@ annosSF = c('b','b','b','ab','ab','a',
 ```
 
 
-```{r}
+```{r, fig.cap="Figure 4. Effects of Treatment on syrphid fraction at different dates"}
 #plot for BUFF DIST = 900
 ggplot(Data900, aes(x = Treatment, y = syrphid_fraction , fill = Treatment)) +
   geom_boxplot() +
@@ -407,17 +403,13 @@ ggplot(Data900, aes(x = Treatment, y = syrphid_fraction , fill = Treatment)) +
 ```
 
 
-###comments date3 syrphid fraction anova
+#### **Comment:**
 
+#### Similar findings of the graph than the ones from previous graph can be observed;
++ #### An increase in syrphid fraction over time in most treatments except for HGD and H. Syrphid fraction in HPGD grows also quite slow. 
++ #### Treatments involving a large combination of NE show a higher syrphid fraction: O, HPGD, HBP. 
 
-
-##Remarks 
-
-Similar findings of the graph from the previous result can be observed;
--An increase in syrphid fraction over time in most treatments except for HGD and H. Syrphid fraction in HPGD grows also quite slow. 
-Treatments involving a large combination of NE show a higher syrphid fraction: O, HPGD, HBP. 
-Note that NaN have been purposely removed to obtain this graph. Given that syrphid fraction is a division, many values had NaN because of the division by 0.
-
+#### *Note* that NaN have been purposely removed to obtain this graph. Given that syrphid fraction is a division, many values had NaN because of the division by 0.
 
 
 
@@ -446,16 +438,18 @@ G2
 ```
 
 
-```{r}
+```{r, fig.cap= "Figure 5. Effect of landscape complexity on PR and SF"}
 # install.packages("gridExtra")
 library(gridExtra)
 grid.arrange(G1, G2, nrow = 1)
 
 ```
 
+#### **Comment**:
+#### These graphs brings to light the relationship between parasitism rate and syrphid fraction with landscape complexity. It shows that both PR and SF tend to increase with landscape complexity.
 
 
-```{r}
+```{r, fig.cap= "Figure 6. Other Significant relationships between variables"}
 # combine the scatter plots into 1 graph
 
 attach(DataOG)
@@ -468,8 +462,21 @@ plot(Biomass_fin ~ syrphid_fraction, data = DataOG, xlab ="Syrphid fraction", yl
 abline(lm(Biomass_fin ~ syrphid_fraction, data = DataOG))
 ```
 
+#### **Comment**:
+#### These graphs were included in the original article, and so we chose to display them here. They show three significant relationships between the following variables: 
++ #### APG and parasitism rate (strongly negatively correlated)
++ #### APG and syrphid fraction (strongly negatively correlated) 
++ #### Final cabbage biomass and syrphid fraction (positive correlation) 
+#### In the article, the team ran Chi-square tests to demonstrate the significant correlation between these variables. We tried to run the Chi-square test but obtained different values. Thus, we chose to run some AIC tests comparing linear models with just one variable for biomass. We found that APG and aphid density do not have as much as a strong effect on cabbage biomass as syrphid fraction does. 
+#### **Note**: These AIC tests can be found in the document "Some linear models (Biomass)". 
 
 
+# **Linear models and model comparison**
+
+#### For 6 dependent variables (APG, aphid density, parasitism rate, parasitized aphids, syrphid fraction, cabbage biomass), we ran between **15 to 20 linear models** using the lm() function and testing different combinations of variables. We then used the **AIC index** to compare the efficiency of the models and figure which one is best fit for each dependent variable. We also decided to carry out **anova tests** using the anova() function to highlight significant differences between linear models. To do so, we arranged the 15-20 models of each dependent variables from complex to simple. We then tested the models 2 by 2, starting with comparing the most simple one but the next most simple one, following a gradient of increasing model complexity. 
+
+
+#### The linear models and model compairisons can be found in the folder called **"Linear models and model comparison"**. On the other hand, the excel file called **"Linear models, AIC calculation"** (Data folder) shows all the different models and the variables they include. Moreover, it shows the 3 best models for each dependent variable according to the AIC index. 
 
 
 
