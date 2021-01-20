@@ -1,0 +1,103 @@
+---
+title: "Discussion part"
+author: "Adriele Benedetto"
+date: "19/01/2021"
+output: html_document
+---
+
+
+# **Discussion**
+
+#### Below are listed the major findings of the research, each with its own plausible explanation.
+
+### **Finding (1)**
+
++ #### In the absence of natural enemies, APG was higher in complex landscape than in simpler ones. However, higher APG in complex landscape was compensated by stronger pest control. In fact, parasitism rate and syrphid fraction also increased with increasing landscape complexity.
+
+### **Explanation (1)**
+
++ #### This could be due to the fact that greater surface area of semi-natural is often associated with a greater availability of resources, nesting sites, overwintering habitats. Thus, this could have benefited both aphids (increased colonization and reproduction) as well as natural enemies. 
+
+#### *Note*: Other studies found that pest control tends to increase with larger natural or semi-natural habitat (up to 5 more control in complex landscapes versus simple ones)
+
+
+### **Finding (2)**
+
++ #### When comparing the individual contribution of specific natural enemies guilds (NEG), it seems that flying insects (HP treatment) have a stronger control effect than ground-dwellers (GD), especially in complex landscape. This is confirmed by higher parasitism rate and syrphid fraction in complex landscape. Control by GD increased much less with increasing landscape complexity.
+
+### **Explanation (2)**
+
++ #### This finding is consistent with the idea that generalist predators (ground-dwellers) have a lower impact than specialist predators (flying insect) when prey density is high.
+
+### **Finding (3)**
+
++ #### There is a complementary effect between flying insects and ground dwellers. Aphid control was stronger in the presence of both guilds than with either guild alone.  
+
+### **Explanation (3)**
+
++ #### This could be due to a variety of reasons. First, predation could have taken place in different parts of the plant limiting interference between the natural enemies. This is referred to as "spatially segregated behavior". Another possible explanation is that aphids may have tried to escape from the branches and reach the soil surface, becoming vulnerable to the ground-dwellers. However, this behavior was not observed. Instead, some ground dwellers were seen climbing directly onto the plant. 
+
+### **Finding (4)**
+
++ #### In some dates, natural enemy rates (parasitism rate and syrphid fraction) are lower in treatments accessible to birds (O treatment) than in the other treatments. 
+
+### **Explanation (4)**
+
++ #### This is likely to be due to predation by birds of parasitized aphids and syrphid larvae. 
+
+
+# **Conclusion** 
+
+### **From the article:**
+
++ #### The interaction between enemy guilds and landscape complexity is complex.
++ #### Pest control was always stronger when many different enemies were present, especially in more complex landscapes.
++ #### Pest control of GD and flying insects was complementary, but flying insects provided the strongest contribution to pest control.
+
+#### More work needed to understand the interactions between natural enemies. 
+
+### **from our work:**
+
++ #### We learned how to run and interpret different statistical tests and models (e.g. anovas, post hoc tests, chi-square test, linear models etc.)
++ #### we learned how to plot graphs
++ #### we learned how to understand and reconstruct (by trials and errors) the statistical analysis of some scientific articles
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
