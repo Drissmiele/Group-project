@@ -38,67 +38,89 @@ DataOG[is.infinite(DataOG)] <- 1
 
 
 #linear model arranged from complex to simple models
-lmSF_M11 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date+ DataOG$Treatment+ I(DataOG$Field_Mgmt*DataOG$Date)+ I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M10 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date + DataOG$Treatment + I(DataOG$Field_Mgmt*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M14 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M8 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M15  <- lm(DataOG$syrphid_fraction ~  DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment +  I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M17 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date + DataOG$Treatment + I(DataOG$Field_Mgmt*DataOG$Date))
-lmSF_M9 <- lm(DataOG$syrphid_fraction ~ DataOG$Pt.seminatural + DataOG$Date + DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Treatment))
-lmSF_M12 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Date + DataOG$Treatment+ I(DataOG$Field_Mgmt*DataOG$Date))
-lmSF_M13 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt +DataOG$Date + DataOG$Treatment)
-lmSF_M16 <- lm(DataOG$syrphid_fraction ~ DataOG$Date +DataOG$Treatment)
+lmSF_M1 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date+ DataOG$Treatment+ I(DataOG$Field_Mgmt*DataOG$Date)+ I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M2 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date + DataOG$Treatment + I(DataOG$Field_Mgmt*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M3 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M4 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M5  <- lm(DataOG$syrphid_fraction ~  DataOG$Pt.seminatural + DataOG$Date +DataOG$Treatment +  I(DataOG$Pt.seminatural*DataOG$Date) + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M6 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Pt.seminatural+ DataOG$Date + DataOG$Treatment + I(DataOG$Field_Mgmt*DataOG$Date))
+lmSF_M7 <- lm(DataOG$syrphid_fraction ~ DataOG$Pt.seminatural + DataOG$Date + DataOG$Treatment + I(DataOG$Pt.seminatural*DataOG$Treatment))
+lmSF_M8 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt + DataOG$Date + DataOG$Treatment+ I(DataOG$Field_Mgmt*DataOG$Date))
+lmSF_M9 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt +DataOG$Date + DataOG$Treatment)
+lmSF_M10 <- lm(DataOG$syrphid_fraction ~ DataOG$Date +DataOG$Treatment)
+lmSF_M11 <- lm(DataOG$syrphid_fraction ~ DataOG$Pt.seminatural +DataOG$Treatment)
+lmSF_M12 <- lm(DataOG$syrphid_fraction ~ DataOG$Field_Mgmt)
+lmSF_M13 <- lm(DataOG$syrphid_fraction ~ DataOG$Pt.seminatural)
+lmSF_M14 <- lm(DataOG$syrphid_fraction ~ DataOG$Treatment)
+lmSF_M15 <- lm(DataOG$syrphid_fraction ~ DataOG$croptype)
 
-# anova
-anova(lmSF_M16, lmSF_M13)
-#lmSFM13: 2.2e-16 ***
+#AIC model comparison
+AIC(lmSF_M1, lmSF_M2, lmSF_M3, lmSF_M4, lmSF_M5, lmSF_M6, lmSF_M7, lmSF_M8,lmSF_M9,lmSF_M10,lmSF_M11,lmSF_M12,lmSF_M13,lmSF_M14,lmSF_M15)
 
-anova(lmSF_M13, lmSF_M12)
-#lmSFM12: 7.997e-13 ***
+# df      AIC
+# lmSF_M1   9 1409.151
+# lmSF_M2   8 1409.089 #lowest AIC value = best model
+# lmSF_M3   8 1451.763
+# lmSF_M4   7 1458.672
+# lmSF_M5   7 1618.325
+# lmSF_M6   7 1428.652
+# lmSF_M7   6 1624.700
+# lmSF_M8   6 1432.100
+# lmSF_M9   5 1481.405
+# lmSF_M10  4 1670.877
+# lmSF_M11  4 1661.267
+# lmSF_M12  3 1654.150
+# lmSF_M13  3 1815.628
+# lmSF_M14  3 1688.798
+# lmSF_M15  3 1755.386
 
-anova(lmSF_M12, lmSF_M9)
+
+# anova model comparison
+
+anova(lmSF_M15, lmSF_M14)
+#no p value
+
+anova(lmSF_M15, lmSF_M13)
+#no p value
+
+anova(lmSF_M15, lmSF_M12)
 #no p value 
 
-anova(lmSF_M9,lmSF_M17)
-# M17 < 2.2e-16 ***
+anova(lmSF_M15,lmSF_M11)
+#< 2.2e-16 ***
 
-anova(lmSF_M17, lmSF_M15)
+anova(lmSF_M11, lmSF_M10)
 #no p value
 
-anova(lmSF_M15, lmSF_M8)
+anova(lmSF_M11, lmSF_M9)
+#< 2.2e-16 ***
+
+anova(lmSF_M9, lmSF_M8)
+#7.997e-13 ***
+
+anova(lmSF_M8, lmSF_M7)
 #no p value
 
-anova(lmSF_M8, lmSF_M14)
-# M14 0.002846 **
+anova(lmSF_M8, lmSF_M6)
+# 0.01962 *
 
-anova(lmSF_M14, lmSF_M10)
+anova(lmSF_M6, lmSF_M5)
 #no p value
 
-anova(lmSF_M10, lmSF_M11)
-# M11  0.164
-# no significant difference
+anova(lmSF_M6, lmSF_M4)
+#no p value
 
-anova(lmSF_M14, lmSF_M11)
-#M11 2.44e-11 ***
+anova(lmSF_M6, lmSF_M3)
+#no p value
 
-#M11 is the best model accroding to anova. We still decide to calculate the AIC index.
+anova(lmSF_M6, lmSF_M2)
+# 3.447e-06 ***
 
-#AIC
-AIC(lmSF_M11, lmSF_M10, lmSF_M14, lmSF_M8, lmSF_M15, lmSF_M17, lmSF_M9, lmSF_M12,lmSF_M13,lmSF_M16)
-# df      AIC
-# lmSF_M11  9 1409.151 # rank 2
-# lmSF_M10  8 1409.089 # rank 1
-# lmSF_M14  8 1451.763 # rank 5
-# lmSF_M8   7 1458.672 # rank 6
-# lmSF_M15  7 1618.325 # rank 8
-# lmSF_M17  7 1428.652 # rank 3
-# lmSF_M9   6 1624.700 # rank 9
-# lmSF_M12  6 1432.100 # rank 4
-# lmSF_M13  5 1481.405 # rank 7
-# lmSF_M16  4 1670.877 # rank 10
+anova(lmSF_M2, lmSF_M1)
+# 0.164
 
+# M1 and M2 do not significantly differ from one another, M2 would hence be preferred over M1 because it is more simple.
 
-#M10 is the best model
 
 
 
