@@ -9,7 +9,7 @@ Date_1_SF <- data.frame(Date_1, SF_D1)
 
 #D1 anova test
 anovaD1_SF <- aov(Date_1_SF$SF_D1 ~ Date_1$Treatment, data = Date_1_SF)
-anovaD1_SF_FM <- aov(Date_1_SF$SF_D1 ~ Date_1$Treatment + Date_1$Field_Mgmt, data = Date_1_SF)
+anovaD1_SF_FM <- aov(Date_1_SF$SF_D1 ~ Date_1$Treatment + Date_1$fieldma, data = Date_1_SF)
 
 
 summary(anovaD1_SF)
