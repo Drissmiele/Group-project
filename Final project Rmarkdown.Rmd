@@ -319,94 +319,12 @@ Globally, the more natural enemies are involved, the higher the parasitism rate 
 
 ### *Effect of enemy exclusion treatments on syrphid fraction at Date 1, 2 and 3*
 
-```{r}
-# new data frame with BUFF = 900
-
-A <- DataOG$BUFF_DIST == "900"
-Data900 <- DataOG[A,]   
-```
-
-```{r, include= FALSE}
-#ANOVA for syrphid fraction at date 1
-DATE1_900 <- Data900[Data900$Date == "1",]
-
-#D1 anova test
-anovaD1_SF <- aov(DATE1_900$syrphid_fraction ~ DATE1_900$Treatment, data = DATE1_900)
-
-summary(anovaD1_SF)
-
-TukeyHSD(anovaD1_SF)
-
-library("agricolae")
-HSD_D1_SF <- HSD.test(anovaD1_SF, "DATE1_900$Treatment", unbalanced = TRUE, group = T)
-HSD_D1_SF
-```
-
-```{r, include= FALSE}
-#ANOVA for syrphid fraction at date 2
-DATE2_900 <- Data900[Data900$Date == "2",]
-
-#D2 anova test
-anovaD2_SF <- aov(DATE2_900$syrphid_fraction ~ DATE2_900$Treatment, data = DATE2_900)
-summary(anovaD2_SF)
-
-TukeyHSD(anovaD2_SF)
-
-library("agricolae")
-HSD_D2_SF <- HSD.test(anovaD2_SF, "DATE2_900$Treatment", unbalanced = TRUE, group = T)
-HSD_D2_SF
-
-```
-
-
-```{r, include= FALSE}
-DATE3_900 <- Data900[Data900$Date == "3",]
-
-#D3 anova test
-anovaD3_SF <- aov(DATE3_900$syrphid_fraction ~ DATE3_900$Treatment, data = DATE3_900)
-
-summary(anovaD3_SF)
-
-TukeyHSD(anovaD3_SF)
-
-library("agricolae")
-HSD_D3_SF <- HSD.test(anovaD3_SF, "DATE3_900$Treatment", unbalanced = TRUE, group = T)
-HSD_D3_SF
-
-```
-
-
-```{r}
-#ANOVA result for syrphid fraction ~ treatment
-annosSF = c('b','b','b','ab','ab','a',
-            'b','ab','ab','a','ab','ab',
-            'a','a','a','a','a','a')
-
-```
-
-
-```{r}
-# plot
-
-A <- DataOG$BUFF_DIST == "900"
-Data900 <-DataOG[A,] 
-
-library(ggplot2)
-ggplot(Data900, aes(x = Treatment, y = syrphid_fraction , fill = Treatment)) +
-geom_boxplot() +
-labs(x = "Enemy exclution treatment", y = "Syrphid fraction",
-title = "Effects of Treatment on syrphid fraction at different dates") +
-geom_hline(yintercept = 0, colour = "grey") +
-  stat_summary(geom = 'text', label =annosSF, fun.y = mean , vjust = -1)+
-facet_grid(.~Date)
-
-```
 
 ```{r}
 # New data frame with BUFF DIST = 900
 
-A <- Data1$BUFF_DIST == "900"
-Data900 <-Data1[A,]           # new data frame with BUFF_DIST = 900
+A <- DataOG$BUFF_DIST == "900"
+Data900 <-DataOG[A,]           # new data frame with BUFF_DIST = 900
 Data900$syrphid_fraction <- (Data900$syrphidl_p / ((Data900$aphid_live) + (Data900$syrphidl_p)))
 
 #Data900$syrphid_fraction[is.na(Data900$syrphid_fraction)] <- 0 #(used to assign 0 to NaN)
@@ -551,6 +469,65 @@ abline(lm(Biomass_fin ~ syrphid_fraction, data = DataOG))
 ```
 
 
+
+
+
+
+# **Discussion**
+
+#### Below are listed the major findings of the research, each with its own plausible explanation.
+
+### **Finding (1)**
+
++ #### In the absence of natural enemies, APG was higher in complex landscape than in simpler ones. However, higher APG in complex landscape was compensated by stronger pest control. In fact, parasitism rate and syrphid fraction also increased with increasing landscape complexity.
+
+### **Explanation (1)**
+
++ #### This could be due to the fact that greater surface area of semi-natural is often associated with a greater availability of resources, nesting sites, overwintering habitats. Thus, this could have benefited both aphids (increased colonization and reproduction) as well as natural enemies. 
+
+#### *Note*: Other studies found that pest control tends to increase with larger natural or semi-natural habitat (up to 5 more control in complex landscapes versus simple ones)
+
+
+### **Finding (2)**
+
++ #### When comparing the individual contribution of specific natural enemies guilds (NEG), it seems that flying insects (HP treatment) have a stronger control effect than ground-dwellers (GD), especially in complex landscape. This is confirmed by higher parasitism rate and syrphid fraction in complex landscape. Control by GD increased much less with increasing landscape complexity.
+
+### **Explanation (2)**
+
++ #### This finding is consistent with the idea that generalist predators (ground-dwellers) have a lower impact than specialist predators (flying insect) when prey density is high.
+
+### **Finding (3)**
+
++ #### There is a complementary effect between flying insects and ground dwellers. Aphid control was stronger in the presence of both guilds than with either guild alone.  
+
+### **Explanation (3)**
+
++ #### This could be due to a variety of reasons. First, predation could have taken place in different parts of the plant limiting interference between the natural enemies. This is referred to as "spatially segregated behavior". Another possible explanation is that aphids may have tried to escape from the branches and reach the soil surface, becoming vulnerable to the ground-dwellers. However, this behavior was not observed. Instead, some ground dwellers were seen climbing directly onto the plant. 
+
+### **Finding (4)**
+
++ #### In some dates, natural enemy rates (parasitism rate and syrphid fraction) are lower in treatments accessible to birds (O treatment) than in the other treatments. 
+
+### **Explanation (4)**
+
++ #### This is likely to be due to predation by birds of parasitized aphids and syrphid larvae. 
+
+
+# **Conclusion** 
+
+### **From the article:**
+
++ #### The interaction between enemy guilds and landscape complexity is complex.
++ #### Pest control was always stronger when many different enemies were present, especially in more complex landscapes.
++ #### Pest control of GD and flying insects was complementary, but flying insects provided the strongest contribution to pest control.
+
+#### More work needed to understand the interactions between natural enemies. 
+
+### **from our work:**
+
++ #### We learned how to run and interpret different statistical tests and models (e.g. anovas, post hoc tests, chi-square test, linear models etc.)
++ #### we learned how to plot graphs
++ #### we learned how to understand and reconstruct (by trials and errors) the statistical analysis of some scientific articles
 
 
 
