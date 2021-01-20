@@ -8,6 +8,8 @@ output: html_document
 knitr::opts_chunk$set(echo = FALSE)
 #install.packages("readxl")
 #install.packages("igraph")
+# install.packages("gridExtra")
+
 Note that the data was provided by the following scientific article: *“Pest control of aphids on landscape complexity and natural enemy interactions”.* 
 It can be retrieved from: https://datadryad.org/stash/dataset/doi:10.5061/dryad.n6428
 
@@ -18,7 +20,7 @@ This study used multiple natural enemy enclosures replicated in 18 fields of Bra
 
 In this study, the variables are as follows:
 
-   *Dependent variables*
+*Dependent variables*
 1. Aphid Population Growth (APG) 
 2. Aphid density 
 3. Parasitized Aphids 
@@ -26,7 +28,7 @@ In this study, the variables are as follows:
 5. Syrphid larvae
 6. Syrphid fraction and the real final dependent variable which is  7. Final cabbage biomass
 
-  *Independent variables*
+*Independent variables*
 1. Landscape complexity (% semi-natural habitat at a radius around fields)
 2. Treatments (different combinations of Natural Enemies exclusions) 3. Field management (organic versus conventional),
 4. Sampling Date
@@ -84,9 +86,10 @@ Step by Step:
 
 # Results
 
-#### *Effects of landscape complexity and natural enemy exclusion on average daily aphid population growth across three sampling dates (1-3) *
+####import data and make data frame called "DataOG" includes APhids population growth, parasitism rate and syrphid fraction.
+```{r}
+# creation of DataOG with all variables
 
-# APG, Treatment, semi-natural habitat 
 Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
 Data1$APG <- NA 
 A <- Data1$Date == "1"
@@ -97,62 +100,135 @@ A <- Data1$Date == "3"
 Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/30)
 DataOG <- Data1
 
+parasitism_rate <- (Data1$aphid_parasitized/(Data1$aphid_live + Data1$aphid_parasitized))
+DataOG$parasitism_rate <- parasitism_rate
+
+syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
+DataOG$syrphid_fraction <- syrphid_fraction
+
+
+#convert NaN to 0
+is.nan.data.frame <- function(x)
+  do.call(cbind, lapply(x, is.nan))
+DataOG[is.nan(DataOG)] <- 0
+
+#convert inf to 1
+is.infinite.data.frame <- function(y)
+  do.call(cbind, lapply(y, is.infinite))
+DataOG[is.infinite(DataOG)] <- 1
+
+```
+
+#### *Effects of landscape complexity and natural enemy exclusion on average daily aphid population growth across three sampling dates (1-3)*
+
+
+```{r}
+#choose only the
 A <- DataOG$BUFF_DIST == "700"
 Data700 <- DataOG[A,]                       
 
 # plot APG ~ % of seminatural habitat for each treatment
 library(ggplot2)
 ggplot(Data700, aes(x = Pt.seminatural, y = APG, color = Treatment, alpha = "0")) +
-  labs(x = "Landscape complexity (% of seminatural habitat)", y = "APG",
-       title = "Effects of landscape complexity on APG in each treatment at 3 different dates") +
-  geom_smooth(method = "lm") +
-  facet_grid(.~Date)
+labs(x = "Landscape complexity (% of seminatural habitat)", y = "APG",
+title = "Effects of landscape complexity on APG in each treatment at 3 different dates") +
+geom_smooth(method = "lm") +
+facet_grid(.~Date)
+```
 
-##### *Findings:*
- 
+
+
+##### *Comments:*
+
 APG slope flattens, gets less steep over time. 
 In all treatments and for all dates (except the last one when it is less clear), we see a trend highlighting an increase in APG as landscape complexity increases. 
 In treatments involving more than 2 natural enemies, APG growth was the lowest. Examples are O, HPGD, HBP.
 When all natural enemies are excluded (H treatment), APG growth is at its highest.
 This finding is consistent with our hypothesis. 
 
-###Effects of enemy exclusion treatments 😊 combination of NE guilds) on APG at Date 1, 2 and 3
 
 
-library(readr)
-Data0 <- Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
+### Effects of enemy exclusion treatments (combination of NE guilds) on APG at Date 1, 2 and 3
 
-cowplot :: # Other function to put several figures together
-  
-# APG
-  
-Data1$APG <- NA 
-A <- Data1$Date == "1"
-Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/10)
-A <- Data1$Date == "2"
-Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/20)
-A <- Data1$Date == "3"
-Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/30)
-Data1$APG
 
+```{r}
 # new data frame with BUFF = 700
-A <- Data1$BUFF_DIST == "700"
-Data700 <- Data1[A,]  
+A <- DataOG$BUFF_DIST == "700"
+Data700 <- Data1[A,] 
+```
+
+#####ANOVA and Tukey HSD (post hoc) test
+```{r}
+#creation of data frame DATE1_700
+DATE1_700 <- Data700[Data700$Date == "1",]
+
+```
 
 
-#ANOVA
-annos = c('a','bc','a','b','d','c',
-          'a','c','b','c','c','c',
-          'a','cd','b','c','e','de')
+```{r, include= FALSE}
+#D1 anova test
+anovaD1_APG <- aov(DATE1_700$APG ~ DATE1_700$Treatment, data = DATE1_700)
+summary(anovaD1_APG)
+
+TukeyHSD(anovaD1_APG)
+
+library("agricolae")
+HSD_D1_APG <- HSD.test(anovaD1_APG, "DATE1_700$Treatment", unbalanced = TRUE, group = T)
+HSD_D1_APG
+```
+
+```{r, include= FALSE}
+DATE2_700 <- Data700[Data700$Date == "2",]
+
+#D2 anova test
+anovaD2_APG <- aov(DATE2_700$APG ~ DATE2_700$Treatment, data = DATE2_700)
+summary(anovaD2_APG)
+
+TukeyHSD(anovaD2_APG)
+
+library("agricolae")
+HSD_D2_APG <- HSD.test(anovaD2_APG, "DATE2_700$Treatment", unbalanced = TRUE, group = T)
+HSD_D2_APG
+```
+
+```{r, include= FALSE}
+DATE3_700 <- Data700[Data700$Date == "3",]
+
+#D3 anova test
+anovaD3_APG <- aov(DATE3_700$APG ~ DATE3_700$Treatment, data = DATE3_700)
+summary(anovaD3_APG)
+
+TukeyHSD(anovaD3_APG)
+
+library("agricolae")
+HSD_D3_APG <- HSD.test(anovaD3_APG, "DATE3_700$Treatment", unbalanced = TRUE, group = T)
+HSD_D3_APG
+
+```
+
+
+```{r}
+#Put result of retter test into a vector called annos
+annos = c('a','bc','ab','abc','c','c',
+'a','b','b','b','b','b',
+'a','bc','b','bc','c','bc')
+
+```
+
+
+```{r}
 #plot
 library(ggplot2)
 ggplot(Data700, aes(x = Treatment, y = APG, fill = Treatment)) +
-  geom_boxplot() +
-  labs(x = "Enemy exclution treatment", y = "Aphids population growth",
-       title = "Effects of Treatment on APG at Different dates") +
-  geom_hline(yintercept = 0, colour = "grey") +
-  stat_summary(geom = 'text', label = annos, fun.y = max, vjust = -1) + facet_grid(.~Date) # same date but one factor changes (e.g. date)
-*Remarks:* 
+geom_boxplot() +
+labs(x = "Enemy exclution treatment", y = "Aphids population growth",
+title = "Effects of Treatment on APG at Different dates") +
+geom_hline(yintercept = 0, colour = "grey") +
+stat_summary(geom = 'text', label = annos, fun.y = max, vjust = -1) + facet_grid(.~Date) # same date but one factor changes (e.g. date)
+
+```
+
+*Comments:* 
 Here we looked at the sole effect of natural enemies (different combinations) on aphid population growth, without considering landscape complexity. 
 We ran anova tests and post-hoc analysis using the tukey test and the letter test which gave rise to the diagram you see. 
 The same conclusions from the previous graph can be drawn here:
@@ -161,29 +237,80 @@ APG goes down considerably as time goes by.
 across all dates, ground dwellers had the smallest control effect out of all natural enemies. 
 
 ####  *Effect of enemy exclusion treatments on parasitism rate at Date 1, 2 and 3* 
- 
+
 # parasitism rate 
 
-Data1$parasitism_rate <- NA
-A <-  Data1$BUFF_DIST == "200"
-Data1[A, "parasitism_rate"] <- (Data1$aphid_parasitized[A]/(Data1$aphid_live[A] + Data1$aphid_parasitized[A]))
-Data1$parasitism_rate
+```{r}
+# new data frame with BUFF = 200
+A <- DataOG$BUFF_DIST == "200"
+Data200 <- DataOG[A,] 
+```
 
-# plot for BUFF DIST = 200 
+```{r, include= FALSE}
 
+DATE1_200 <- Data200[Data200$Date == "1", ]
+
+#D1 anova test
+anovaD1_PR <- aov(DATE1_200$parasitism_rate ~ DATE1_200$Treatment, data = DATE1_200)
+summary(anovaD1_PR)
+
+TukeyHSD(anovaD1_PR)
+
+library("agricolae")
+HSD_D1_PR <- HSD.test(anovaD1_PR, "DATE1_200$Treatment", unbalanced = TRUE, group = T)
+HSD_D1_PR
+```
+
+```{r, include= FALSE}
+DATE2_200 <- Data200[Data200$Date == "2", ]
+
+#D1 anova test
+anovaD2_PR <- aov(DATE2_200$parasitism_rate ~ DATE2_200$Treatment, data = DATE2_200)
+summary(anovaD2_PR)
+
+TukeyHSD(anovaD2_PR)
+
+library("agricolae")
+HSD_D2_PR <- HSD.test(anovaD2_PR, "DATE2_200$Treatment", unbalanced = TRUE, group = T)
+HSD_D2_PR
+
+```
+
+
+```{r, include= FALSE}
+DATE3_200 <- Data200[Data200$Date == "3", ]
+
+#D1 anova test
+anovaD3_PR <- aov(DATE3_200$parasitism_rate ~ DATE3_200$Treatment, data = DATE3_200)
+summary(anovaD3_PR)
+
+TukeyHSD(anovaD3_PR)
+
+library("agricolae")
+HSD_D3_PR <- HSD.test(anovaD3_PR, "DATE3_200$Treatment", unbalanced = TRUE, group = T)
+HSD_D3_PR
+```
+
+```{r}
 #ANOVA result for parasitism rate ~ treatment
-annosPR = c('c','b','c','b','a','b',
-          'd','b','d','a','c','b',
-          'd','bc','d','ab','a','c')
+annosPR = c('b','ab','b','ab','a','ab',
+'c','b','bc','a','bc','bc',
+'c','ab','bc','a','bc','bc')
+```
 
+
+```{r}
 library(ggplot2)
 ggplot(Data1, aes(x = Treatment, y = parasitism_rate, fill = Treatment)) +
-  geom_boxplot() +
-  labs(x = "Enemy exclution treatment", y = "Parasitism rate",
-       title = "Effects of Treatment on Parasitism rate at different dates") +
-  geom_hline(yintercept = 0, colour = "grey") +
-  stat_summary(geom = 'text', label = annosPR, fun.y = mean, vjust = -1) + facet_grid(.~Date)
-##Remarks:
+geom_boxplot() +
+labs(x = "Enemy exclution treatment", y = "Parasitism rate",
+title = "Effects of Treatment on Parasitism rate at different dates") +
+geom_hline(yintercept = 0, colour = "grey") +
+stat_summary(geom = 'text', label = annosPR, fun.y = mean, vjust = -1) + facet_grid(.~Date)
+```
+
+
+##Remar:
 
 This bar plot graph describes the relationship between the natural enemies treatment and parasitism rate. 
 From this graph, we can notice that: 
@@ -192,36 +319,179 @@ Globally, the more natural enemies are involved, the higher the parasitism rate 
 
 ### *Effect of enemy exclusion treatments on syrphid fraction at Date 1, 2 and 3*
 
-Data1 <- read.table("Project data.csv", header = TRUE, dec = ",", sep = ";")
-Data1$APG <- NA 
-A <- Data1$Date == "1"
-Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/10)
-A <- Data1$Date == "2"
-Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/20)
-A <- Data1$Date == "3"
-Data1[A, "APG"] <- ((log(Data1$aphid_live[A] + 1) - log(Data1$aphidsinoculated_init[A] + 1))/30)
-DataOG <- Data1
-
-parasitism_rate <- (Data1$aphid_parasitized/Data1$aphid_live + Data1$aphid_parasitized)
-DataOG$parasitism_rate <- parasitism_rate
-
-syrphid_fraction <- (Data1$syrphidl_p / ((Data1$aphid_live) + (Data1$syrphidl_p)))
-DataOG$syrphid_fraction <- syrphid_fraction
-
+```{r}
 # new data frame with BUFF = 900
 
 A <- DataOG$BUFF_DIST == "900"
 Data900 <- DataOG[A,]   
+```
 
+```{r, include= FALSE}
+#ANOVA for syrphid fraction at date 1
+DATE1_900 <- Data900[Data900$Date == "1",]
+
+#D1 anova test
+anovaD1_SF <- aov(DATE1_900$syrphid_fraction ~ DATE1_900$Treatment, data = DATE1_900)
+
+summary(anovaD1_SF)
+
+TukeyHSD(anovaD1_SF)
+
+library("agricolae")
+HSD_D1_SF <- HSD.test(anovaD1_SF, "DATE1_900$Treatment", unbalanced = TRUE, group = T)
+HSD_D1_SF
+```
+
+```{r, include= FALSE}
+#ANOVA for syrphid fraction at date 2
+DATE2_900 <- Data900[Data900$Date == "2",]
+
+#D2 anova test
+anovaD2_SF <- aov(DATE2_900$syrphid_fraction ~ DATE2_900$Treatment, data = DATE2_900)
+summary(anovaD2_SF)
+
+TukeyHSD(anovaD2_SF)
+
+library("agricolae")
+HSD_D2_SF <- HSD.test(anovaD2_SF, "DATE2_900$Treatment", unbalanced = TRUE, group = T)
+HSD_D2_SF
+
+```
+
+
+```{r, include= FALSE}
+DATE3_900 <- Data900[Data900$Date == "3",]
+
+#D3 anova test
+anovaD3_SF <- aov(DATE3_900$syrphid_fraction ~ DATE3_900$Treatment, data = DATE3_900)
+
+summary(anovaD3_SF)
+
+TukeyHSD(anovaD3_SF)
+
+library("agricolae")
+HSD_D3_SF <- HSD.test(anovaD3_SF, "DATE3_900$Treatment", unbalanced = TRUE, group = T)
+HSD_D3_SF
+
+```
+
+
+```{r}
+#ANOVA result for syrphid fraction ~ treatment
+annosSF = c('b','b','b','ab','ab','a',
+            'b','ab','ab','a','ab','ab',
+            'a','a','a','a','a','a')
+
+```
+
+
+```{r}
 # plot
 
+A <- DataOG$BUFF_DIST == "900"
+Data900 <-DataOG[A,] 
+
 library(ggplot2)
+ggplot(Data900, aes(x = Treatment, y = syrphid_fraction , fill = Treatment)) +
+geom_boxplot() +
+labs(x = "Enemy exclution treatment", y = "Syrphid fraction",
+title = "Effects of Treatment on syrphid fraction at different dates") +
+geom_hline(yintercept = 0, colour = "grey") +
+  stat_summary(geom = 'text', label =annosSF, fun.y = mean , vjust = -1)+
+facet_grid(.~Date)
+
+```
+
+```{r}
+# New data frame with BUFF DIST = 900
+
+A <- Data1$BUFF_DIST == "900"
+Data900 <-Data1[A,]           # new data frame with BUFF_DIST = 900
+Data900$syrphid_fraction <- (Data900$syrphidl_p / ((Data900$aphid_live) + (Data900$syrphidl_p)))
+
+#Data900$syrphid_fraction[is.na(Data900$syrphid_fraction)] <- 0 #(used to assign 0 to NaN)
+
+# Removing all NaN
+Data900 <- na.omit(Data900)
+
+```
+
+
+```{r, include= FALSE}
+#ANOVA for syrphid fraction at date 1
+DATE1_900 <- Data900[Data900$Date == "1",]
+
+#D1 anova test
+anovaD1_SF <- aov(DATE1_900$syrphid_fraction ~ DATE1_900$Treatment, data = DATE1_900)
+
+summary(anovaD1_SF)
+
+TukeyHSD(anovaD1_SF)
+
+library("agricolae")
+HSD_D1_SF <- HSD.test(anovaD1_SF, "DATE1_900$Treatment", unbalanced = TRUE, group = T)
+HSD_D1_SF
+```
+
+```{r, include= FALSE}
+#ANOVA for syrphid fraction at date 2
+DATE2_900 <- Data900[Data900$Date == "2",]
+
+#D2 anova test
+anovaD2_SF <- aov(DATE2_900$syrphid_fraction ~ DATE2_900$Treatment, data = DATE2_900)
+summary(anovaD2_SF)
+
+TukeyHSD(anovaD2_SF)
+
+library("agricolae")
+HSD_D2_SF <- HSD.test(anovaD2_SF, "DATE2_900$Treatment", unbalanced = TRUE, group = T)
+HSD_D2_SF
+
+```
+
+
+```{r, include= FALSE}
+DATE3_900 <- Data900[Data900$Date == "3",]
+
+#D3 anova test
+anovaD3_SF <- aov(DATE3_900$syrphid_fraction ~ DATE3_900$Treatment, data = DATE3_900)
+
+summary(anovaD3_SF)
+
+TukeyHSD(anovaD3_SF)
+
+library("agricolae")
+HSD_D3_SF <- HSD.test(anovaD3_SF, "DATE3_900$Treatment", unbalanced = TRUE, group = T)
+HSD_D3_SF
+
+```
+
+
+```{r}
+#ANOVA result for syrphid fraction ~ treatment
+annosSF = c('b','b','b','ab','ab','a',
+            'b','ab','ab','a','ab','ab',
+            'a','a','a','a','a','a')
+
+```
+
+
+```{r}
+#plot for BUFF DIST = 900
 ggplot(Data900, aes(x = Treatment, y = syrphid_fraction , fill = Treatment)) +
   geom_boxplot() +
   labs(x = "Enemy exclution treatment", y = "Syrphid fraction",
        title = "Effects of Treatment on syrphid fraction at different dates") +
   geom_hline(yintercept = 0, colour = "grey") +
+  stat_summary(geom = 'text', label =annosSF, fun.y = mean , vjust = -1)+
   facet_grid(.~Date)
+
+```
+
+
+###comments date3 syrphid fraction anova
+
+
 
 ##Remarks 
 
@@ -229,3 +499,59 @@ Similar findings of the graph from the previous result can be observed;
 -An increase in syrphid fraction over time in most treatments except for HGD and H. Syrphid fraction in HPGD grows also quite slow. 
 Treatments involving a large combination of NE show a higher syrphid fraction: O, HPGD, HBP. 
 Note that NaN have been purposely removed to obtain this graph. Given that syrphid fraction is a division, many values had NaN because of the division by 0.
+
+
+
+
+```{r, include= FALSE}
+#####parasitism_rate ~ Pt.seminatural
+library(ggplot2)
+A <- DataOG$BUFF_DIST == "200"
+Data200 <-DataOG[A,]   
+
+G1 <- ggplot(Data200, aes(Pt.seminatural, parasitism_rate)) + 
+  labs(x = "% seminatural habitat", y = "Parasitism rate", title = " Effect of landscape complexity on PR")+
+   geom_point() +
+  geom_smooth(method = "lm") 
+G1
+
+###syrphid_fraction ~ Pt.seminatural)
+
+B <- DataOG$BUFF_DIST == "900"
+Data900 <-DataOG[B,]   
+
+G2 <- ggplot(Data900, aes(Pt.seminatural, syrphid_fraction)) + 
+ labs(x = "% seminatural habitat", y = "Syrphid fraction", title = " Effect of landscape complexity on SF")+
+  geom_point() +
+  geom_smooth(method = "lm")
+G2
+```
+
+
+```{r}
+# install.packages("gridExtra")
+library(gridExtra)
+grid.arrange(G1, G2, nrow = 1)
+
+```
+
+
+
+```{r}
+# combine the scatter plots into 1 graph
+
+attach(DataOG)
+par(mfrow=c(3,1))
+plot(APG ~ parasitism_rate, data = DataOG, xlab="Parasitism rate", main = "Effect of parasitism rate on APG across all dates")
+abline(lm(APG ~ parasitism_rate, data = DataOG))
+plot(APG ~ syrphid_fraction, data = DataOG, xlab ="Syrphid fraction", main = "Effect of syrphid fraction on APG across all dates")
+abline(lm(APG ~ syrphid_fraction, data = DataOG))
+plot(Biomass_fin ~ syrphid_fraction, data = DataOG, xlab ="Syrphid fraction", ylab = "Final Cabbage Biomass (g)", main = "Effect of syrphid fraction on final cabbage biomass")
+abline(lm(Biomass_fin ~ syrphid_fraction, data = DataOG))
+```
+
+
+
+
+
+
